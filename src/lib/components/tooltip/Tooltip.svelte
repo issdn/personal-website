@@ -6,7 +6,6 @@
   } from "./tooltipPositionFunctions";
 
   export let text = "";
-  export let visible = false;
   export let icon: ComponentType | null = null;
   export let textSize = "text-md";
 
@@ -30,15 +29,7 @@
       ) as string;
     }
   }
-
-  const destroyOnWindowExit = () => {
-    if (document.visibilityState === "hidden") {
-      visible = false;
-    }
-  };
 </script>
-
-<svelte:window on:visibilitychange={destroyOnWindowExit} />
 
 <span
   role="tooltip"
