@@ -11,10 +11,9 @@
   import DragPan from "$lib/symbols/DragPan.svelte";
   import InkEraser from "$lib/symbols/InkEraser.svelte";
   import ToolButton from "./ToolButton.svelte";
-  import { center } from "./actions";
+  import { center, focusOnMount } from "./actions";
 
   let colorsExpanded = false;
-  let container: HTMLDivElement;
   let dragButton: HTMLSpanElement;
   let dragging = false;
   let position = { x: 0, y: -100 };
@@ -193,11 +192,12 @@
     use:center={(pos) => (position = pos)}
     transition:fly={{ y: -100 }}
     style={`left: ${position.x}px; top: ${position.y}px;`}
-    class="touch-none z-50 absolute bg-dark rounded-lg dark:bg-light drop-shadow-lg p-2
+    class="touch-none z-10 absolute bg-dark rounded-lg dark:bg-light drop-shadow-lg p-2
 	before:absolute before:top-full before:right-2 before:content-['BETA'] before:font-primary before:bg-red-500 before:text-xs before:px-1 before:rounded-b-sm"
   >
     <div class="items-center flex flex-row justify-between">
       <span
+        use:focusOnMount
         role="button"
         tabindex="0"
         aria-label="Drag Toolbox"

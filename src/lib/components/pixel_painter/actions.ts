@@ -17,4 +17,11 @@ const center = (
   };
 };
 
-export { center };
+const focusOnMount = (node: HTMLElement) => {
+  let focused = false;
+  if (node && !focused) {
+    node.focus();
+  }
+};
+
+export { center, focusOnMount };

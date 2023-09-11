@@ -58,7 +58,7 @@
   <div
     class={`${
       painterEnabled && "pointer-events-none opacity-50"
-    } duration-500 z-10 relative h-full w-full px-4 md:px-16 lg:px-[20%] xl:px-[30%] py-8 flex flex-col justify-between gap-y-24`}
+    } duration-500 relative h-full w-full px-4 md:px-16 lg:px-[20%] xl:px-[30%] py-8 flex flex-col justify-between gap-y-24`}
   >
     <Navbar />
     <div class="flex flex-col h-full gap-y-24">
@@ -92,7 +92,7 @@
       <span
         in:fade={{ duration: 1000, delay: 500 }}
         out:fade={{ duration: 125, delay: 0 }}
-        class="absolute left-1/2 gap-y-4 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[100]"
+        class="absolute left-1/2 gap-y-4 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
       >
         <Spinner />
       </span>
@@ -106,7 +106,7 @@
   {/if}
 
   <div
-    class="absolute bottom-10 right-4 md:right-16 lg:right-10 flex flex-row gap-x-1 items-end z-50"
+    class="absolute bottom-10 right-4 md:right-16 lg:right-10 flex flex-row gap-x-1 items-end z-10"
   >
     {#if !pageLoaded}
       <Spinner size="sm" />
