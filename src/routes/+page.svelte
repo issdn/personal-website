@@ -88,7 +88,7 @@
     </footer>
   </div>
   {#if painterEnabled}
-    {#if !$painter || !$painterReady}
+    {#if !$painter || $painterReady === "false"}
       <span
         in:fade={{ duration: 1000, delay: 500 }}
         out:fade={{ duration: 125, delay: 0 }}
@@ -98,11 +98,11 @@
       </span>
     {/if}
     {#if painterImported}
-      {#if $painterReady}
-        <svelte:component this={PixelPainterToolBox} />
-      {/if}
       <svelte:component this={PixelPainter} />
     {/if}
+  {/if}
+  {#if $painterReady === "drawn"}
+    <svelte:component this={PixelPainterToolBox} />
   {/if}
 
   <div
