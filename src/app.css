@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+	a:focus,button:focus,[role="button"]:focus{
+		@apply outline-primary outline outline-offset-2;
+	}
+}
 
 @layer utilities {
 	.tDir{
