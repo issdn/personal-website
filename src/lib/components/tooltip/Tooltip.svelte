@@ -10,20 +10,24 @@
   export let icon: ComponentType | null = null;
   export let textSize = "text-md";
 
-  let styles: string | null = null;
-  let arrowClasses: string = "";
+  let positionClasses: string = "";
   let tooltip: HTMLSpanElement;
+  let styles = "";
 
   $: if (tooltip) {
-    let _stylesObj = adjustTooltipPosition(tooltip, window);
-    if (_stylesObj) {
-      styles = _stylesObj[0];
-      arrowClasses = _stylesObj[1];
+    let _posClasses = adjustTooltipPosition(tooltip, window, 50);
+    if (_posClasses) {
+      positionClasses = _posClasses;
     } else {
-      let _sizing = getWidestPossibleSideAndSetWidth(tooltip, window);
-      const _stylesObj = adjustTooltipPosition(tooltip, window, _sizing[0]);
-      styles = _sizing[1] + " " + _stylesObj![0];
-      arrowClasses = _stylesObj![1];
+      styles = "white-space: normal;";
+      let newSqushedPos = getWidestPossibleSideAndSetWidth(tooltip, window);
+      // If the newSquashedPos is passed then it will return string always.
+      positionClasses = adjustTooltipPosition(
+        tooltip,
+        window,
+        50,
+        newSqushedPos
+      ) as string;
     }
   }
 
@@ -39,10 +43,8 @@
 <span
   role="tooltip"
   bind:this={tooltip}
-  style={`${styles ? styles : "top: 0; left: 0;"} ${
-    tooltip ? "opacity: 1;" : "opacity: 0;"
-  }`}
-  class={`transition-opacity delay-500 duration-200 after:border-transparent font-bold whitespace-nowrap pointer-events-none drop-shadow-md after:content-[' '] after:border-[5px] after:border-solid after:absolute z-[50] absolute bg-primary dark:bg-light rounded-md px-2 py-2 text-light dark:text-dark ${arrowClasses} ${textSize}`}
+  style={`${tooltip ? "opacity: 1;" : "opacity: 0;"}${styles}`}
+  class={`transition-opacity delay-500 duration-200 after:border-transparent font-bold whitespace-nowrap pointer-events-none drop-shadow-md after:content-[' '] after:border-[5px] after:border-solid after:absolute z-[50] absolute bg-primary dark:bg-light rounded-md px-2 py-2 text-light dark:text-dark ${textSize} ${positionClasses}`}
 >
   {text}
   {#if icon}
@@ -54,6 +56,58 @@
 </span>
 
 <style>
+  :root {
+    --arrowNodeGapSize: 50%;
+  }
+
+  /* Sets where tooltip will be positioned around a node */
+  .rm {
+    top: calc(var(--arrowNodeGapSize) + 100%);
+    left: 0;
+    transform: translateY(-50%);
+  }
+  .lm {
+    top: calc(var(--arrowNodeGapSize) + 100%);
+    right: 0;
+    transform: translateY(-50%);
+  }
+  .tm {
+    bottom: calc(var(--arrowNodeGapSize) + 100%);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .bm {
+    top: calc(var(--arrowNodeGapSize) + 100%);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .tl {
+    bottom: calc(var(--arrowNodeGapSize) + 100%);
+    right: 0;
+  }
+  .tr {
+    bottom: calc(var(--arrowNodeGapSize) + 100%);
+    left: 0;
+  }
+  .bl {
+    top: calc(var(--arrowNodeGapSize) + 100%);
+    right: 0;
+  }
+  .br {
+    top: calc(var(--arrowNodeGapSize) + 100%);
+    left: 0;
+  }
+  .l {
+    top: 50%;
+    right: calc(var(--arrowNodeGapSize) + 100%);
+    transform: translateY(-50%);
+  }
+  .r {
+    top: 50%;
+    left: calc(var(--arrowNodeGapSize) + 100%);
+    transform: translateY(-50%);
+  }
+
   .tSide::after {
     bottom: 100%;
   }
