@@ -1,5 +1,4 @@
 import Tooltip from "./Tooltip.svelte";
-import type { DeviceType } from "../windowUtils";
 import type { Sides } from "./tooltipPositionFunctions";
 import type { ComponentType } from "svelte";
 
@@ -44,12 +43,14 @@ const tooltip = (node: HTMLElement | SVGSVGElement, params: TooltipParams) => {
     if (!position || position === "static") {
       node.style.position = "relative";
     }
+    console.log(component);
     if (!component) {
       newTooltip();
     }
   };
 
-  const createTooltipMobile = () => {
+  const createTooltipMobile = (e: Event) => {
+    e.stopPropagation();
     if (_params.showOnMobile) {
       createTooltip();
     }

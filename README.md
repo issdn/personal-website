@@ -18,7 +18,7 @@ Around 160kB on initial load and ~240kB with pixel painter.
     ```
 
 Data of colored pixels for pixel art painter is compressed with custom algorithm.
-Best case scenario is an completely empty array where you go from ~70kB to 5B 
+Best case scenario is no colored cells where the string size is 5B 
 and worst case is when you have fully filled canvas witch a different color for every other column: ~500kB (cached for 1 day tho).
 
 Required Env variables:

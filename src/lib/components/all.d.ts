@@ -20,3 +20,8 @@ type OptionalSnackbarProps = {
 type Actions = "draw" | "erase" | "move" | "placeholder";
 type TranslationShape = typeof import("../../translations/en.json");
 type TranslationKeys = keyof TranslationShape;
+
+type EventHandlersObject = {
+  [key: string]: EventListenerOrEventListenerObject;
+};
+type DeviceType = "mobile" | "desktop" | null;
