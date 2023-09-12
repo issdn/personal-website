@@ -3,21 +3,17 @@
   import FormatPaint from "$lib/symbols/FormatPaint.svelte";
   import Navbar from "$lib/components/Navbar.svelte";
   import SnackbarContainer from "$lib/components/SnackbarContainer.svelte";
-  import translations, {
-    setLanguages,
-    language,
-  } from "$lib/components/languageStore";
+  import translations, { setLanguages } from "$lib/components/languageStore";
   import { onMount } from "svelte";
   import tooltip from "$lib/components/tooltip/tooltipAction";
   import windowStore from "$lib/components/windowUtils";
   import Help from "$lib/symbols/Help.svelte";
   import Spinner from "$lib/components/Spinner.svelte";
+  import { languages } from "../translations/languages";
+  import en from "../translations/en.json";
 
-  export let data;
-
-  language.set(data.lang as string);
-  translations.set(data.translation);
-  setLanguages(data.languages);
+  translations.set(en);
+  setLanguages(languages);
 
   let PixelPainterToolBox: typeof import("$lib/components/pixel_painter/PixelPainterToolBox.svelte").default;
   let PixelPainter: typeof import("$lib/components/pixel_painter/PixelPainter.svelte").default;
