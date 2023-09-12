@@ -4,13 +4,11 @@
   import Person from "./person.svelte";
   import DarkmodeSwitch from "./DarkmodeSwitch.svelte";
   import LanguageDropdown from "./LanguageDropdown.svelte";
-  import language, { translator } from "./languageStore";
+  import translations from "./languageStore";
   import tooltip from "./tooltip/tooltipAction";
   import darkModeStore from "./darkmodeStore";
   import { fade } from "svelte/transition";
   import OpenInNew from "$lib/symbols/OpenInNew.svelte";
-
-  $: translation = translator($language);
 
   $: iconsColor = $darkModeStore ? "#E8E2E2" : "#5D3891";
 </script>
@@ -20,7 +18,7 @@
     <ul class="flex flex-row gap-x-4 md:gap-x-6 items-center">
       <li
         class="h-8 w-8"
-        use:tooltip={{ text: translation("githubProfile"), icon: OpenInNew }}
+        use:tooltip={{ text: translations["githubProfile"], icon: OpenInNew }}
       >
         <a
           aria-label="Link to my github profile."
@@ -30,7 +28,10 @@
       </li>
       <li
         class="h-8 w-8"
-        use:tooltip={{ text: translation("LinkedInProfile"), icon: OpenInNew }}
+        use:tooltip={{
+          text: translations["LinkedInProfile"],
+          icon: OpenInNew,
+        }}
       >
         <a
           aria-label="Link to my github linkedin."
@@ -39,7 +40,7 @@
         >
       </li>
       <li
-        use:tooltip={{ text: translation("CVDownload"), icon: OpenInNew }}
+        use:tooltip={{ text: translations["CVDownload"], icon: OpenInNew }}
         class="h-8 w-8"
       >
         <a

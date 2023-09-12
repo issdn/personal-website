@@ -22,7 +22,10 @@ const generateDefaultCanvas = () => {
   return `${CANVAS_X},${parseInt(CANVAS_X) ** 2}`;
 };
 
-export async function GET() {
+export async function GET({ setHeaders }) {
+  setHeaders({
+    "Cache-Control": "public, max-age=86400",
+  });
   const collection = client
     .db("karolbielski")
     .collection(VERIFIED_PIXELS_COL_NAME);

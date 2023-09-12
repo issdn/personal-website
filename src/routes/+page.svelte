@@ -3,19 +3,27 @@
   import FormatPaint from "$lib/symbols/FormatPaint.svelte";
   import Navbar from "$lib/components/Navbar.svelte";
   import SnackbarContainer from "$lib/components/SnackbarContainer.svelte";
-  import language, { translator } from "$lib/components/languageStore";
+  import translations, {
+    setLanguages,
+    language,
+  } from "$lib/components/languageStore";
   import { onMount } from "svelte";
   import tooltip from "$lib/components/tooltip/tooltipAction";
   import windowStore from "$lib/components/windowUtils";
   import Help from "$lib/symbols/Help.svelte";
   import Spinner from "$lib/components/Spinner.svelte";
 
+  export let data;
+
+  language.set(data.lang as string);
+  translations.set(data.translation);
+  setLanguages(data.languages);
+
   let PixelPainterToolBox: typeof import("$lib/components/pixel_painter/PixelPainterToolBox.svelte").default;
   let PixelPainter: typeof import("$lib/components/pixel_painter/PixelPainter.svelte").default;
   let painter: typeof import("$lib/components/pixel_painter/pixelPainterStore").default;
   let painterReady: typeof import("$lib/components/pixel_painter/pixelPainterStore").painterReady;
 
-  $: translation = translator($language);
   let pageLoaded = false;
   let painterEnabled = false;
   let painterImported = false;
@@ -64,9 +72,9 @@
     <div class="flex flex-col h-full gap-y-24">
       <section transition:fade={{ delay: 200 }} class="text-xl">
         <h1 class="text-5xl font-extrabold font-primary">
-          {translation("title")}
+          {$translations["title"]}
         </h1>
-        <p>{translation("mainPar")}</p>
+        <p>{$translations["mainPar"]}</p>
       </section>
     </div>
     <footer
@@ -74,17 +82,19 @@
     >
       <span
         class="bg-primary dark:bg-light text-light dark:text-dark rounded-md px-2"
-        >Made with Svelte</span
+        >{$translations["MadeWithSvelte"]}</span
       >
       <a
         target="_blank"
         href="https://commons.wikimedia.org/wiki/File:Octicons-mark-github.svg"
-        >Github Icon</a
+        >{$translations["GithubIcon"]}</a
       >
       <a target="_blank" href="https://icons8.com/icons/set/linkedin"
-        >Linkedin Icon</a
+        >{$translations["LinkedInIcon"]}</a
       >
-      <a target="_blank" href="https://fonts.google.com/icons">Other Icons</a>
+      <a target="_blank" href="https://fonts.google.com/icons"
+        >{$translations["OtherIcons"]}</a
+      >
     </footer>
   </div>
   {#if painterEnabled}
@@ -119,7 +129,10 @@
         on:focus={importPainter}
         aria-label="Information about pixel art painter"
         class={`drop-shadow-lg cursor-help w-fit h-fit text-sm`}
-        use:tooltip={{ text: translation("painterInfo"), device: $windowStore }}
+        use:tooltip={{
+          text: $translations["painterInfo"],
+          device: $windowStore,
+        }}
         ><Help class="fill-primary dark:fill-light h-6 w-6"
           ><desc>Information about pixel art painter</desc></Help
         ></span

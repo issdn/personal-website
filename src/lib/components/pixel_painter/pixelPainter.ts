@@ -310,10 +310,19 @@ class PixelPainter {
     });
   }
 
-  private resetQuickAction() {
-    if (!this.quickAction) return;
-    this.quickAction = false;
-    this.action = this.lastAction;
+  destroy() {
+    window.removeEventListener("resize", this.setCanvasPositionToMiddle);
+    if (!this.canvas) return;
+    if (this.config.isTouchScreen) {
+      this.commandsByListener.mobile.forEach((value, key) => {
+        this.canvas.removeEventListener(key, value);
+      });
+    } else {
+      window.removeEventListener("visibilitychange", this.resetQuickAction);
+      this.commandsByListener.desktop.forEach((value, key) => {
+        this.canvas.removeEventListener(key, value);
+      });
+    }
   }
 
   setCellBoard(cellBoard: CellBoard) {
@@ -347,6 +356,12 @@ class PixelPainter {
     this.lastAction = this.action;
     this.action = action;
     return this;
+  }
+
+  private resetQuickAction() {
+    if (!this.quickAction) return;
+    this.quickAction = false;
+    this.action = this.lastAction;
   }
 
   private setCanvasPositionToMiddle() {
@@ -598,21 +613,6 @@ class PixelPainter {
     } else {
       this.backgroundCommandsByListener.desktop.forEach((commandFunctions) => {
         this.canvas.removeEventListener("mousemove", commandFunctions.execute);
-      });
-    }
-  }
-
-  destroy() {
-    window.removeEventListener("resize", this.setCanvasPositionToMiddle);
-    if (!this.canvas) return;
-    if (this.config.isTouchScreen) {
-      this.commandsByListener.mobile.forEach((value, key) => {
-        this.canvas.removeEventListener(key, value);
-      });
-    } else {
-      window.removeEventListener("visibilitychange", this.resetQuickAction);
-      this.commandsByListener.desktop.forEach((value, key) => {
-        this.canvas.removeEventListener(key, value);
       });
     }
   }
