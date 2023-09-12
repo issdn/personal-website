@@ -18,7 +18,7 @@
     <ul class="flex flex-row gap-x-4 md:gap-x-6 items-center">
       <li
         class="h-8 w-8"
-        use:tooltip={{ text: translations["githubProfile"], icon: OpenInNew }}
+        use:tooltip={{ text: $translations["githubProfile"], icon: OpenInNew }}
       >
         <a
           aria-label="Link to my github profile."
@@ -29,7 +29,7 @@
       <li
         class="h-8 w-8"
         use:tooltip={{
-          text: translations["LinkedInProfile"],
+          text: $translations["LinkedInProfile"],
           icon: OpenInNew,
         }}
       >
@@ -40,7 +40,7 @@
         >
       </li>
       <li
-        use:tooltip={{ text: translations["CVDownload"], icon: OpenInNew }}
+        use:tooltip={{ text: $translations["CVDownload"], icon: OpenInNew }}
         class="h-8 w-8"
       >
         <a
