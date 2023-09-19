@@ -1,8 +1,8 @@
 <script lang="ts">
   import { slide } from "svelte/transition";
-  import translations, { language, languages } from "./languageStore";
+  import {translations, language, languages } from "./";
   import Translate from "$lib/symbols/Translate.svelte";
-  import snackbars from "./snackbars";
+  import snackbars from "../snackbar/snackbars";
 
   let expanded = false;
   let loading = false;

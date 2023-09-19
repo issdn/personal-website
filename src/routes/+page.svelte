@@ -1,40 +1,40 @@
 <script lang="ts">
   import { fade } from "svelte/transition";
   import FormatPaint from "$lib/symbols/FormatPaint.svelte";
-  import Navbar from "$lib/components/Navbar.svelte";
-  import SnackbarContainer from "$lib/components/SnackbarContainer.svelte";
-  import translations, { setLanguages } from "$lib/components/languageStore";
+  import Navbar from "$lib/layout/Navbar.svelte";
+  import SnackbarContainer from "$lib/snackbar/SnackbarContainer.svelte";
+  import { translations, setLanguages } from "$lib/language"
   import { onMount } from "svelte";
-  import tooltip from "$lib/components/tooltip/tooltipAction";
-  import windowStore from "$lib/components/windowUtils";
+  import { tooltip } from "$lib/tooltip"
+  import { deviceType } from "$lib/stores"
   import Help from "$lib/symbols/Help.svelte";
-  import Spinner from "$lib/components/Spinner.svelte";
-  import { languages } from "../translations/languages";
+  import Spinner from "$lib/visual_indicators/Spinner.svelte";
+  import { languages } from "../translations"
   import en from "../translations/en.json";
 
   translations.set(en);
   setLanguages(languages);
 
-  let PixelPainterToolBox: typeof import("$lib/components/pixel_painter/PixelPainterToolBox.svelte").default;
-  let PixelPainter: typeof import("$lib/components/pixel_painter/PixelPainter.svelte").default;
-  let painter: typeof import("$lib/components/pixel_painter/pixelPainterStore").default;
-  let painterReady: typeof import("$lib/components/pixel_painter/pixelPainterStore").painterReady;
+  let PixelPainterToolBox: typeof import("$lib/pixel_painter/PixelPainterToolBox.svelte").default;
+  let PixelPainter: typeof import("$lib/pixel_painter/PixelPainter.svelte").default;
+  let painter: typeof import("$lib/pixel_painter").painter;
+  let painterReady: typeof import("$lib/pixel_painter").painterReady;
 
   let pageLoaded = false;
   let painterEnabled = false;
   let painterImported = false;
 
   const importPainter = async () => {
-    painter = (await import("$lib/components/pixel_painter/pixelPainterStore"))
+    painter = (await import("$lib/pixel_painter/pixelPainterStore"))
       .default;
     PixelPainterToolBox = (
-      await import("$lib/components/pixel_painter/PixelPainterToolBox.svelte")
+      await import("$lib/pixel_painter/PixelPainterToolBox.svelte")
     ).default;
     PixelPainter = (
-      await import("$lib/components/pixel_painter/PixelPainter.svelte")
-    ).default;
+      (await import("$lib/pixel_painter/PixelPainter.svelte")).default
+    );
     painterReady = (
-      await import("$lib/components/pixel_painter/pixelPainterStore")
+      await import("$lib/pixel_painter")
     ).painterReady;
   };
 
@@ -51,7 +51,7 @@
   };
 
   onMount(() => {
-    windowStore.setDeviceType("ontouchstart" in window ? "mobile" : "desktop");
+    deviceType.setDeviceType("ontouchstart" in window ? "mobile" : "desktop");
     pageLoaded = true;
   });
 </script>
@@ -127,7 +127,7 @@
         class={`drop-shadow-lg cursor-help w-fit h-fit text-sm`}
         use:tooltip={{
           text: $translations["painterInfo"],
-          device: $windowStore,
+          device: $deviceType,
         }}
         ><Help class="fill-primary dark:fill-light h-6 w-6"
           ><desc>Information about pixel art painter</desc></Help

@@ -1,9 +1,9 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
-  import InfoBox from "../InfoBox.svelte";
-  import windowStore from "../windowUtils";
+  import InfoBox from "$lib/visual_indicators/InfoBox.svelte";
+  import { deviceType } from "$lib/stores";
   import painter, { cellBoard, painterReady } from "./pixelPainterStore";
-  import darkModeStore from "$lib/components/darkmodeStore";
+  import { darkmode } from "$lib/darkmode"
 
   let error: { message: string; detail: string } | null = null;
   let canvas: HTMLCanvasElement;
@@ -18,9 +18,9 @@
   $: {
     painter.update((painter) =>
       painter
-        .setConfig({ accentColor: $darkModeStore ? "#232323" : "#D9D9D9" })
+        .setConfig({ accentColor: $darkmode ? "#232323" : "#D9D9D9" })
         .setPainterContext({
-          accentColor: $darkModeStore ? "#D9D9D9" : "#232323",
+          accentColor: $darkmode ? "#D9D9D9" : "#232323",
         })
     );
   }
@@ -39,7 +39,7 @@
           painterReady.set("fetched");
           cellBoard.fromRawColorsArray(data.cells);
           painter.update((painter) =>
-            painter.setConfig({ isTouchScreen: $windowStore === "mobile" })
+            painter.setConfig({ isTouchScreen: $deviceType === "mobile" })
           );
           $painter
             .init(canvas)

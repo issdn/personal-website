@@ -1,6 +1,6 @@
 <script lang="ts">
   import Snackbar from "./Snackbar.svelte";
-  import snackbars from "./snackbars";
+  import { snackbars } from "./";
 </script>
 
 <div

@@ -8,6 +8,24 @@ Around 160kB on initial load and ~240kB with pixel painter.
     - Preload
     - Extendable through commands using special command and background command interface:
     ```typescript
+    // The command implementation will look like:
+    type TCommand = (...args: unknown[]) => {
+        start: CommandFunction;
+        execute: CommandFunction;
+        end: CommandFunction;
+    };
+    type CommandFunction = (
+        getRelativeCoordinates: GetRelativeCoordinatesFn,
+        x: number,
+        y: number
+        ) =>
+        | void
+        | ((
+            ctx: CanvasRenderingContext2D,
+            painterContext: PainterContext,
+            canvas: HTMLCanvasElement
+            ) => void);
+    // pixelPainterStore.ts
     const cellBoard = new CellBoard(pixelPainter.config.gridSize, pixelPainter.config.borderWidth);
     const commandInvoker = new CommandInvoker();
     commandInvoker.commands
@@ -23,6 +41,7 @@ and worst case is when you have fully filled canvas witch a different color for 
 
 Required Env variables:
 ```env
+MONGODB_HOSTNAME: string
 MONGODB_DB_NAME: string
 MONGODB_PASSWORD: string
 MONGODB_USERNAME: string

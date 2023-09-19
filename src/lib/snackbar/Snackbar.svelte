@@ -1,11 +1,11 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
-  import snackbars from "./snackbars";
+  import snackbars from "../snackbar/snackbars";
   import { slide } from "svelte/transition";
   import Close from "$lib/symbols/Close.svelte";
   import CheckCircle from "$lib/symbols/CheckCircle.svelte";
   import Error from "$lib/symbols/Error.svelte";
-  import { focusOnMount } from "./pixel_painter/actions";
+  import { focusOnMount } from "../pixel_painter/actions";
 
   const widthAnimate = (
     node: HTMLElement,

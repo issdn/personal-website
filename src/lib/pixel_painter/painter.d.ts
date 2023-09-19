@@ -29,9 +29,9 @@ interface ICommandInvoker {
   backgroundCommands: Set<ReturnType<TCommand>>;
 }
 
-type TCell = InstanceType<typeof import("./pixelPainter").Cell>;
+type TCell = InstanceType<typeof import("./cell").default>;
 type TCellArray = TCell[][];
-type TCellBoard = InstanceType<typeof import("./pixelPainter").CellBoard>;
+type TCellBoard = InstanceType<typeof import("./cellBoard").default>;
 type TRawCellBoard = (string | 0)[][];
 type TPixelPainter = InstanceType<typeof import("./pixelPainter").PixelPainter>;
 type PainterListeners = {
@@ -43,3 +43,4 @@ type PainterListenersKeys = {
 };
 type TBaseConfig = typeof baseConfig;
 type TBaseConfigParameter = Partial<TBaseConfig>;
+type Actions = "draw" | "erase" | "move" | "placeholder";

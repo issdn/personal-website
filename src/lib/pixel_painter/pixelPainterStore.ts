@@ -1,5 +1,6 @@
 import { writable } from "svelte/store";
-import PixelPainter, { CellBoard } from "./pixelPainter";
+import PixelPainter from "./pixelPainter";
+import CellBoard from "./cellBoard";
 import {
   CommandInvoker,
   drawCommand,

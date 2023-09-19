@@ -1,5 +1,5 @@
 import { json } from "@sveltejs/kit";
-import { translations, languages } from "../../../translations/languages";
+import { translations, languages } from "../../../translations";
 
 export async function GET({ url, setHeaders }) {
   setHeaders({

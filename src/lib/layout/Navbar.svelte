@@ -1,16 +1,16 @@
 <script>
-  import Linkedin from "./linkedin.svelte";
-  import Github from "./github.svelte";
-  import Person from "./person.svelte";
-  import DarkmodeSwitch from "./DarkmodeSwitch.svelte";
-  import LanguageDropdown from "./LanguageDropdown.svelte";
-  import translations from "./languageStore";
-  import tooltip from "./tooltip/tooltipAction";
-  import darkModeStore from "./darkmodeStore";
+  import Linkedin from "$lib/symbols/Linkedin.svelte";
+  import Github from "$lib/symbols/Github.svelte";
+  import Person from "$lib/symbols/Person.svelte";
+  import DarkmodeSwitch from "$lib/darkmode/DarkmodeSwitch.svelte";
+  import LanguageDropdown from "$lib/language/LanguageDropdown.svelte";
+  import { translations } from "$lib/language";
+  import { tooltip } from "$lib/tooltip";
+  import {darkmode} from "$lib/darkmode";
   import { fade } from "svelte/transition";
   import OpenInNew from "$lib/symbols/OpenInNew.svelte";
 
-  $: iconsColor = $darkModeStore ? "#E8E2E2" : "#5D3891";
+  $: iconsColor = $darkmode ? "#E8E2E2" : "#5D3891";
 </script>
 
 <nav transition:fade>

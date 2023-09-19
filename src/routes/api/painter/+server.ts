@@ -6,10 +6,11 @@ import {
   NEW_PIXELS_COL_NAME,
   VERIFIED_PIXELS_COL_NAME,
   MONGODB_DB_NAME,
+  MONGODB_HOSTNAME
 } from "$env/static/private";
 import { error, json, type RequestEvent } from "@sveltejs/kit";
 
-const uri = `mongodb+srv://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@${MONGODB_DB_NAME}.sa6rvct.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@${MONGODB_HOSTNAME}/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -27,7 +28,7 @@ export async function GET({ setHeaders }) {
     "Cache-Control": "public, max-age=86400",
   });
   const collection = client
-    .db("karolbielski")
+    .db(MONGODB_DB_NAME)
     .collection(VERIFIED_PIXELS_COL_NAME);
   try {
     await client.connect();
@@ -67,7 +68,7 @@ export async function POST({ request }: RequestEvent) {
   try {
     await client.connect();
     await client
-      .db("karolbielski")
+      .db(MONGODB_DB_NAME)
       .collection(NEW_PIXELS_COL_NAME)
       .insertOne({ _id: new ObjectId(), cells: cells });
     return json({ message: "Your art has been saved to database." });

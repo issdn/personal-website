@@ -9,5 +9,4 @@
     <h1 class="text-9xl">{$page.status}</h1>
     <a href="/" class="text-accent text-xl hover:underline">go back</a>
   </div>
-  <img class="w-48" src="./brokenh.svg" alt="404 heart" />
 </div>

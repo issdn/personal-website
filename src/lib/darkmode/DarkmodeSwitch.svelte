@@ -1,20 +1,20 @@
 <script lang="ts">
   import DarkMode from "$lib/symbols/DarkMode.svelte";
   import LightMode from "$lib/symbols/LightMode.svelte";
-  import darkModeStore from "./darkmodeStore";
+  import {darkmode} from "./"
 
   const setDark = () => {
     document.documentElement.classList.add("dark");
-    darkModeStore.switchMode();
+    darkmode.switchMode();
   };
 
   const setLight = () => {
     document.documentElement.classList.remove("dark");
-    darkModeStore.switchMode();
+    darkmode.switchMode();
   };
 
   const toggle = () => {
-    $darkModeStore ? setLight() : setDark();
+    $darkmode ? setLight() : setDark();
   };
 
   let hovering = false;
@@ -29,7 +29,7 @@
   on:click={toggle}
   class="h-12 w-12 rounded-full relative hover:bg-accent-secondary dark:hover:bg-accent-secondary-dark overflow-hidden"
 >
-  {#if $darkModeStore}
+  {#if $darkmode}
     <DarkMode
       filled={hovering}
       class="h-6 w-6 absolute fill-primary dark:fill-light left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"

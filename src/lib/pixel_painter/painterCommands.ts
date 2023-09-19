@@ -7,12 +7,12 @@ const drawCommand = (cellBoard: TCellBoard) => {
   let lastCell: TCell | null = null;
   let isDrawing = false;
 
-  function paintMultipleCells(
+  const paintMultipleCells = (
     ctx: CanvasRenderingContext2D,
     painterContext: PainterContext,
     x: number,
     y: number
-  ) {
+  )  => {
     const cells = cellBoard.getCellBoardCells(x, y, painterContext.size);
     for (const cell of cells) {
       cell.owned = true;
@@ -21,14 +21,14 @@ const drawCommand = (cellBoard: TCellBoard) => {
     lastCell = cells[Math.floor(cells.length / 2)];
   }
 
-  function start(getRelativeCoordinates: GetRelativeCoordinatesFn) {
+  const start = (getRelativeCoordinates: GetRelativeCoordinatesFn) => {
     isDrawing = true;
     return (ctx: CanvasRenderingContext2D, painterContext: PainterContext) => {
       paintMultipleCells(ctx, painterContext, ...getRelativeCoordinates());
     };
   }
 
-  function execute(getRelativeCoordinates: GetRelativeCoordinatesFn) {
+  const execute = (getRelativeCoordinates: GetRelativeCoordinatesFn) => {
     const initialCell = cellBoard.getCellBoardCell(...getRelativeCoordinates());
     if (!initialCell) return;
     if (!isDrawing) return;
@@ -47,7 +47,7 @@ const drawCommand = (cellBoard: TCellBoard) => {
     };
   }
 
-  function end() {
+  const end = () => {
     isDrawing = false;
     lastCell = null;
   }
@@ -63,12 +63,12 @@ const eraseCommand = (cellBoard: TCellBoard) => {
   let lastCell: TCell | null = null;
   let isErasing = false;
 
-  function eraseMultipleCells(
+  const eraseMultipleCells = (
     ctx: CanvasRenderingContext2D,
     painterContext: PainterContext,
     x: number,
     y: number
-  ) {
+  ) => {
     const cells = cellBoard.getCellBoardCells(x, y, painterContext.size);
     for (const cell of cells) {
       cell.reset(ctx);
@@ -76,14 +76,14 @@ const eraseCommand = (cellBoard: TCellBoard) => {
     lastCell = cells[Math.floor(cells.length / 2)];
   }
 
-  function start(getRelativeCoordinates: GetRelativeCoordinatesFn) {
+  const start = (getRelativeCoordinates: GetRelativeCoordinatesFn) => {
     isErasing = true;
     return (ctx: CanvasRenderingContext2D, painterContext: PainterContext) => {
       eraseMultipleCells(ctx, painterContext, ...getRelativeCoordinates());
     };
   }
 
-  function execute(getRelativeCoordinates: GetRelativeCoordinatesFn) {
+  const execute = (getRelativeCoordinates: GetRelativeCoordinatesFn) => {
     const cell = cellBoard.getCellBoardCell(...getRelativeCoordinates());
     if (!cell) return;
     if (!isErasing) return;
@@ -102,7 +102,7 @@ const eraseCommand = (cellBoard: TCellBoard) => {
     };
   }
 
-  function end() {
+  const end = () => {
     isErasing = false;
     lastCell = null;
   }
@@ -120,11 +120,11 @@ const moveCommand = () => {
   let isMoving = false;
   let cursorStyleBefore = "";
 
-  function start(
+  const start = (
     getRelativeCoordinates: GetRelativeCoordinatesFn,
     x: number,
     y: number
-  ) {
+  ) => {
     lastMousePosition = { x: x, y: y };
     return (
       ctx: CanvasRenderingContext2D,
@@ -138,11 +138,11 @@ const moveCommand = () => {
     };
   }
 
-  function execute(
+  const execute = (
     getRelativeCoordinates: GetRelativeCoordinatesFn,
     x: number,
     y: number
-  ) {
+  ) => {
     if (!isMoving) return;
     const xShift = offset.x + x - lastMousePosition.x;
     const yShift = offset.y + y - lastMousePosition.y;
@@ -180,7 +180,7 @@ const moveCommand = () => {
     };
   }
 
-  function end() {
+  const end = () => {
     return (
       ctx: CanvasRenderingContext2D,
       painterContext: PainterContext,
@@ -201,13 +201,13 @@ const moveCommand = () => {
 const placeholderCommand = (cellBoard: TCellBoard) => {
   let previousPlaceholder: TCell[] = [];
 
-  function clearPlaceholder(ctx: CanvasRenderingContext2D) {
+  const clearPlaceholder = (ctx: CanvasRenderingContext2D) => {
     for (const cell of previousPlaceholder) {
       cell.removePlaceholder(ctx);
     }
   }
 
-  function execute(getRelativeCoordinates: GetRelativeCoordinatesFn) {
+  const execute = (getRelativeCoordinates: GetRelativeCoordinatesFn) => {
     return (ctx: CanvasRenderingContext2D, painterContext: PainterContext) => {
       const cells = cellBoard.getCellBoardCells(
         ...getRelativeCoordinates(),

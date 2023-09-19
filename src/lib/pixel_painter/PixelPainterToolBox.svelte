@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import { fly, slide } from "svelte/transition";
   import painter from "./pixelPainterStore";
-  import snackbars from "../snackbars";
+  import { snackbars } from "$lib/snackbar";
   import { COLORS, color } from "./painterToolBoxStores";
   import RangeInput from "./RangeInput.svelte";
   import DragIndicator from "$lib/symbols/DragIndicator.svelte";

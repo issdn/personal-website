@@ -1,17 +1,17 @@
 <script lang="ts">
-  import translations from "../languageStore";
+  import { translations } from "$lib/language";
   export let active: boolean = false;
   export let label: TranslationKeys;
   export let shortcut: string;
   import tooltip from "../tooltip/tooltipAction";
-  import windowStore from "../windowUtils";
+  import { deviceType } from "$lib/stores";
 </script>
 
 <button
   use:tooltip={{
     text: $translations[label],
     textSize: "text-sm",
-    device: $windowStore,
+    device: $deviceType,
     showOnMobile: false,
   }}
   {...$$restProps}
