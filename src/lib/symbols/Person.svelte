@@ -4,6 +4,8 @@
 
 <svg
 	aria-label="Person icon"
+	class={$$props.class}
+	style={$$props.style}
 	width="32px"
 	height="32px"
 	viewBox="0 0 8.4666672 8.215332"

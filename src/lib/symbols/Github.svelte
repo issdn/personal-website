@@ -1,8 +1,10 @@
 <script lang="ts">
-	export let color: string = '#5D3891';
+	export let color: string = "#5D3891";
 </script>
 
 <svg
+	class={$$props.class}
+	style={$$props.style}
 	aria-label="Github logo"
 	width="32px"
 	height="32px"

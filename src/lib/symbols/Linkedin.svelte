@@ -1,8 +1,10 @@
 <script lang="ts">
-	export let color: string = '#5D3891';
+	export let color: string = "#5D3891";
 </script>
 
 <svg
+	class={$$props.class}
+	style={$$props.style}
 	aria-label="Linkedin logo"
 	width="32px"
 	height="32px"
@@ -22,7 +24,9 @@
 		inkscape:deskcolor="#d1d1d1"
 		inkscape:document-units="mm"
 		showgrid="false"
-	/><defs id="defs2" /><g id="layer1" transform="translate(-23.095786,-134.7503)"
+	/><defs id="defs2" /><g
+		id="layer1"
+		transform="translate(-23.095786,-134.7503)"
 		><g
 			style={`fill:${color};fill-opacity:1`}
 			id="g4926"

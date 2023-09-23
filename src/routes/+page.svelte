@@ -66,11 +66,16 @@
         <h1 class="text-5xl font-extrabold font-primary">
           {$texts["title"]}
         </h1>
-        <p>{$texts["mainPar"]}</p>
+        <div class="relative">
+          <p>{$texts["mainPar"]}</p>
+          <a href="mailto:karol.bielski@gmx.de" class="drop-shadow-lg cursor-pointer absolute -bottom-1/2 right-0 px-2 py-1 text-light bg-special rounded-md -rotate-3">
+            karol.bielski@gmx.de
+          </a>
+        </div>
       </section>
     </div>
     <footer
-      class="flex flex-col md:flex-row py-4 gap-x-6 gap-y-2 md:items-center text-sm [&>span]:w-fit [&>a]:w-fit"
+      class="flex flex-col lg:flex-row py-4 gap-x-6 gap-y-2 lg:items-center text-md [&>span]:w-fit [&>a]:w-fit"
     >
       <span
         class="bg-primary dark:bg-light text-light dark:text-dark rounded-md px-2"
@@ -125,7 +130,7 @@
           text: $texts["painterInfo"],
           device: $deviceType,
         }}
-        ><Help class="fill-primary dark:fill-light h-6 w-6"
+        ><Help class="fill-primary dark:fill-light h-8 w-8"
           ><desc>Information about pixel art painter</desc></Help
         ></span
       >
@@ -134,10 +139,10 @@
         aria-label="Toggle Pixel Painter"
         class={`bg-[length:400%] ${
           painterEnabled && "animate-background"
-        } transition-[box-shadow] bg-special active:animate-background md:hover:animate-background fill-light rounded-md p-2 drop-shadow-lg`}
+        } transition-[box-shadow] bg-special-gradient active:animate-background md:hover:animate-background fill-light rounded-md p-2 drop-shadow-lg`}
         on:click={handlePixelPainterOpen}
       >
-        <FormatPaint class="h-icon-sm"
+        <FormatPaint class="h-10"
           ><desc>Turn on pixel art painter</desc></FormatPaint
         >
       </button>

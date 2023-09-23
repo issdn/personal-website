@@ -18,6 +18,7 @@
   };
 
   const handleLanguageChange = async (lang: Translations) => {
+    expanded = false;
     if (!languageFetched) {
       loading = true;
     }
@@ -36,8 +37,8 @@
     on:click={() => (expanded = !expanded)}
     class={`${
       loading && "animate-pulse"
-    } h-12 w-12 flex items-center justify-center hover:bg-accent-secondary dark:hover:bg-accent-secondary-dark rounded-full`}
-    ><Translate class="fill-primary dark:fill-light w-6 h-6"
+    } h-16 w-16 flex items-center justify-center hover:bg-accent-secondary dark:hover:bg-accent-secondary-dark rounded-full`}
+    ><Translate class="fill-primary dark:fill-light w-8 h-8"
       ><desc>Change language dropdown button</desc></Translate
     ></button
   >
