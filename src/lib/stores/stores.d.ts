@@ -1,1 +1,0 @@
-type DeviceType = "mobile" | "desktop" | null;

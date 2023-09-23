@@ -1,3 +1,8 @@
+import { Actions } from ".";
+import type { TCellBoard } from "./cellBoard";
+import type { PainterContext, TCommand } from "./commands";
+import type { ICommandInvoker } from "./commands/commandInvoker";
+
 const baseConfig = {
   gridSize: 10,
   borderWidth: 1,
@@ -235,7 +240,7 @@ class PixelPainter {
         this.invokeBackgroundCommands(e, "start");
         this.removeBackgroundCommandsEvents();
         if (e.touches.length >= 2) {
-          this.setQuickAction("move");
+          this.setQuickAction(Actions.move);
         }
         this.feedParametersToCommand(
           e.touches[0].clientX,
@@ -268,7 +273,7 @@ class PixelPainter {
         this.invokeBackgroundCommands(e, "start");
         this.removeBackgroundCommandsEvents();
         if (e.button === 1 || e.button === 2) {
-          this.setQuickAction("move");
+          this.setQuickAction(Actions.move);
         }
         this.feedParametersToCommand(
           e.clientX,
@@ -397,4 +402,22 @@ class PixelPainter {
   }
 }
 
+type TPixelPainter = InstanceType<typeof PixelPainter>;
+enum TPainterListenersKeys {
+  desktop = "desktop",
+  mobile = "mobile"
+};
+type TPainterListeners = {
+  [key in keyof TPainterListenersKeys]: { [key: string]: (e: Event) => void };
+};
+type TBaseConfig = typeof baseConfig;
+type TBaseConfigParameter = Partial<TBaseConfig>;
+
 export default PixelPainter;
+export type {
+  TPixelPainter,
+  TPainterListeners,
+  TPainterListenersKeys,
+  TBaseConfig,
+  TBaseConfigParameter
+}

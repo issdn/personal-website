@@ -7,7 +7,8 @@ import {
   eraseCommand,
   moveCommand,
   placeholderCommand,
-} from "./painterCommands";
+} from "./commands";
+import { Actions } from ".";
 
 const pixelPainter = new PixelPainter();
 const painterStore = () => {
@@ -29,9 +30,9 @@ const cellBoard = new CellBoard(
 );
 const commandInvoker = new CommandInvoker();
 commandInvoker.commands
-  .set("draw", drawCommand(cellBoard))
-  .set("erase", eraseCommand(cellBoard))
-  .set("move", moveCommand());
+  .set(Actions.draw, drawCommand(cellBoard))
+  .set(Actions.erase, eraseCommand(cellBoard))
+  .set(Actions.move, moveCommand());
 commandInvoker.backgroundCommands.add(placeholderCommand(cellBoard));
 
 painter.update((painter) =>

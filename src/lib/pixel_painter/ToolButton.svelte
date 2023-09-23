@@ -1,15 +1,15 @@
 <script lang="ts">
-  import { translations } from "$lib/language";
   export let active: boolean = false;
   export let label: TranslationKeys;
   export let shortcut: string;
   import tooltip from "../tooltip/tooltipAction";
   import { deviceType } from "$lib/stores";
+  import { texts, type TranslationKeys } from "$lib/translation";
 </script>
 
 <button
   use:tooltip={{
-    text: $translations[label],
+    text: $texts[label],
     textSize: "text-sm",
     device: $deviceType,
     showOnMobile: false,

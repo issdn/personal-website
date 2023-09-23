@@ -9,8 +9,7 @@
 		<span
 			class="font-primary text-dark dark:text-light bg-accent-secondary dark:bg-accent-secondary-dark"
 		>
-			This website sadly uses a lot of javascript to function properly so you'll have to enable it
-			to load 😞
+			This website requires javascript 🥲.
 		</span>
 	</div>
 </noscript>

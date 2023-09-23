@@ -1,3 +1,4 @@
+import type { DeviceType } from "$lib/stores";
 import Tooltip from "./Tooltip.svelte";
 import type { Sides } from "./tooltipPositionFunctions";
 import type { ComponentType } from "svelte";

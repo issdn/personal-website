@@ -6,6 +6,7 @@
   import CheckCircle from "$lib/symbols/CheckCircle.svelte";
   import Error from "$lib/symbols/Error.svelte";
   import { focusOnMount } from "../pixel_painter/actions";
+  import { SnackbarType, type SnackbarStyleObject, type SnackbarSettingObject } from ".";
 
   const widthAnimate = (
     node: HTMLElement,
@@ -22,7 +23,7 @@
   export let id: string;
   export let title: string;
   export let detail: string | null = null;
-  export let type: SnackbarType = "success";
+  export let type: SnackbarType = SnackbarType.success;
   export let duration: number;
   export let timeout: NodeJS.Timeout;
 

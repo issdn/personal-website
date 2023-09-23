@@ -1,20 +1,46 @@
-export type Sides =
-  | "rm"
-  | "lm"
-  | "tm"
-  | "bm"
-  | "tl"
-  | "tr"
-  | "bl"
-  | "br"
-  | "l"
-  | "r";
+enum Sides {
+  RM = "rm",
+  LM = "lm",
+  TM = "tm",
+  BM = "bm",
+  TL = "tl",
+  TR = "tr",
+  BL = "bl",
+  BR = "br",
+  L = "l",
+  R = "r",
+}
+
+enum AS {
+  TSide = 'tSide',
+  BSide = 'bSide',
+  LSide = 'lSide',
+  RSide = 'rSide',
+}
+enum AP {
+  MHPos = 'mhPos',
+  MVPos = 'mvPos',
+  LPos = 'lPos',
+  RPos = 'rPos',
+  TPos = 'tPos',
+  BPos = 'bPos',
+}
+enum AD {
+  TDir = 'tDir',
+  BDir = 'bDir',
+  LDir = 'lDir',
+  RDir = 'rDir',
+}
+type ArrowCreationKey = keyof AS | keyof AP | keyof AD;
+
+export { Sides, AS, AP, AD, type ArrowCreationKey }
+
 
 const getFreePossibleSides = (
   node: HTMLElement,
   window: Window,
   arrowNodeGapSize: number,
-  squashedFreeSide: "r" | "l" | null = null
+  squashedFreeSide: Sides.R | Sides.L | null = null
 ): Sides | null => {
   const { width, height } = node.getBoundingClientRect();
   const {
@@ -34,21 +60,21 @@ const getFreePossibleSides = (
   const startLToR = left + width - parentWidth < window.innerWidth;
   switch (true) {
     case t && m:
-      return "tm";
+      return Sides.TM;
     case b && m:
-      return "bm";
+      return Sides.BM;
     case l:
-      return "l";
+      return Sides.L;
     case r:
-      return "r";
-    case t && (startRToL || squashedFreeSide === "l"):
-      return "tl";
-    case t && (startLToR || squashedFreeSide === "r"):
-      return "tr";
-    case b && (startRToL || squashedFreeSide === "l"):
-      return "bl";
-    case b && (startLToR || squashedFreeSide === "r"):
-      return "br";
+      return Sides.R;
+    case t && (startRToL || squashedFreeSide === Sides.L):
+      return Sides.TL;
+    case t && (startLToR || squashedFreeSide === Sides.R):
+      return Sides.TR;
+    case b && (startRToL || squashedFreeSide === Sides.L):
+      return Sides.BL;
+    case b && (startLToR || squashedFreeSide === Sides.R):
+      return Sides.BR;
     default:
       return null;
   }
@@ -57,14 +83,14 @@ const getFreePossibleSides = (
 export const getWidestPossibleSideAndSetWidth = (
   node: HTMLElement,
   window: Window
-): "l" | "r" => {
+): Sides.L | Sides.R => {
   const { left } = node.getBoundingClientRect();
   const largestPossibleWidthOnRight = window.innerWidth - left;
   const largestPossibleWidthOnLeft = left;
   if (largestPossibleWidthOnLeft > largestPossibleWidthOnRight) {
-    return "l";
+    return Sides.L;
   } else {
-    return "r";
+    return Sides.R;
   }
 };
 
@@ -72,7 +98,7 @@ export const adjustTooltipPosition = (
   node: HTMLElement,
   window: Window,
   arrowNodeGapSize: number,
-  squashedFreeSide: "r" | "l" | null = null
+  squashedFreeSide: Sides.R | Sides.L | null = null
 ) => {
   const tooltipSide = getFreePossibleSides(
     node,
@@ -91,58 +117,56 @@ export const adjustTooltipPosition = (
   let arrowPosition: AP;
   switch (tooltipSide) {
     case "l":
-      arrowSide = "rSide";
+      arrowSide = AS.RSide;
       break;
     case "r":
-      arrowSide = "lSide";
+      arrowSide = AS.LSide;
       break;
     case "tm":
     case "tr":
     case "tl":
-      arrowSide = "bSide";
+      arrowSide = AS.BSide;
       break;
     case "bm":
     case "br":
     case "bl":
-      arrowSide = "tSide";
+      arrowSide = AS.TSide;
       break;
     default:
-      arrowSide = "bSide";
+      arrowSide = AS.BSide;
   }
   switch (arrowSide) {
     case "tSide":
-      arrowDirection = "bDir";
+      arrowDirection = AD.BDir;
       break;
     case "bSide":
-      arrowDirection = "tDir";
+      arrowDirection = AD.TDir;
       break;
     case "lSide":
-      arrowDirection = "rDir";
+      arrowDirection = AD.RDir;
       break;
     case "rSide":
-      arrowDirection = "lDir";
+      arrowDirection = AD.LDir;
       break;
     default:
-      arrowDirection = "bDir";
+      arrowDirection = AD.BDir;
       break;
   }
   switch (tooltipSide) {
     case "tm":
-      arrowPosition = "mhPos";
-      break;
     case "bm":
-      arrowPosition = "mhPos";
+      arrowPosition = AP.MHPos;
       break;
     case "tr":
     case "br":
-      arrowPosition = "lPos";
+      arrowPosition = AP.LPos;
       break;
     case "tl":
     case "bl":
-      arrowPosition = "rPos";
+      arrowPosition = AP.RPos;
       break;
     default: {
-      arrowPosition = "mvPos";
+      arrowPosition = AP.MVPos;
       break;
     }
   }

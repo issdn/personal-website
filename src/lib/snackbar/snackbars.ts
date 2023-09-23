@@ -1,4 +1,5 @@
 import { writable } from 'svelte/store';
+import type { OptionalSnackbarProps, SnackbarProps, SnackbarType } from '.';
 
 const defaultOptionalProps = {
 	type: 'success' as SnackbarType,

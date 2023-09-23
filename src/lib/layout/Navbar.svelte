@@ -3,8 +3,8 @@
   import Github from "$lib/symbols/Github.svelte";
   import Person from "$lib/symbols/Person.svelte";
   import DarkmodeSwitch from "$lib/darkmode/DarkmodeSwitch.svelte";
-  import LanguageDropdown from "$lib/language/LanguageDropdown.svelte";
-  import { translations } from "$lib/language";
+  import LanguageDropdown from "$lib/translation/LanguageDropdown.svelte";
+  import { texts } from "$lib/translation";
   import { tooltip } from "$lib/tooltip";
   import {darkmode} from "$lib/darkmode";
   import { fade } from "svelte/transition";
@@ -18,7 +18,7 @@
     <ul class="flex flex-row gap-x-4 md:gap-x-6 items-center">
       <li
         class="h-8 w-8"
-        use:tooltip={{ text: $translations["githubProfile"], icon: OpenInNew }}
+        use:tooltip={{ text: $texts["githubProfile"], icon: OpenInNew }}
       >
         <a
           aria-label="Link to my github profile."
@@ -29,7 +29,7 @@
       <li
         class="h-8 w-8"
         use:tooltip={{
-          text: $translations["LinkedInProfile"],
+          text: $texts["LinkedInProfile"],
           icon: OpenInNew,
         }}
       >
@@ -40,7 +40,7 @@
         >
       </li>
       <li
-        use:tooltip={{ text: $translations["CVDownload"], icon: OpenInNew }}
+        use:tooltip={{ text: $texts["CVDownload"], icon: OpenInNew }}
         class="h-8 w-8"
       >
         <a

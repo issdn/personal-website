@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, test } from 'vitest';
-import { Cell } from './pixelPainter';
-import { CellBoard } from './pixelPainter';
+import  Cell  from './cell';
+import  CellBoard from './cellBoard';
 
 describe('Test CellBoard', () => {
 	const mockCellArray = [

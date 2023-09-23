@@ -3,17 +3,15 @@
   import FormatPaint from "$lib/symbols/FormatPaint.svelte";
   import Navbar from "$lib/layout/Navbar.svelte";
   import SnackbarContainer from "$lib/snackbar/SnackbarContainer.svelte";
-  import { translations, setLanguages } from "$lib/language"
   import { onMount } from "svelte";
-  import { tooltip } from "$lib/tooltip"
-  import { deviceType } from "$lib/stores"
+  import { tooltip } from "$lib/tooltip";
+  import { DeviceType, deviceType } from "$lib/stores";
   import Help from "$lib/symbols/Help.svelte";
   import Spinner from "$lib/visual_indicators/Spinner.svelte";
-  import { languages } from "../translations"
-  import en from "../translations/en.json";
+  import { texts } from "$lib/translation";
+  import en from "$lib/translation/en.json";
 
-  translations.set(en);
-  setLanguages(languages);
+  texts.set(en);
 
   let PixelPainterToolBox: typeof import("$lib/pixel_painter/PixelPainterToolBox.svelte").default;
   let PixelPainter: typeof import("$lib/pixel_painter/PixelPainter.svelte").default;
@@ -25,17 +23,13 @@
   let painterImported = false;
 
   const importPainter = async () => {
-    painter = (await import("$lib/pixel_painter/pixelPainterStore"))
-      .default;
+    painter = (await import("$lib/pixel_painter/pixelPainterStore")).default;
     PixelPainterToolBox = (
       await import("$lib/pixel_painter/PixelPainterToolBox.svelte")
     ).default;
-    PixelPainter = (
-      (await import("$lib/pixel_painter/PixelPainter.svelte")).default
-    );
-    painterReady = (
-      await import("$lib/pixel_painter")
-    ).painterReady;
+    PixelPainter = (await import("$lib/pixel_painter/PixelPainter.svelte"))
+      .default;
+    painterReady = (await import("$lib/pixel_painter")).painterReady;
   };
 
   const handlePixelPainterOpen = async () => {
@@ -51,7 +45,9 @@
   };
 
   onMount(() => {
-    deviceType.setDeviceType("ontouchstart" in window ? "mobile" : "desktop");
+    deviceType.setDeviceType(
+      "ontouchstart" in window ? DeviceType.Mobile : DeviceType.Desktop
+    );
     pageLoaded = true;
   });
 </script>
@@ -68,9 +64,9 @@
     <div class="flex flex-col h-full gap-y-24">
       <section transition:fade={{ delay: 200 }} class="text-xl">
         <h1 class="text-5xl font-extrabold font-primary">
-          {$translations["title"]}
+          {$texts["title"]}
         </h1>
-        <p>{$translations["mainPar"]}</p>
+        <p>{$texts["mainPar"]}</p>
       </section>
     </div>
     <footer
@@ -78,26 +74,26 @@
     >
       <span
         class="bg-primary dark:bg-light text-light dark:text-dark rounded-md px-2"
-        >{$translations["MadeWithSvelte"]}</span
+        >{$texts["MadeWithSvelte"]}</span
       >
       <a
         target="_blank"
         href="https://commons.wikimedia.org/wiki/File:Octicons-mark-github.svg"
-        >{$translations["GithubIcon"]}</a
+        >{$texts["GithubIcon"]}</a
       >
       <a target="_blank" href="https://icons8.com/icons/set/linkedin"
-        >{$translations["LinkedInIcon"]}</a
+        >{$texts["LinkedInIcon"]}</a
       >
       <a target="_blank" href="https://fonts.google.com/icons"
-        >{$translations["OtherIcons"]}</a
+        >{$texts["OtherIcons"]}</a
       >
     </footer>
   </div>
   {#if painterEnabled}
     {#if !$painter || $painterReady === "false"}
       <span
-        in:fade={{ duration: 1000, delay: 500 }}
-        out:fade={{ duration: 125, delay: 0 }}
+        in:fade={{ duration: 1000 }}
+        out:fade={{ duration: 125 }}
         class="absolute left-1/2 gap-y-4 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
       >
         <Spinner />
@@ -126,7 +122,7 @@
         aria-label="Information about pixel art painter"
         class={`drop-shadow-lg cursor-help w-fit h-fit text-sm`}
         use:tooltip={{
-          text: $translations["painterInfo"],
+          text: $texts["painterInfo"],
           device: $deviceType,
         }}
         ><Help class="fill-primary dark:fill-light h-6 w-6"

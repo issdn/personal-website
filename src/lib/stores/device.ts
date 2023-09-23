@@ -1,8 +1,8 @@
 import { writable } from "svelte/store";
 
 const deviceStore = () => {
-  const { set, subscribe } = writable<DeviceType>(null);
-  const setDeviceType = (deviceType: "mobile" | "desktop") => {
+  const { set, subscribe } = writable<DeviceType>(DeviceType.Desktop);
+  const setDeviceType = (deviceType: DeviceType) => {
     set(deviceType);
   };
   return {
@@ -12,4 +12,8 @@ const deviceStore = () => {
 };
 
 const deviceType = deviceStore();
-export default deviceType;
+enum DeviceType {
+  Mobile = "mobile",
+  Desktop = "desktop"
+}
+export { DeviceType, deviceType }
