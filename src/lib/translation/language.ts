@@ -23,9 +23,5 @@ const textsStore = () => {
 
 const texts = textsStore();
 
-// let fetchedLanguages = [] as Translations;
-// const setFetchedLanguages = (newLanguages: string[]) => {
-//   fetchedLanguages = newLanguages;
-// };
 export default texts;
 export { language };

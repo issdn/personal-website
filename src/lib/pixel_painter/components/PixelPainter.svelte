@@ -2,7 +2,7 @@
   import { onDestroy, onMount } from "svelte";
   import InfoBox from "$lib/visual_indicators/InfoBox.svelte";
   import { deviceType } from "$lib/stores";
-  import painter, { cellBoard, painterReady } from "./pixelPainterStore";
+  import painter, { cellBoard, painterReady } from "../stores/pixelPainterStore";
   import { darkmode } from "$lib/darkmode"
 
   let error: { message: string; detail: string } | null = null;

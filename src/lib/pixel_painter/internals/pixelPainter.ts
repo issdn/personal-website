@@ -1,7 +1,7 @@
 import type { TCellBoard } from "./cellBoard";
-import type { PainterContext, TCommand } from "./commands";
-import type { ICommandInvoker } from "./commands/commandInvoker";
-import { Actions } from "./pixelPainterStore";
+import type { PainterContext, TCommand } from "../commands";
+import type { ICommandInvoker } from "../commands/commandInvoker";
+import { Actions } from "../stores/pixelPainterStore";
 
 const baseConfig = {
   gridSize: 10,
@@ -406,8 +406,8 @@ class PixelPainter {
 type TPixelPainter = InstanceType<typeof PixelPainter>;
 enum TPainterListenersKeys {
   desktop = "desktop",
-  mobile = "mobile"
-};
+  mobile = "mobile",
+}
 type TPainterListeners = {
   [key in keyof TPainterListenersKeys]: { [key: string]: (e: Event) => void };
 };
@@ -420,5 +420,5 @@ export type {
   TPainterListeners,
   TPainterListenersKeys,
   TBaseConfig,
-  TBaseConfigParameter
-}
+  TBaseConfigParameter,
+};

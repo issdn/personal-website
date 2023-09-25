@@ -1,13 +1,13 @@
 import { writable } from "svelte/store";
-import PixelPainter from "./pixelPainter";
-import CellBoard from "./cellBoard";
+import PixelPainter from "../internals/pixelPainter";
+import CellBoard from "../internals/cellBoard";
 import {
   CommandInvoker,
   drawCommand,
   eraseCommand,
   moveCommand,
   placeholderCommand,
-} from "./commands";
+} from "../commands";
 
 export enum Actions {
   draw = "draw",

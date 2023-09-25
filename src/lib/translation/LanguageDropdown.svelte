@@ -3,6 +3,12 @@
   import { texts, language, Translations, type TranslationShape } from ".";
   import Translate from "$lib/symbols/Translate.svelte";
 
+  const imports = {
+    en: () => import("./languages/en"),
+    de: () => import("./languages/de"),
+    pl: () => import("./languages/pl"),
+  }
+
   let expanded = false;
   let loading = false;
   let languageFetched = false;
@@ -11,8 +17,8 @@
   let preloadPromise: Promise<void>;
 
   const handlePreload = async (lang: Translations) => {
-    preloadPromise = import(/* @vite-ignore */`./${lang}.json`).then(async (_translation) => {
-      translation = _translation;
+    preloadPromise = imports[lang]().then((file) => {
+      translation = file.default;
       languageFetched = true;
     });
   };

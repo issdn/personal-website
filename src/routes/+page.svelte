@@ -9,27 +9,27 @@
   import Help from "$lib/symbols/Help.svelte";
   import Spinner from "$lib/visual_indicators/Spinner.svelte";
   import { texts } from "$lib/translation";
-  import en from "$lib/translation/en.json";
+  import en from "$lib/translation/languages/en";
 
   texts.set(en);
 
-  let PixelPainterToolBox: typeof import("$lib/pixel_painter/PixelPainterToolBox.svelte").default;
-  let PixelPainter: typeof import("$lib/pixel_painter/PixelPainter.svelte").default;
-  let painter: typeof import("$lib/pixel_painter/pixelPainterStore").default;
-  let painterReady: typeof import("$lib/pixel_painter/pixelPainterStore").painterReady;
+  let PixelPainterToolBox: typeof import("$lib/pixel_painter/components/PixelPainterToolBox.svelte").default;
+  let PixelPainter: typeof import("$lib/pixel_painter/components/PixelPainter.svelte").default;
+  let painter: typeof import("$lib/pixel_painter/stores/pixelPainterStore").default;
+  let painterReady: typeof import("$lib/pixel_painter/stores/pixelPainterStore").painterReady;
 
   let pageLoaded = false;
   let painterEnabled = false;
   let painterImported = false;
 
   const importPainter = async () => {
-    const painterItems = (await import("$lib/pixel_painter/pixelPainterStore"));
+    const painterItems = (await import("$lib/pixel_painter/stores/pixelPainterStore"));
     painterReady = painterItems.painterReady
     painter = painterItems.default
     PixelPainterToolBox = (
-      await import("$lib/pixel_painter/PixelPainterToolBox.svelte")
+      await import("$lib/pixel_painter/components/PixelPainterToolBox.svelte")
     ).default;
-    PixelPainter = (await import("$lib/pixel_painter/PixelPainter.svelte"))
+    PixelPainter = (await import("$lib/pixel_painter/components/PixelPainter.svelte"))
       .default;
   };
 

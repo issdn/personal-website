@@ -1,4 +1,4 @@
-{
+export default {
   "deleteAll": "Alles löschen",
   "submit": "Einreichen",
   "erase": "Löschen",

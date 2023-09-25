@@ -1,9 +1,9 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { fly, slide } from "svelte/transition";
-  import painter, { Actions } from "./pixelPainterStore";
+  import painter, { Actions } from "../stores/pixelPainterStore";
   import { SnackbarType, snackbars } from "$lib/snackbar";
-  import { COLORS, color } from "./painterToolBoxStores";
+  import { COLORS, color } from "../stores/painterToolBoxStores";
   import RangeInput from "./RangeInput.svelte";
   import DragIndicator from "$lib/symbols/DragIndicator.svelte";
   import Close from "$lib/symbols/Close.svelte";
@@ -11,7 +11,7 @@
   import DragPan from "$lib/symbols/DragPan.svelte";
   import InkEraser from "$lib/symbols/InkEraser.svelte";
   import ToolButton from "./ToolButton.svelte";
-  import { center, focusOnMount } from "./actions";
+  import { center, focusOnMount } from "../actions";
 
   let colorsExpanded = false;
   let dragButton: HTMLSpanElement;

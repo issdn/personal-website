@@ -1,6 +1,6 @@
 import type { GetRelativeCoordinatesFn, PainterContext } from ".";
-import type { TCell } from "../cell";
-import type { TCellBoard } from "../cellBoard";
+import type { TCell } from "../internals/cell";
+import type { TCellBoard } from "../internals/cellBoard";
 
 const drawCommand = (cellBoard: TCellBoard) => {
     let lastCell: TCell | null = null;
