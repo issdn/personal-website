@@ -1,7 +1,7 @@
-import { Actions } from ".";
 import type { TCellBoard } from "./cellBoard";
 import type { PainterContext, TCommand } from "./commands";
 import type { ICommandInvoker } from "./commands/commandInvoker";
+import { Actions } from "./pixelPainterStore";
 
 const baseConfig = {
   gridSize: 10,
@@ -11,8 +11,6 @@ const baseConfig = {
   yCellAmount: 125,
   isTouchScreen: false,
 };
-
-
 
 class PixelPainter {
   canvas!: HTMLCanvasElement;

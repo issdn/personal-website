@@ -8,7 +8,13 @@ import {
   moveCommand,
   placeholderCommand,
 } from "./commands";
-import { Actions } from ".";
+
+export enum Actions {
+  draw = "draw",
+  erase = "erase",
+  move = "move",
+  placeholde = "placeholder"
+}
 
 const pixelPainter = new PixelPainter();
 const painterStore = () => {

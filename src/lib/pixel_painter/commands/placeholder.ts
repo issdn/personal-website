@@ -1,4 +1,6 @@
 import type { GetRelativeCoordinatesFn, PainterContext } from ".";
+import type { TCell } from "../cell";
+import type { TCellBoard } from "../cellBoard";
 
 const placeholderCommand = (cellBoard: TCellBoard) => {
     let previousPlaceholder: TCell[] = [];

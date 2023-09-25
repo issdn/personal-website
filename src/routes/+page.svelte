@@ -15,21 +15,22 @@
 
   let PixelPainterToolBox: typeof import("$lib/pixel_painter/PixelPainterToolBox.svelte").default;
   let PixelPainter: typeof import("$lib/pixel_painter/PixelPainter.svelte").default;
-  let painter: typeof import("$lib/pixel_painter").painter;
-  let painterReady: typeof import("$lib/pixel_painter").painterReady;
+  let painter: typeof import("$lib/pixel_painter/pixelPainterStore").default;
+  let painterReady: typeof import("$lib/pixel_painter/pixelPainterStore").painterReady;
 
   let pageLoaded = false;
   let painterEnabled = false;
   let painterImported = false;
 
   const importPainter = async () => {
-    painter = (await import("$lib/pixel_painter/pixelPainterStore")).default;
+    const painterItems = (await import("$lib/pixel_painter/pixelPainterStore"));
+    painterReady = painterItems.painterReady
+    painter = painterItems.default
     PixelPainterToolBox = (
       await import("$lib/pixel_painter/PixelPainterToolBox.svelte")
     ).default;
     PixelPainter = (await import("$lib/pixel_painter/PixelPainter.svelte"))
       .default;
-    painterReady = (await import("$lib/pixel_painter")).painterReady;
   };
 
   const handlePixelPainterOpen = async () => {

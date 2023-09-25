@@ -1,8 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { fly, slide } from "svelte/transition";
-  import painter from "./pixelPainterStore";
-  import { snackbars } from "$lib/snackbar";
+  import painter, { Actions } from "./pixelPainterStore";
+  import { SnackbarType, snackbars } from "$lib/snackbar";
   import { COLORS, color } from "./painterToolBoxStores";
   import RangeInput from "./RangeInput.svelte";
   import DragIndicator from "$lib/symbols/DragIndicator.svelte";
@@ -18,7 +18,7 @@
   let dragging = false;
   let position = { x: 0, y: -100 };
   let saving = false;
-  let action: Actions = "draw";
+  let action: Actions = Actions.draw;
   let brushSize = 0;
 
   $: {
@@ -60,7 +60,7 @@
     });
     if (res.ok) {
       snackbars.add("Saved!", {
-        type: "success",
+        type: SnackbarType.success,
         detail: "Your art will be visible after verification.",
       });
     } else {
@@ -77,22 +77,22 @@
 
   const handleEraseClick = () => {
     if (action === "erase") {
-      action = "draw";
+      action = Actions.draw;
     } else {
-      action = "erase";
+      action = Actions.erase;
     }
   };
 
   const handleMoveClick = () => {
     if (action === "move") {
-      action = "draw";
+      action = Actions.draw;
     } else {
-      action = "move";
+      action = Actions.move;
     }
   };
 
   const handleColorClick = (newColor: (typeof COLORS)[number][number]) => {
-    action = "draw";
+    action = Actions.draw;
     color.set(newColor);
     colorsExpanded = false;
   };
