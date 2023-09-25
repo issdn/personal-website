@@ -12,6 +12,8 @@ const baseConfig = {
   isTouchScreen: false,
 };
 
+
+
 class PixelPainter {
   canvas!: HTMLCanvasElement;
   cellBoard!: TCellBoard;
@@ -131,7 +133,8 @@ class PixelPainter {
 
   setQuickAction(action: Actions) {
     this.quickAction = true;
-    this.setAction(action);
+    this.lastAction = this.action;
+    this.action = action;
     return this;
   }
 

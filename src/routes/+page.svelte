@@ -66,36 +66,36 @@
         <h1 class="text-5xl font-extrabold font-primary">
           {$texts["title"]}
         </h1>
-        <div class="relative">
-          <p>{$texts["mainPar"]}</p>
-          <a href="mailto:karol.bielski@gmx.de" class="drop-shadow-lg cursor-pointer absolute -bottom-1/2 right-0 px-2 py-1 text-light bg-special rounded-md -rotate-3">
-            karol.bielski@gmx.de
-          </a>
-        </div>
+        <p>{$texts["mainPar"]}</p>
       </section>
     </div>
     <footer
-      class="flex flex-col lg:flex-row py-4 gap-x-6 gap-y-2 lg:items-center text-md [&>span]:w-fit [&>a]:w-fit"
+      class="flex flex-col py-4 gap-y-6 md:gap-2 text-md w-full"
     >
-      <span
-        class="bg-primary dark:bg-light text-light dark:text-dark rounded-md px-2"
-        >{$texts["MadeWithSvelte"]}</span
-      >
-      <a
-        target="_blank"
-        href="https://commons.wikimedia.org/wiki/File:Octicons-mark-github.svg"
-        >{$texts["GithubIcon"]}</a
-      >
-      <a target="_blank" href="https://icons8.com/icons/set/linkedin"
-        >{$texts["LinkedInIcon"]}</a
-      >
-      <a target="_blank" href="https://fonts.google.com/icons"
-        >{$texts["OtherIcons"]}</a
-      >
+      <div class="flex flex-col md:flex-row gap-x-6 gap-y-1">
+        <span
+          class="bg-primary dark:bg-light text-light w-fit dark:text-dark rounded-md px-2"
+          >{$texts["MadeWithSvelte"]}</span
+        >
+        <a href="mailto:karol.bielski@gmx.de" class="w-fit">karol.bielski@gmx.de</a>
+      </div>
+      <div class="flex flex-col md:flex-row gap-x-6 opacity-60 [&>a]:w-fit">
+        <a
+          target="_blank"
+          href="https://commons.wikimedia.org/wiki/File:Octicons-mark-github.svg"
+          >{$texts["GithubIcon"]}</a
+        >
+        <a target="_blank" href="https://icons8.com/icons/set/linkedin"
+          >{$texts["LinkedInIcon"]}</a
+        >
+        <a target="_blank" href="https://fonts.google.com/icons"
+          >{$texts["OtherIcons"]}</a
+        >
+      </div>
     </footer>
   </div>
   {#if painterEnabled}
-    {#if !$painter || $painterReady === "false"}
+    {#if $painterReady === "false"}
       <span
         in:fade={{ duration: 1000 }}
         out:fade={{ duration: 125 }}

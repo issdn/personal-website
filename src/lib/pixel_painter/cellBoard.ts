@@ -1,4 +1,4 @@
-import Cell from "./cell";
+import Cell, { type TCell } from "./cell";
 
 class CellBoard {
   cells: TCellArray = [];
