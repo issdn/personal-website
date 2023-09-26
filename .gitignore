@@ -16,3 +16,4 @@ package-lock.json
 .npmrc
 .eslintrc.cjs
 .eslintignore
+test-results

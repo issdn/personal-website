@@ -83,18 +83,35 @@
 >
   <div
     class={`${
-      painterEnabled && "pointer-events-none opacity-50"
-    } duration-500 relative h-full w-full px-4 md:px-16 lg:px-[20%] xl:px-[30%] py-8 flex flex-col justify-between gap-y-24`}
+      painterEnabled && "[&>section,nav,footer]:pointer-events-none [&>section,nav,footer]:opacity-50"
+    } duration-500 h-full w-full px-4 md:px-16 lg:px-[20%] xl:px-[30%] py-8 flex flex-col justify-between gap-y-24`}
   >
     <Navbar />
-    <div class="flex flex-col h-full gap-y-24">
+    <main class="flex flex-col h-full gap-y-24">
       <section transition:fade={{ delay: 200 }} class="text-xl">
         <h1 class="text-5xl font-extrabold font-primary">
           {$texts["title"]}
         </h1>
         <p>{$texts["mainPar"]}</p>
       </section>
-    </div>
+      {#if painterEnabled}
+      {#await painterData}
+        <span
+          in:fade={{ duration: 250 }}
+          out:fade={{ duration: 125 }}
+          class="absolute left-1/2 gap-y-4 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
+        >
+          <Spinner />
+        </span>
+      {:then settledResults}
+        {#if settledResults[0].status === "fulfilled" 
+          && settledResults[1].status === "fulfilled" 
+          && settledResults[1].value}
+          <svelte:component cells={settledResults[1].value} this={settledResults[0].value} />
+        {/if}
+      {/await}
+    {/if}
+    </main>
     <footer class="flex flex-col py-4 gap-y-6 md:gap-2 text-md w-full">
       <div class="flex flex-col md:flex-row gap-x-6 gap-y-1">
         <span
@@ -120,23 +137,6 @@
       </div>
     </footer>
   </div>
-  {#if painterEnabled}
-    {#await painterData}
-      <span
-        in:fade={{ duration: 250 }}
-        out:fade={{ duration: 125 }}
-        class="absolute left-1/2 gap-y-4 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
-      >
-        <Spinner />
-      </span>
-    {:then settledResults}
-      {#if settledResults[0].status === "fulfilled" 
-        && settledResults[1].status === "fulfilled" 
-        && settledResults[1].value}
-        <svelte:component cells={settledResults[1].value} this={settledResults[0].value} />
-      {/if}
-    {/await}
-  {/if}
   <div
     class="absolute bottom-10 right-4 md:right-16 lg:right-10 flex flex-row gap-x-1 items-end z-10"
   >

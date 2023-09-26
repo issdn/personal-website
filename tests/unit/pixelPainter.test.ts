@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, test } from 'vitest';
-import  Cell  from './internals/cell';
-import  CellBoard from './internals/cellBoard';
+import  Cell  from '../../src/lib/pixel_painter/internals/cell';
+import  CellBoard from '../../src/lib/pixel_painter/internals/cellBoard';
 
 describe('Test CellBoard', () => {
 	const mockCellArray = [

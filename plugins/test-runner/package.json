@@ -1,0 +1,9 @@
+{
+  "name": "test-runner",
+  "version": "1.0.0",
+  "description": "Netlify post-build test runner plugin.",
+  "main": "index.js",
+  "type": "module",
+  "author": "issdn",
+  "license": "ISC"
+}

@@ -3,16 +3,20 @@ import { defineConfig } from 'vitest/config';
 import strip from '@rollup/plugin-strip';
 
 export default defineConfig(({ command }) => {
+	const both = {
+		test: {
+			include: ["tests/unit/**/*.{ts,js}"]
+		}
+	}
 	if (command === 'build') {
 		return {
-			plugins: [sveltekit(), strip({ include: 'src/**/*.{js,ts,svelte}' })]
+			plugins: [sveltekit(), strip({ include: 'src/**/*.{js,ts,svelte}' })],
+			...both
 		};
 	} else {
 		return {
 			plugins: [sveltekit()],
-			test: {
-				include: ['src/**/*.{test,spec}.{js,ts}']
-			}
+			...both
 		};
 	}
 });

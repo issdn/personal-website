@@ -5,16 +5,13 @@
 <svg
 	class={$$props.class}
 	style={$$props.style}
-	aria-label="Linkedin logo"
 	width="32px"
 	height="32px"
 	viewBox="0 0 135.46666 135.46667"
 	version="1.1"
-	id="svg5"
 	xml:space="preserve"
 	xmlns="http://www.w3.org/2000/svg"
 	><sodipodi:namedview
-		id="namedview7"
 		pagecolor="#ffffff"
 		bordercolor="#000000"
 		borderopacity="0.25"
@@ -24,8 +21,7 @@
 		inkscape:deskcolor="#d1d1d1"
 		inkscape:document-units="mm"
 		showgrid="false"
-	/><defs id="defs2" /><g
-		id="layer1"
+	/><defs /><g
 		transform="translate(-23.095786,-134.7503)"
 		><g
 			style={`fill:${color};fill-opacity:1`}
