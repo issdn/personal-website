@@ -1,13 +1,8 @@
 <script lang="ts">
   import { slide } from "svelte/transition";
-  import { texts, language, Translations, type TranslationShape } from ".";
+  import { texts, language, type Translations, type TranslationShape, languageImportObject, languageImportObjectKeys } from ".";
   import Translate from "$lib/symbols/Translate.svelte";
 
-  const imports = {
-    en: () => import("./languages/en"),
-    de: () => import("./languages/de"),
-    pl: () => import("./languages/pl"),
-  }
 
   let expanded = false;
   let loading = false;
@@ -17,7 +12,7 @@
   let preloadPromise: Promise<void>;
 
   const handlePreload = async (lang: Translations) => {
-    preloadPromise = imports[lang]().then((file) => {
+    preloadPromise = languageImportObject[lang]().then((file) => {
       translation = file.default;
       languageFetched = true;
     });
@@ -51,9 +46,9 @@
   {#if expanded}
     <ul
       transition:slide={{ duration: 200 }}
-      class="transition-colors duration-500 gap-y-1 mt-1 text-xl absolute w-full flex flex-col items-center bg-light dark:bg-dark pb-2 rounded-b-xl"
+      class="transition-colors duration-500 gap-y-1 mt-1 text-2xl absolute w-full flex flex-col items-center bg-light dark:bg-dark pb-2 rounded-b-xl"
     >
-      {#each Object.values(Translations) as _language}
+      {#each languageImportObjectKeys as _language}
         <li>
           <button
             on:focus={() => handlePreload(_language)}

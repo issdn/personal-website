@@ -2,8 +2,13 @@
   import { onDestroy, onMount } from "svelte";
   import InfoBox from "$lib/visual_indicators/InfoBox.svelte";
   import { deviceType } from "$lib/stores";
-  import painter, { cellBoard, painterReady } from "../stores/pixelPainterStore";
-  import { darkmode } from "$lib/darkmode"
+  import painter, { Actions } from "../stores/pixelPainterStore";
+  import { darkmode } from "$lib/darkmode";
+  import CellBoard from "../internals/cellBoard";
+  import { CommandInvoker, drawCommand, eraseCommand, moveCommand, placeholderCommand } from "../commands";
+
+  export let cells: string;
+  export let painterInitialized: boolean = false;
 
   let error: { message: string; detail: string } | null = null;
   let canvas: HTMLCanvasElement;
@@ -25,54 +30,39 @@
     );
   }
 
-  onMount(() => {
-    fetch("api/painter")
-      .then(async (res) => {
-        const data = await res.json();
-        if (!res.ok) {
-          setErrorMessage(
-            "Failed to fetch data.",
-            "This happened because of unknown issue. Please try again later."
-          );
-          painterReady.set("error");
-        } else {
-          painterReady.set("fetched");
-          cellBoard.fromRawColorsArray(data.cells);
-          painter.update((painter) =>
-            painter.setConfig({ isTouchScreen: $deviceType === "mobile" })
-          );
-          $painter
-            .init(canvas)
-            .then(async (painterInstance) => {
-              try {
-                await painterInstance.draw();
-                painterReady.set("drawn");
-              } catch {
-                setErrorMessage(
-                  "The database isn't responding.",
-                  "Please try again later."
-                );
-              }
-            })
-            .catch(() => {
-              setErrorMessage(
-                "Couldn't get canvas context.",
-                "Your browser might not support canvas."
-              );
-            });
-        }
+  onMount(async () => {
+    const cellBoard = new CellBoard(
+      $painter.config.gridSize,
+      $painter.config.borderWidth
+    );
+    await cellBoard.fromRawColorsArray(cells)
+    const commandInvoker = new CommandInvoker();
+    commandInvoker.commands
+      .set(Actions.draw, drawCommand(cellBoard))
+      .set(Actions.erase, eraseCommand(cellBoard))
+      .set(Actions.move, moveCommand());
+    commandInvoker.backgroundCommands.add(placeholderCommand(cellBoard));
+    painter.update((painter) =>
+      painter.setCellBoard(cellBoard)
+      .setCommandsInvoker(commandInvoker)
+      .setConfig({ isTouchScreen: $deviceType === "mobile" })
+    );
+    painterInitialized = true;
+    $painter
+      .init(canvas)
+      .then(async (painterInstance) => {
+        await painterInstance.draw();
       })
-      .catch(() =>
+      .catch(() => {
         setErrorMessage(
-          "Failed to fetch data.",
-          "Check your internet connection."
-        )
-      );
+          "Couldn't get canvas context.",
+          "Your browser might not support canvas."
+        );
+      });
   });
 
   onDestroy(() => {
     $painter.destroy();
-    painterReady.set("false");
   });
 </script>
 
@@ -93,9 +83,7 @@
 {/if}
 <div class="absolute overflow-hidden top-0 left-0 h-full w-full z-0 box-border">
   <canvas
-    style={$painterReady === "fetched" || $painterReady === "drawn"
-      ? "opacity:1;"
-      : "opacity: 0;"}
+    style={painterInitialized ? "opacity:1;" : "opacity: 0;"}
     class={`touch-none absolute transition-[opacity] duration-500`}
     bind:this={canvas}
   />

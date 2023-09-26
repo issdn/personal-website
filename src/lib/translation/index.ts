@@ -1,10 +1,14 @@
-enum Translations {
-    EN = "en",
-    DE = "de",
-    PL = "pl"
-}
+export const languageImportObject = {
+    en: () => import("./languages/en"),
+    de: () => import("./languages/de"),
+    pl: () => import("./languages/pl"),
+} as const
 
-type TranslationShape = typeof import("./en.json");
+
+type Translations = keyof typeof languageImportObject
+export const languageImportObjectKeys = Object.keys(languageImportObject) as Translations[]
+
+type TranslationShape = typeof import("./languages/en").default;
 type TranslationKeys = keyof TranslationShape
-export { Translations, type TranslationShape, type TranslationKeys };
+export type { Translations, TranslationShape, TranslationKeys };
 export { default as texts, language } from "./language"

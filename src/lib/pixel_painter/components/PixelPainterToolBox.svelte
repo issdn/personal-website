@@ -173,10 +173,6 @@
       handleClearAllClick();
     }
   };
-  let visible = false;
-  onMount(() => {
-    visible = true;
-  });
 </script>
 
 <svelte:window
@@ -187,10 +183,10 @@
   on:keydown={handleKeyboardShortcuts}
 />
 
-{#if visible}
+
   <div
     use:center={(pos) => (position = pos)}
-    transition:fly={{ y: -100 }}
+    in:fly={{ y: -100 }}
     style={`left: ${position.x}px; top: ${position.y}px;`}
     class="touch-none z-10 absolute bg-dark rounded-lg dark:bg-light drop-shadow-lg p-2
 	before:absolute before:top-full before:right-2 before:content-['BETA'] before:font-primary before:bg-red-500 before:text-xs before:px-1 before:rounded-b-sm"
@@ -302,4 +298,3 @@
       </div>
     {/if}
   </div>
-{/if}
