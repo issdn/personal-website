@@ -7,26 +7,19 @@ import type {
 import type { ICommandInvoker } from "../commands/commandInvoker";
 import { Actions } from "../stores/pixelPainterStore";
 
-const baseConfig = {
-  gridSize: 10,
-  borderWidth: 1,
-  accentColor: "2b2b2b",
-  xCellAmount: 250,
-  yCellAmount: 125,
-  isTouchScreen: false,
-};
-
 class PixelPainter {
   canvas!: HTMLCanvasElement;
   cellBoard!: TCellBoard;
   action!: Actions;
-  config: TBaseConfig;
+  ctx!: CanvasRenderingContext2D;
+  painterContext!: PaintFunctionContext;
+  private xCellAmount: number;
+  private yCellAmount: number;
+  private isTouchScreen: boolean
   private canvasSize = { width: 0, height: 0 };
-  private ctx!: CanvasRenderingContext2D;
   private commandInvoker!: ICommandInvoker;
   private lastAction!: Actions;
   private quickAction = false;
-  private painterContext!: PaintFunctionContext;
 
   private commandsByListener: {
     mobile: Map<
@@ -39,13 +32,17 @@ class PixelPainter {
     >;
   } = { mobile: new Map(), desktop: new Map() };
 
-  private backgroundCommandsByListener: Set<Record<keyof ReturnType<TCommand>, (e: MouseEvent) => void>> = new Set()
+  private backgroundCommandsByListener: Set<
+    Record<keyof ReturnType<TCommand>, (e: MouseEvent) => void>
+  > = new Set();
 
-  constructor(config: TBaseConfigParameter = {}) {
-    this.config = { ...baseConfig, ...config };
+  constructor(isTouchScreen: boolean, xCellAmount: number, yCellAmount: number) {
+    this.isTouchScreen = isTouchScreen;
+    this.xCellAmount = xCellAmount;
+    this.yCellAmount = yCellAmount
   }
 
-  async init(
+  init(
     canvas: HTMLCanvasElement,
     cellBoard: TCellBoard,
     commandInvoker: CommandInvoker
@@ -59,39 +56,12 @@ class PixelPainter {
     this.setCanvasPositionToMiddle = this.setCanvasPositionToMiddle.bind(this);
     window.addEventListener("resize", this.setCanvasPositionToMiddle);
     this.setCommandsByListener();
-    if(!this.config.isTouchScreen) {
+    if (!this.isTouchScreen) {
       this.createBackgroundCommandsEventsObject();
     }
     this.attachEventListeners();
     this.attachBackgroundEvents();
-    return this;
-  }
-
-  async draw() {
-    this.canvasSize = this.getSideLengthInPX();
-    /*
-     * If the canvas is smaller than the window, we need to resize it.
-     * Number of cells has to be static so their size has to be larger.
-     */
-    if (
-      this.canvasSize.width < window.innerWidth ||
-      this.canvasSize.height < window.innerHeight
-    ) {
-      const gridSize = this.getCellSizeFromSidesLength(
-        window.innerWidth,
-        window.innerHeight
-      );
-      this.config = {
-        ...this.config,
-        borderWidth: Math.floor((gridSize * 10) / 100),
-        gridSize: gridSize,
-      };
-      this.canvasSize = this.getSideLengthInPX();
-    }
     this.setCanvasSize();
-    this.setCanvasPositionToMiddle();
-    this.drawGrid();
-    this.drawCells();
   }
 
   reset() {
@@ -102,10 +72,16 @@ class PixelPainter {
     });
   }
 
+  setCanvasPositionToMiddle() {
+    this.canvas.style.left =
+      -this.canvas.width / 2 + window.innerWidth / 2 + "px";
+    this.canvas.style.top =
+      -this.canvas.height / 2 + window.innerHeight / 2 + "px";
+  }
+
   destroy() {
-    window.removeEventListener("resize", this.setCanvasPositionToMiddle);
     if (!this.canvas) return;
-    if (this.config.isTouchScreen) {
+    if (this.isTouchScreen) {
       this.commandsByListener.mobile.forEach((value, key) => {
         this.canvas.removeEventListener(key, value);
       });
@@ -119,11 +95,6 @@ class PixelPainter {
 
   setPainterContext(cellContext: Partial<PaintFunctionContext>) {
     this.painterContext = { ...this.painterContext, ...cellContext };
-    return this;
-  }
-
-  setConfig(config: TBaseConfigParameter) {
-    this.config = { ...this.config, ...config };
     return this;
   }
 
@@ -147,49 +118,38 @@ class PixelPainter {
     this.action = this.lastAction;
   }
 
-  private setCanvasPositionToMiddle() {
-    this.canvas.style.left =
-      -this.canvas.width / 2 + window.innerWidth / 2 + "px";
-    this.canvas.style.top =
-      -this.canvas.height / 2 + window.innerHeight / 2 + "px";
-  }
-
   private getSideLengthInPX() {
     return {
-      width:
-        this.config.xCellAmount *
-        (this.config.gridSize + this.config.borderWidth),
-      height:
-        this.config.yCellAmount *
-        (this.config.gridSize + this.config.borderWidth),
+      width: this.xCellAmount * this.cellBoard.cellBorderSize,
+      height: this.yCellAmount * this.cellBoard.cellBorderSize,
     };
   }
 
-  private drawGrid() {
-    this.ctx.fillStyle = this.config.accentColor;
+  drawGrid(color: string) {
+    this.ctx.fillStyle = color;
     let x = 0;
     let y = 0;
-    for (let xCells = 0; xCells < this.config.xCellAmount; xCells++) {
+    for (let xCells = 0; xCells < this.xCellAmount; xCells++) {
       this.ctx.fillRect(
-        x - this.config.borderWidth,
+        x - this.cellBoard.borderWidth,
         0,
-        this.config.borderWidth,
+        this.cellBoard.borderWidth,
         this.canvasSize.height
       );
-      x += this.config.gridSize + this.config.borderWidth;
+      x += this.cellBoard.cellBorderSize;
     }
-    for (let yCells = 0; yCells < this.config.yCellAmount; yCells++) {
+    for (let yCells = 0; yCells < this.yCellAmount; yCells++) {
       this.ctx.fillRect(
         0,
-        y - this.config.borderWidth,
+        y - this.cellBoard.borderWidth,
         this.canvasSize.width,
-        this.config.borderWidth
+        this.cellBoard.borderWidth
       );
-      y += this.config.gridSize + this.config.borderWidth;
+      y += this.cellBoard.cellBorderSize;
     }
   }
 
-  private drawCells() {
+  drawCells() {
     this.cellBoard.cells.forEach((row) => {
       row.forEach((cell) => {
         if (cell.originColor) {
@@ -202,12 +162,29 @@ class PixelPainter {
 
   private getCellSizeFromSidesLength(xLength: number, yLength: number) {
     return Math.max(
-      xLength / this.config.xCellAmount,
-      yLength / this.config.yCellAmount
+      xLength / this.xCellAmount,
+      yLength / this.yCellAmount
     );
   }
 
   private setCanvasSize() {
+    this.canvasSize = this.getSideLengthInPX();
+    /*
+     * If the canvas is smaller than the window, we need to resize it.
+     * Number of cells has to be static so their size has to be larger.
+     */
+    if (
+      this.canvasSize.width < window.innerWidth ||
+      this.canvasSize.height < window.innerHeight
+    ) {
+      const cellSize = this.getCellSizeFromSidesLength(
+        window.innerWidth,
+        window.innerHeight
+      );
+      this.cellBoard.borderWidth = Math.floor((cellSize * 10) / 100);
+      this.cellBoard.cellSize = cellSize 
+      this.canvasSize = this.getSideLengthInPX();
+    }
     this.canvas.style.width = this.canvasSize.width + "px";
     this.canvas.style.height = this.canvasSize.height + "px";
     this.canvas.width = this.canvas.clientWidth;
@@ -311,7 +288,7 @@ class PixelPainter {
 
   private attachEventListeners() {
     if (!this.canvas) return;
-    if (this.config.isTouchScreen) {
+    if (this.isTouchScreen) {
       this.commandsByListener.mobile.forEach((value, key) => {
         this.canvas.addEventListener(key, value);
       });
@@ -327,25 +304,25 @@ class PixelPainter {
     this.commandInvoker.backgroundCommands.forEach((command) => {
       this.backgroundCommandsByListener.add(
         // @ts-ignore
-        ["execute", "start", "end"].reduce((acc,k) => ({
-          ...acc,
-          [k]: (e: MouseEvent) =>
-            // @ts-ignore
-            this.feedParametersToCommand(e.clientX, e.clientY, command[k]),
-        }), {})
+        ["execute", "start", "end"].reduce(
+          (acc, k) => ({
+            ...acc,
+            [k]: (e: MouseEvent) =>
+              // @ts-ignore
+              this.feedParametersToCommand(e.clientX, e.clientY, command[k]),
+          }),
+          {}
+        )
       );
     });
   }
 
-  private invokeBackgroundCommands(
-    e: MouseEvent,
-    type: "start" | "end"
-  ) {
+  private invokeBackgroundCommands(e: MouseEvent, type: "start" | "end") {
     this.backgroundCommandsByListener.forEach((commandFunctions) => {
       commandFunctions[type](e as never);
     });
   }
-  
+
   private attachBackgroundEvents() {
     this.backgroundCommandsByListener.forEach((commandFunctions) => {
       this.canvas.addEventListener("mousemove", commandFunctions.execute);
@@ -367,14 +344,10 @@ enum TPainterListenersKeys {
 type TPainterListeners = {
   [key in keyof TPainterListenersKeys]: { [key: string]: (e: Event) => void };
 };
-type TBaseConfig = typeof baseConfig;
-type TBaseConfigParameter = Partial<TBaseConfig>;
 
 export default PixelPainter;
 export type {
   TPixelPainter,
   TPainterListeners,
   TPainterListenersKeys,
-  TBaseConfig,
-  TBaseConfigParameter,
 };

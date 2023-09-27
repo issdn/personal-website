@@ -1,4 +1,3 @@
-import type { DeviceType } from "$lib/stores";
 import Tooltip from "./Tooltip.svelte";
 import type { Sides } from "./tooltipPositionFunctions";
 import type { ComponentType } from "svelte";
@@ -6,7 +5,7 @@ import type { ComponentType } from "svelte";
 const defaultParams = {
   side: "b" as Sides,
   icon: null,
-  device: "desktop",
+  isTouchScreen: false,
   showOnMobile: true,
 };
 
@@ -14,7 +13,7 @@ type TooltipParams = {
   text: string;
   side?: Sides;
   icon?: ComponentType | null;
-  device?: DeviceType;
+  isTouchScreen?: boolean;
   textSize?: string;
   showOnMobile?: boolean;
 };
@@ -64,7 +63,7 @@ const tooltip = (node: HTMLElement | SVGSVGElement, params: TooltipParams) => {
     }
   };
 
-  if (_params.device === "mobile") {
+  if (_params.isTouchScreen) {
     node.addEventListener("click", createTooltipMobile);
     window.addEventListener("click", destroyTooltip);
     return {

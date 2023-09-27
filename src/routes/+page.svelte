@@ -5,12 +5,12 @@
   import SnackbarContainer from "$lib/snackbar/SnackbarContainer.svelte";
   import { onMount } from "svelte";
   import { tooltip } from "$lib/tooltip";
-  import { DeviceType, deviceType } from "$lib/stores";
   import Help from "$lib/symbols/Help.svelte";
   import Spinner from "$lib/visual_indicators/Spinner.svelte";
   import { texts } from "$lib/translation";
   import en from "$lib/translation/languages/en";
   import { SnackbarType, snackbars } from "$lib/snackbar";
+  import { isTouchScreen } from "$lib/stores";
 
   texts.set(en);
 
@@ -71,9 +71,7 @@
   };
 
   onMount(() => {
-    deviceType.setDeviceType(
-      "ontouchstart" in window ? DeviceType.Mobile : DeviceType.Desktop
-    );
+    isTouchScreen.set("ontouchstart" in window ? true : false)
     pageLoaded = true;
   });
 </script>
@@ -152,7 +150,7 @@
         class={`drop-shadow-lg cursor-help w-fit h-fit text-sm`}
         use:tooltip={{
           text: $texts["painterInfo"],
-          device: $deviceType,
+          isTouchScreen: $isTouchScreen,
         }}
         ><Help class="fill-primary dark:fill-light h-8 w-8"
           ><desc>Information about pixel art painter</desc></Help

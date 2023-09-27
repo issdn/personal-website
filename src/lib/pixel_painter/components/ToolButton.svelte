@@ -2,7 +2,7 @@
   export let active: boolean = false;
   export let label: TranslationKeys;
   export let shortcut: string;
-  import { deviceType } from "$lib/stores";
+  import { isTouchScreen } from "$lib/stores";
   import { tooltip } from "$lib/tooltip";
   import { texts, type TranslationKeys } from "$lib/translation";
 </script>
@@ -11,7 +11,7 @@
   use:tooltip={{
     text: $texts[label],
     textSize: "text-sm",
-    device: $deviceType,
+    isTouchScreen: $isTouchScreen,
     showOnMobile: false,
   }}
   {...$$restProps}

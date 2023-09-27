@@ -49,7 +49,7 @@
   };
 
   const handleSave = async () => {
-    const cells = await $painter.cellBoard.toRawColorsString();
+    const cells = $painter.cellBoard.toRawColorsString();
     saving = true;
     const res = await fetch("api/painter", {
       method: "POST",

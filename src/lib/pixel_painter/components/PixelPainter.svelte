@@ -1,11 +1,16 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
   import InfoBox from "$lib/visual_indicators/InfoBox.svelte";
-  import { deviceType } from "$lib/stores";
   import painter, { Actions } from "../stores/pixelPainterStore";
   import { darkmode } from "$lib/darkmode";
   import CellBoard from "../internals/cellBoard";
-  import { CommandInvoker, drawCommand, eraseCommand, moveCommand, placeholderCommand } from "../commands";
+  import {
+    CommandInvoker,
+    drawCommand,
+    eraseCommand,
+    moveCommand,
+    placeholderCommand,
+  } from "../commands";
 
   export let cells: string;
   export let painterInitialized: boolean = false;
@@ -23,7 +28,6 @@
   $: {
     painter.update((painter) =>
       painter
-        .setConfig({ accentColor: $darkmode ? "#232323" : "#D9D9D9" })
         .setPainterContext({
           accentColor: $darkmode ? "#D9D9D9" : "#232323",
         })
@@ -31,30 +35,25 @@
   }
 
   onMount(async () => {
-    const cellBoard = new CellBoard(
-      $painter.config.gridSize,
-      $painter.config.borderWidth
-    );
-    await cellBoard.fromRawColorsArray(cells)
+    const cellBoard = CellBoard.fromRawColorsArray(cells, 10, 1);
     const commandInvoker = new CommandInvoker();
     commandInvoker.commands
       .set(Actions.draw, drawCommand())
       .set(Actions.erase, eraseCommand())
       .set(Actions.move, moveCommand());
     commandInvoker.backgroundCommands.add(placeholderCommand());
-    painter.update((painter) => painter.setConfig({ isTouchScreen: $deviceType === "mobile" }));
-    painterInitialized = true;
-    $painter
-      .init(canvas, cellBoard, commandInvoker)
-      .then(async (painterInstance) => {
-        await painterInstance.draw();
-      })
-      .catch(() => {
-        setErrorMessage(
-          "Couldn't get canvas context.",
-          "Your browser might not support canvas."
-        );
-      });
+    try {
+      $painter.init(canvas, cellBoard, commandInvoker);
+      $painter.drawGrid($darkmode ? "#232323" : "#D9D9D9");
+      $painter.drawCells()
+      painterInitialized = true;
+      $painter.setCanvasPositionToMiddle();
+    } catch {
+      setErrorMessage(
+        "Couldn't get canvas context.",
+        "Your browser might not support canvas."
+      );
+    }
   });
 
   onDestroy(() => {
@@ -79,6 +78,7 @@
 {/if}
 <div class="absolute overflow-hidden top-0 left-0 h-full w-full z-0 box-border">
   <canvas
+    on:resize={$painter.setCanvasPositionToMiddle}
     style={painterInitialized ? "opacity:1;" : "opacity: 0;"}
     class={`touch-none absolute transition-[opacity] duration-500`}
     bind:this={canvas}

@@ -3,14 +3,32 @@ import Cell, { type TCell } from "./cell";
 class CellBoard {
   cells: TCellArray = [];
 
-  gridSize: number;
-  borderWidth: number;
+  _cellSize: number;
+  _borderWidth: number;
   cellBorderSize: number;
 
-  constructor(gridSize: number, borderWidth: number) {
-    this.gridSize = gridSize;
-    this.borderWidth = borderWidth;
-    this.cellBorderSize = gridSize + borderWidth;
+  constructor(cellSize: number, borderWidth: number, cellBorderSize: number) {
+    this._cellSize = cellSize;
+    this._borderWidth = borderWidth;
+    this.cellBorderSize = cellBorderSize;
+  }
+
+  get cellSize() {
+    return this._cellSize
+  }
+
+  get borderWidth() {
+    return this._borderWidth
+  }
+
+  set cellSize(value: number) {
+    this._cellSize = value;
+    this.cellBorderSize = this._cellSize + this._borderWidth;
+  }
+  
+  set borderWidth(value: number) {
+    this.borderWidth = value;
+    this.cellBorderSize = this._cellSize + this._borderWidth;
   }
 
   getCellBoardCell(x: number, y: number): TCell {
@@ -58,10 +76,9 @@ class CellBoard {
    * output -> 3,1,#1111112,#2222221,1
    * Where first number is the side length, second the number of zeros in row and third is 6-number hex color where 7th number is the number of same colors in row.
    * @date 8/26/2023 - 12:57:32 PM
-   * @async
    * @returns {string}
    */
-  async toRawColorsString() {
+  toRawColorsString() {
     const nrOfRows = this.cells.length;
     const cells = this.cells.flat();
     let rawStr = "";
@@ -95,11 +112,15 @@ class CellBoard {
    * E.g. "3,3,#1111113" -> [Cell[0,0,0], Cell[0,0,0], Cell[#1111113,#1111113,#1111113]]
    * @date 8/26/2023 - 12:14:34 PM
    *
-   * @async
    * @param {string} pixelsString
    * @returns {void}
    */
-  async fromRawColorsArray(pixelsString: string) {
+  static fromRawColorsArray(
+    pixelsString: string,
+    cellSize: number,
+    borderWidth: number
+  ) {
+    const cellBorderSize = cellSize + borderWidth;
     const cells: TCellArray = [];
     const pixelsStringSplitted = pixelsString.split(",");
     const size = parseInt(pixelsStringSplitted[0]);
@@ -115,9 +136,9 @@ class CellBoard {
         for (let i = 0; i < nrOfCells; i++) {
           flat.push(
             new Cell(
-              row * this.cellBorderSize,
-              col * this.cellBorderSize,
-              this.gridSize,
+              row * cellBorderSize,
+              col * cellBorderSize,
+              cellSize,
               color
             )
           );
@@ -131,11 +152,7 @@ class CellBoard {
         const nrOfCells = parseInt(item);
         for (let i = 0; i < nrOfCells; i++) {
           flat.push(
-            new Cell(
-              row * this.cellBorderSize,
-              col * this.cellBorderSize,
-              this.gridSize
-            )
+            new Cell(row * cellBorderSize, col * cellBorderSize, cellSize)
           );
           col += 1;
           if (col >= size) {
@@ -149,13 +166,13 @@ class CellBoard {
     for (let i = 0; i < size; i++) {
       cells.push(flat.slice(i * size, i * size + size));
     }
-    this.cells = cells;
+    return new CellBoard(cellSize, borderWidth, cellBorderSize);
   }
 }
 
 type TCellArray = TCell[][];
-type TCellBoard = InstanceType<typeof import("./cellBoard").default>;
+type TCellBoard = InstanceType<typeof CellBoard>;
 type TRawCellBoard = (string | 0)[][];
 export default CellBoard;
 
-export type { TCellArray, TCellBoard, TRawCellBoard }
+export type { TCellArray, TCellBoard, TRawCellBoard };
