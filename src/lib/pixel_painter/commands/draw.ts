@@ -1,61 +1,68 @@
-import type { GetRelativeCoordinatesFn, PainterContext } from ".";
+import type {
+  CommandFunction,
+  PaintFunctionContext,
+} from ".";
 import type { TCell } from "../internals/cell";
 import type { TCellBoard } from "../internals/cellBoard";
 
-const drawCommand = (cellBoard: TCellBoard) => {
-    let lastCell: TCell | null = null;
-    let isDrawing = false;
-  
-    const paintMultipleCells = (
-      ctx: CanvasRenderingContext2D,
-      painterContext: PainterContext,
-      x: number,
-      y: number
-    )  => {
-      const cells = cellBoard.getCellBoardCells(x, y, painterContext.size);
-      for (const cell of cells) {
-        cell.owned = true;
-        cell.draw(ctx, painterContext.color);
-      }
-      lastCell = cells[Math.floor(cells.length / 2)];
+const drawCommand = () => {
+  let lastCell: TCell | null = null;
+  let isDrawing = false;
+
+  const paintMultipleCells = (
+    cells: ReturnType<TCellBoard["getCellBoardCells"]>,
+    ctx: PaintFunctionContext["ctx"],
+    color: PaintFunctionContext["color"]
+  ) => {
+    for (const cell of cells) {
+      cell.owned = true;
+      cell.draw(ctx, color);
     }
-  
-    const start = (getRelativeCoordinates: GetRelativeCoordinatesFn) => {
-      isDrawing = true;
-      return (ctx: CanvasRenderingContext2D, painterContext: PainterContext) => {
-        paintMultipleCells(ctx, painterContext, ...getRelativeCoordinates());
-      };
-    }
-  
-    const execute = (getRelativeCoordinates: GetRelativeCoordinatesFn) => {
-      const initialCell = cellBoard.getCellBoardCell(...getRelativeCoordinates());
-      if (!initialCell) return;
-      if (!isDrawing) return;
-      return (ctx: CanvasRenderingContext2D, painterContext: PainterContext) => {
-        if (!lastCell) return;
-        cellBoard.interpolate(
-          lastCell.x,
-          lastCell.y,
-          initialCell.x,
-          initialCell.y,
-          (x: number, y: number) => {
-            paintMultipleCells(ctx, painterContext, x, y);
-          }
-        );
-        lastCell = initialCell;
-      };
-    }
-  
-    const end = () => {
-      isDrawing = false;
-      lastCell = null;
-    }
-  
-    return {
-      start,
-      execute,
-      end,
+    lastCell = cells[Math.floor(cells.length / 2)];
+  };
+
+  const start: CommandFunction = (
+    [x, y, absX, absY],
+    { getCellBoardCells }
+  ) => {
+    isDrawing = true;
+    return ({ ctx, color, size }) => {
+      paintMultipleCells(getCellBoardCells(x, y, size), ctx, color);
     };
   };
+
+  const execute: CommandFunction = (
+    [x, y, absX, absY],
+    { getCellBoardCell, interpolate, getCellBoardCells }
+  ) => {
+    const initialCell = getCellBoardCell(x, y);
+    if (!initialCell) return;
+    if (!isDrawing) return;
+    return ({ ctx, size, color }) => {
+      if (!lastCell) return;
+      interpolate(
+        lastCell.x,
+        lastCell.y,
+        initialCell.x,
+        initialCell.y,
+        (x: number, y: number) => {
+          paintMultipleCells(getCellBoardCells(x, y, size), ctx, color);
+        }
+      );
+      lastCell = initialCell;
+    };
+  };
+
+  const end: CommandFunction = () => {
+    isDrawing = false;
+    lastCell = null;
+  };
+
+  return {
+    start,
+    execute,
+    end,
+  };
+};
 
 export default drawCommand;

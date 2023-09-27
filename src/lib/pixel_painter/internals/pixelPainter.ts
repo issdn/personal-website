@@ -1,7 +1,12 @@
 import type { TCellBoard } from "./cellBoard";
-import type { PainterContext, TCommand } from "../commands";
+import type {
+  CommandInvoker,
+  PaintFunctionContext,
+  TCommand,
+} from "../commands";
 import type { ICommandInvoker } from "../commands/commandInvoker";
 import { Actions } from "../stores/pixelPainterStore";
+import type CellBoard from "./cellBoard";
 
 const baseConfig = {
   gridSize: 10,
@@ -22,7 +27,7 @@ class PixelPainter {
   private commandInvoker!: ICommandInvoker;
   private lastAction!: Actions;
   private quickAction = false;
-  private painterContext!: PainterContext;
+  private painterContext!: PaintFunctionContext;
 
   private commandsByListener: {
     mobile: Map<
@@ -35,17 +40,20 @@ class PixelPainter {
     >;
   } = { mobile: new Map(), desktop: new Map() };
 
-  private backgroundCommandsByListener: {
-    mobile: Set<Record<keyof ReturnType<TCommand>, (e: TouchEvent) => void>>;
-    desktop: Set<Record<keyof ReturnType<TCommand>, (e: MouseEvent) => void>>;
-  } = { mobile: new Set(), desktop: new Set() };
+  private backgroundCommandsByListener: Set<Record<keyof ReturnType<TCommand>, (e: MouseEvent) => void>> = new Set()
 
   constructor(config: TBaseConfigParameter = {}) {
     this.config = { ...baseConfig, ...config };
   }
 
-  async init(canvas: HTMLCanvasElement) {
+  async init(
+    canvas: HTMLCanvasElement,
+    cellBoard: TCellBoard,
+    commandInvoker: CommandInvoker
+  ) {
     this.canvas = canvas;
+    this.cellBoard = cellBoard;
+    this.commandInvoker = commandInvoker;
     const ctx = this.canvas.getContext("2d");
     if (!ctx) throw new Error("Context is null");
     this.ctx = ctx;
@@ -53,13 +61,12 @@ class PixelPainter {
     window.addEventListener("resize", this.setCanvasPositionToMiddle);
     this.setCommandsByListener();
     this.createBackgroundCommandsEventsObject();
-    this.addEventListenersToCanvas();
-    this.addBackgroundCommandsEvents();
+    this.attachEventListeners();
+    this.attachBackgroundEvents();
     return this;
   }
 
   async draw() {
-    if (!this.cellBoard) throw new Error("Cell board is not set");
     this.canvasSize = this.getSideLengthInPX();
     /*
      * If the canvas is smaller than the window, we need to resize it.
@@ -109,23 +116,13 @@ class PixelPainter {
     }
   }
 
-  setCellBoard(cellBoard: TCellBoard) {
-    this.cellBoard = cellBoard;
-    return this;
-  }
-
-  setPainterContext(cellContext: Partial<PainterContext>) {
+  setPainterContext(cellContext: Partial<PaintFunctionContext>) {
     this.painterContext = { ...this.painterContext, ...cellContext };
     return this;
   }
 
   setConfig(config: TBaseConfigParameter) {
     this.config = { ...this.config, ...config };
-    return this;
-  }
-
-  setCommandsInvoker(commandInvoker: ICommandInvoker) {
-    this.commandInvoker = commandInvoker;
     return this;
   }
 
@@ -228,18 +225,16 @@ class PixelPainter {
     y: number,
     fn: ReturnType<TCommand>[keyof ReturnType<TCommand>]
   ) {
-    fn(() => this.getRelativeCoordinates(x, y), x, y)?.(
-      this.ctx,
-      this.painterContext,
-      this.canvas
-    );
+    fn([...this.getRelativeCoordinates(x, y), x, y], {
+      getCellBoardCell: this.cellBoard.getCellBoardCell.bind(this.cellBoard),
+      getCellBoardCells: this.cellBoard.getCellBoardCells.bind(this.cellBoard),
+      interpolate: this.cellBoard.interpolate.bind(this.cellBoard),
+    })?.({ ...this.painterContext, ctx: this.ctx, canvas: this.canvas });
   }
 
   private setCommandsByListener() {
     this.commandsByListener.mobile
       .set("touchstart", (e: TouchEvent) => {
-        this.invokeBackgroundCommands(e, "start");
-        this.removeBackgroundCommandsEvents();
         if (e.touches.length >= 2) {
           this.setQuickAction(Actions.move);
         }
@@ -266,13 +261,11 @@ class PixelPainter {
           this.commandInvoker.commands.get(this.action)!.end
         );
         this.resetQuickAction();
-        this.invokeBackgroundCommands(e, "end");
-        this.addBackgroundCommandsEvents();
       });
     this.commandsByListener.desktop
       .set("mousedown", (e: MouseEvent) => {
         this.invokeBackgroundCommands(e, "start");
-        this.removeBackgroundCommandsEvents();
+        this.removeBackgroundEvents();
         if (e.button === 1 || e.button === 2) {
           this.setQuickAction(Actions.move);
         }
@@ -300,7 +293,7 @@ class PixelPainter {
         );
         this.resetQuickAction();
         this.invokeBackgroundCommands(e, "end");
-        this.addBackgroundCommandsEvents();
+        this.attachBackgroundEvents();
       })
       .set("mouseleave", (e: MouseEvent) => {
         this.feedParametersToCommand(
@@ -311,60 +304,11 @@ class PixelPainter {
         );
         this.resetQuickAction();
         this.invokeBackgroundCommands(e, "end");
-        this.addBackgroundCommandsEvents();
+        this.attachBackgroundEvents();
       });
   }
 
-  private createBackgroundCommandsEventsObject() {
-    this.commandInvoker.backgroundCommands.forEach((command) => {
-      this.backgroundCommandsByListener.mobile.add({
-        execute: (e: TouchEvent) =>
-          this.feedParametersToCommand(
-            e.touches[0].clientX,
-            e.touches[0].clientY,
-            command.execute
-          ),
-        start: (e: TouchEvent) =>
-          this.feedParametersToCommand(
-            e.touches[0].clientX,
-            e.touches[0].clientY,
-            command.start
-          ),
-        end: (e: TouchEvent) =>
-          this.feedParametersToCommand(
-            e.touches[0].clientX,
-            e.touches[0].clientY,
-            command.end
-          ),
-      });
-    });
-    this.commandInvoker.backgroundCommands.forEach((command) => {
-      this.backgroundCommandsByListener.desktop.add({
-        execute: (e: MouseEvent) =>
-          this.feedParametersToCommand(e.clientX, e.clientY, command.execute),
-        start: (e: MouseEvent) =>
-          this.feedParametersToCommand(e.clientX, e.clientY, command.start),
-        end: (e: MouseEvent) =>
-          this.feedParametersToCommand(e.clientX, e.clientY, command.end),
-      });
-    });
-  }
-
-  private invokeBackgroundCommands(
-    e: TouchEvent | MouseEvent,
-    type: "start" | "end"
-  ) {
-    if (this.config.isTouchScreen) {
-      this.backgroundCommandsByListener.mobile.forEach((commandFunctions) => {
-        commandFunctions[type](e as never);
-      });
-    } else {
-      this.backgroundCommandsByListener.desktop.forEach((commandFunctions) => {
-        commandFunctions[type](e as never);
-      });
-    }
-  }
-  private addEventListenersToCanvas() {
+  private attachEventListeners() {
     if (!this.canvas) return;
     if (this.config.isTouchScreen) {
       this.commandsByListener.mobile.forEach((value, key) => {
@@ -378,28 +322,39 @@ class PixelPainter {
     }
   }
 
-  private addBackgroundCommandsEvents() {
-    if (this.config.isTouchScreen) {
-      this.backgroundCommandsByListener.mobile.forEach((commandFunctions) => {
-        this.canvas.addEventListener("touchmove", commandFunctions.execute);
-      });
-    } else {
-      this.backgroundCommandsByListener.desktop.forEach((commandFunctions) => {
-        this.canvas.addEventListener("mousemove", commandFunctions.execute);
-      });
-    }
+  private createBackgroundCommandsEventsObject() {
+    this.commandInvoker.backgroundCommands.forEach((command) => {
+      this.backgroundCommandsByListener.add(
+        // @ts-ignore
+        ["execute", "start", "end"].reduce((acc,k) => ({
+          ...acc,
+          [k]: (e: MouseEvent) =>
+            // @ts-ignore
+            this.feedParametersToCommand(e.clientX, e.clientY, command[k]),
+        }), {})
+      );
+    });
   }
 
-  private removeBackgroundCommandsEvents() {
-    if (this.config.isTouchScreen) {
-      this.backgroundCommandsByListener.mobile.forEach((commandFunctions) => {
-        this.canvas.removeEventListener("touchmove", commandFunctions.execute);
-      });
-    } else {
-      this.backgroundCommandsByListener.desktop.forEach((commandFunctions) => {
-        this.canvas.removeEventListener("mousemove", commandFunctions.execute);
-      });
-    }
+  private invokeBackgroundCommands(
+    e: MouseEvent,
+    type: "start" | "end"
+  ) {
+    this.backgroundCommandsByListener.forEach((commandFunctions) => {
+      commandFunctions[type](e as never);
+    });
+  }
+  
+  private attachBackgroundEvents() {
+    this.backgroundCommandsByListener.forEach((commandFunctions) => {
+      this.canvas.addEventListener("mousemove", commandFunctions.execute);
+    });
+  }
+
+  private removeBackgroundEvents() {
+    this.backgroundCommandsByListener.forEach((commandFunctions) => {
+      this.canvas.removeEventListener("mousemove", commandFunctions.execute);
+    });
   }
 }
 

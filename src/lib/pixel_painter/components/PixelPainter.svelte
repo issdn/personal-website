@@ -38,18 +38,14 @@
     await cellBoard.fromRawColorsArray(cells)
     const commandInvoker = new CommandInvoker();
     commandInvoker.commands
-      .set(Actions.draw, drawCommand(cellBoard))
-      .set(Actions.erase, eraseCommand(cellBoard))
+      .set(Actions.draw, drawCommand())
+      .set(Actions.erase, eraseCommand())
       .set(Actions.move, moveCommand());
-    commandInvoker.backgroundCommands.add(placeholderCommand(cellBoard));
-    painter.update((painter) =>
-      painter.setCellBoard(cellBoard)
-      .setCommandsInvoker(commandInvoker)
-      .setConfig({ isTouchScreen: $deviceType === "mobile" })
-    );
+    commandInvoker.backgroundCommands.add(placeholderCommand());
+    painter.update((painter) => painter.setConfig({ isTouchScreen: $deviceType === "mobile" }));
     painterInitialized = true;
     $painter
-      .init(canvas)
+      .init(canvas, cellBoard, commandInvoker)
       .then(async (painterInstance) => {
         await painterInstance.draw();
       })

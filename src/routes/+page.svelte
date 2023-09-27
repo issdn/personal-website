@@ -82,9 +82,8 @@
   class="min-h-full max-h-[100vh] max-w-[100vw] overflow-hidden relative h-full bg-light dark:bg-dark"
 >
   <div
-    class={`${
-      painterEnabled && "[&>section,nav,footer]:pointer-events-none [&>section,nav,footer]:opacity-50"
-    } duration-500 h-full w-full px-4 md:px-16 lg:px-[20%] xl:px-[30%] py-8 flex flex-col justify-between gap-y-24`}
+    class={`${ painterEnabled && "[&_nav]:pointer-events-none [&_nav]:opacity-40 [&_section]:pointer-events-none [&_section]:opacity-40 [&_footer]:pointer-events-none [&_footer]:opacity-40"
+} duration-500 h-full w-full px-4 md:px-16 lg:px-[20%] xl:px-[30%] py-8 flex flex-col justify-between gap-y-24`}
   >
     <Navbar />
     <main class="flex flex-col h-full gap-y-24">

@@ -1,43 +1,43 @@
-import type { GetRelativeCoordinatesFn, PainterContext } from ".";
+import type { CommandFunction } from ".";
 import type { TCell } from "../internals/cell";
-import type { TCellBoard } from "../internals/cellBoard";
 
-const placeholderCommand = (cellBoard: TCellBoard) => {
-    let previousPlaceholder: TCell[] = [];
+const placeholderCommand = () => {
+  let previousPlaceholder: TCell[] = [];
 
-    const clearPlaceholder = (ctx: CanvasRenderingContext2D) => {
-        for (const cell of previousPlaceholder) {
-            cell.removePlaceholder(ctx);
-        }
+  const clearPlaceholder = (ctx: CanvasRenderingContext2D) => {
+    for (const cell of previousPlaceholder) {
+      cell.removePlaceholder(ctx);
     }
+  };
 
-    const execute = (getRelativeCoordinates: GetRelativeCoordinatesFn) => {
-        return (ctx: CanvasRenderingContext2D, painterContext: PainterContext) => {
-            const cells = cellBoard.getCellBoardCells(
-                ...getRelativeCoordinates(),
-                painterContext.size
-            );
-            clearPlaceholder(ctx);
-            for (const cell of cells) {
-                cell.drawPlaceholder(ctx, painterContext.accentColor);
-            }
-            previousPlaceholder = cells;
-        };
-    }
-
-    return {
-        execute,
-        start: () => {
-            return (ctx: CanvasRenderingContext2D) => {
-                clearPlaceholder(ctx);
-            };
-        },
-        end: () => {
-            return (ctx: CanvasRenderingContext2D) => {
-                clearPlaceholder(ctx);
-            };
-        },
+  const execute: CommandFunction = ([x, y], { getCellBoardCells }) => {
+    return ({ size, ctx, accentColor }) => {
+      const cells = getCellBoardCells(x, y, size);
+      clearPlaceholder(ctx);
+      for (const cell of cells) {
+        cell.drawPlaceholder(ctx, accentColor);
+      }
+      previousPlaceholder = cells;
     };
+  };
+  
+  const start: CommandFunction = () => {
+    return ({ ctx }) => {
+      clearPlaceholder(ctx);
+    };
+  };
+  
+  const end: CommandFunction = () => {
+    return ({ ctx }) => {
+      clearPlaceholder(ctx);
+    };
+  };
+
+  return {
+    execute,
+    start,
+    end,
+  };
 };
 
 export default placeholderCommand;

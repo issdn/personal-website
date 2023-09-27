@@ -1,38 +1,33 @@
 [Personal website](https://karolbielski.com/).
 
-Around 160kB on initial load and ~240kB with pixel painter.
+Around 160kB on initial load and ~240kB with pixel painter. DOM loads in ~200ms.
 
 1. Translation.
-2. Pixel art painter
     - Dynamic import
     - Preload
-    - Extendable through commands using special command and background command interface:
+2. No library-components
+3. Pixel art painter
+    - Dynamic import
+    - Preload
+    - Extendable through commands using special command interface:
     ```typescript
     // The command implementation will look like:
+    type CommandFunction = (
+        ([x, y, absX, absY], {getCellBoardCells,...})) =>
+        | void
+        | ((...) => void);
     type TCommand = (...args: unknown[]) => {
         start: CommandFunction;
         execute: CommandFunction;
         end: CommandFunction;
     };
-    type CommandFunction = (
-        getRelativeCoordinates: GetRelativeCoordinatesFn,
-        x: number,
-        y: number
-        ) =>
-        | void
-        | ((
-            ctx: CanvasRenderingContext2D,
-            painterContext: PainterContext,
-            canvas: HTMLCanvasElement
-            ) => void);
     // pixelPainterStore.ts
-    const cellBoard = new CellBoard(pixelPainter.config.gridSize, pixelPainter.config.borderWidth);
     const commandInvoker = new CommandInvoker();
     commandInvoker.commands
-        .set('draw', drawCommand(cellBoard))
-        .set('erase', eraseCommand(cellBoard))
+        .set('draw', drawCommand())
+        .set('erase', eraseCommand())
         .set('move', moveCommand());
-    commandInvoker.backgroundCommands.add(placeholderCommand(cellBoard));
+    commandInvoker.backgroundCommands.add(placeholderCommand());
     ```
 
 Data of colored pixels for pixel art painter is compressed with custom algorithm.

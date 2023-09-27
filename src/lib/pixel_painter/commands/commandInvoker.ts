@@ -1,5 +1,5 @@
-import type { Actions } from "$lib/pixel_painter";
 import type { TCommand } from ".";
+import type { Actions } from "../stores/pixelPainterStore";
 
 interface ICommandInvoker {
     commands: Map<Actions, ReturnType<TCommand>>;
