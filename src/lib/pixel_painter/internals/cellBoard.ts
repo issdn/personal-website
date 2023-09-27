@@ -7,10 +7,11 @@ class CellBoard {
   _borderWidth: number;
   cellBorderSize: number;
 
-  constructor(cellSize: number, borderWidth: number, cellBorderSize: number) {
+  constructor(cellSize: number, borderWidth: number, cellBorderSize: number, cells: TCellArray) {
     this._cellSize = cellSize;
     this._borderWidth = borderWidth;
     this.cellBorderSize = cellBorderSize;
+    this.cells = cells
   }
 
   get cellSize() {
@@ -162,11 +163,10 @@ class CellBoard {
         }
       }
     }
-
     for (let i = 0; i < size; i++) {
       cells.push(flat.slice(i * size, i * size + size));
     }
-    return new CellBoard(cellSize, borderWidth, cellBorderSize);
+    return new CellBoard(cellSize, borderWidth, cellBorderSize, cells);
   }
 }
 
