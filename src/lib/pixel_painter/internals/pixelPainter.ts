@@ -6,7 +6,6 @@ import type {
 } from "../commands";
 import type { ICommandInvoker } from "../commands/commandInvoker";
 import { Actions } from "../stores/pixelPainterStore";
-import type CellBoard from "./cellBoard";
 
 const baseConfig = {
   gridSize: 10,
@@ -60,7 +59,9 @@ class PixelPainter {
     this.setCanvasPositionToMiddle = this.setCanvasPositionToMiddle.bind(this);
     window.addEventListener("resize", this.setCanvasPositionToMiddle);
     this.setCommandsByListener();
-    this.createBackgroundCommandsEventsObject();
+    if(!this.config.isTouchScreen) {
+      this.createBackgroundCommandsEventsObject();
+    }
     this.attachEventListeners();
     this.attachBackgroundEvents();
     return this;
@@ -255,8 +256,8 @@ class PixelPainter {
       )
       .set("touchend", (e: TouchEvent) => {
         this.feedParametersToCommand(
-          e.touches[0].clientX,
-          e.touches[0].clientY,
+          e.changedTouches[0].clientX,
+          e.changedTouches[0].clientY,
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           this.commandInvoker.commands.get(this.action)!.end
         );
