@@ -1,8 +1,9 @@
 import type { TCellBoard } from "./cellBoard";
-import type {
-  CommandInvoker,
-  PaintFunctionContext,
-  TCommand,
+import {
+  CommandLifecycleStep,
+  type CommandInvoker,
+  type PaintFunctionContext,
+  type TCommand,
 } from "../commands";
 import type { ICommandInvoker } from "../commands/commandInvoker";
 import { Actions } from "../stores/pixelPainterStore";
@@ -214,7 +215,7 @@ class PixelPainter {
     this.commandsByListener.mobile
       .set("touchstart", (e: TouchEvent) => {
         if (e.touches.length >= 2) {
-          this.setQuickAction(Actions.move);
+          this.setQuickAction(Actions.Move);
         }
         this.feedParametersToCommand(
           e.touches[0].clientX,
@@ -242,10 +243,10 @@ class PixelPainter {
       });
     this.commandsByListener.desktop
       .set("mousedown", (e: MouseEvent) => {
-        this.invokeBackgroundCommands(e, "start");
+        this.invokeBackgroundCommands(e, CommandLifecycleStep.Start);
         this.removeBackgroundEvents();
         if (e.button === 1 || e.button === 2) {
-          this.setQuickAction(Actions.move);
+          this.setQuickAction(Actions.Move);
         }
         this.feedParametersToCommand(
           e.clientX,
@@ -270,7 +271,7 @@ class PixelPainter {
           this.commandInvoker.commands.get(this.action)!.end
         );
         this.resetQuickAction();
-        this.invokeBackgroundCommands(e, "end");
+        this.invokeBackgroundCommands(e, CommandLifecycleStep.End);
         this.attachBackgroundEvents();
       })
       .set("mouseleave", (e: MouseEvent) => {
@@ -281,7 +282,7 @@ class PixelPainter {
           this.commandInvoker.commands.get(this.action)!.end
         );
         this.resetQuickAction();
-        this.invokeBackgroundCommands(e, "end");
+        this.invokeBackgroundCommands(e, CommandLifecycleStep.End);
         this.attachBackgroundEvents();
       });
   }
@@ -304,7 +305,7 @@ class PixelPainter {
     this.commandInvoker.backgroundCommands.forEach((command) => {
       this.backgroundCommandsByListener.add(
         // @ts-ignore
-        ["execute", "start", "end"].reduce(
+        Object.values(CommandLifecycleStep).reduce(
           (acc, k) => ({
             ...acc,
             [k]: (e: MouseEvent) =>
@@ -317,7 +318,7 @@ class PixelPainter {
     });
   }
 
-  private invokeBackgroundCommands(e: MouseEvent, type: "start" | "end") {
+  private invokeBackgroundCommands(e: MouseEvent, type: CommandLifecycleStep.Start | CommandLifecycleStep.End) {
     this.backgroundCommandsByListener.forEach((commandFunctions) => {
       commandFunctions[type](e as never);
     });

@@ -3,10 +3,10 @@ import PixelPainter from "../internals/pixelPainter";
 import { isTouchScreen } from "$lib/stores/device"
 
 export enum Actions {
-  draw = "draw",
-  erase = "erase",
-  move = "move",
-  placeholde = "placeholder",
+  Draw = "draw",
+  Erase = "erase",
+  Move = "move",
+  Placeholder = "placeholder",
 }
 let _isTouchScreen: boolean;
 isTouchScreen.subscribe((is) => (_isTouchScreen = is));

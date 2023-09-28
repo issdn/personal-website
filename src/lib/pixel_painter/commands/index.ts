@@ -8,6 +8,12 @@ type PaintFunctionContext = {
   ctx: CanvasRenderingContext2D;
 };
 
+export enum CommandLifecycleStep {
+  Start = "start",
+  Execute = "execute",
+  End = "end"
+}
+
 type CommandFunction = (
   [x, y, absX, absY]: [number, number, number, number],
   {

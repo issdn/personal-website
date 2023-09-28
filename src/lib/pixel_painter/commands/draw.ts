@@ -22,7 +22,7 @@ const drawCommand = () => {
   };
 
   const start: CommandFunction = (
-    [x, y, absX, absY],
+    [x, y],
     { getCellBoardCells }
   ) => {
     isDrawing = true;
@@ -32,7 +32,7 @@ const drawCommand = () => {
   };
 
   const execute: CommandFunction = (
-    [x, y, absX, absY],
+    [x, y],
     { getCellBoardCell, interpolate, getCellBoardCells }
   ) => {
     const initialCell = getCellBoardCell(x, y);

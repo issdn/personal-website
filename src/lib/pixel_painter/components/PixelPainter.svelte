@@ -25,22 +25,14 @@
     };
   };
 
-  $: {
-    painter.update((painter) =>
-      painter.setPainterContext({
-        accentColor: $darkmode ? "#D9D9D9" : "#232323",
-      })
-    );
-  }
-
   onMount(async () => {
     const cellBoard = CellBoard.fromRawColorsArray(cells, 10, 1);
     console.log(cellBoard.cells);
     const commandInvoker = new CommandInvoker();
     commandInvoker.commands
-      .set(Actions.draw, drawCommand())
-      .set(Actions.erase, eraseCommand())
-      .set(Actions.move, moveCommand());
+      .set(Actions.Draw, drawCommand())
+      .set(Actions.Erase, eraseCommand())
+      .set(Actions.Move, moveCommand());
     commandInvoker.backgroundCommands.add(placeholderCommand());
     try {
       $painter.init(canvas, cellBoard, commandInvoker);
@@ -48,6 +40,11 @@
       $painter.drawCells();
       painterInitialized = true;
       $painter.setCanvasPositionToMiddle();
+      painter.update((painter) =>
+        painter.setPainterContext({
+          accentColor: $darkmode ? "#D9D9D9" : "#232323",
+        })
+      );
     } catch {
       setErrorMessage(
         "Couldn't get canvas context.",
@@ -82,8 +79,5 @@
   style={painterInitialized ? "opacity:1;" : "opacity: 0;"}
   class="absolute overflow-hidden top-0 left-0 h-full w-full z-0 box-border transition-[opacity] duration-500"
 >
-  <canvas
-    class="touch-none absolute"
-    bind:this={canvas}
-  />
+  <canvas class="touch-none absolute" bind:this={canvas} />
 </div>

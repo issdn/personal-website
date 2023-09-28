@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { onMount } from "svelte";
   import { fly, slide } from "svelte/transition";
   import painter, { Actions } from "../stores/pixelPainterStore";
   import { SnackbarType, snackbars } from "$lib/snackbar";
@@ -18,7 +17,7 @@
   let dragging = false;
   let position = { x: 0, y: -100 };
   let saving = false;
-  let action: Actions = Actions.draw;
+  let action: Actions = Actions.Draw;
   let brushSize = 0;
 
   $: {
@@ -73,26 +72,27 @@
 
   const handleClearAllClick = () => {
     $painter.reset();
+    action = Actions.Draw
   };
 
   const handleEraseClick = () => {
     if (action === "erase") {
-      action = Actions.draw;
+      action = Actions.Draw;
     } else {
-      action = Actions.erase;
+      action = Actions.Erase;
     }
   };
 
   const handleMoveClick = () => {
     if (action === "move") {
-      action = Actions.draw;
+      action = Actions.Draw;
     } else {
-      action = Actions.move;
+      action = Actions.Move;
     }
   };
 
   const handleColorClick = (newColor: (typeof COLORS)[number][number]) => {
-    action = Actions.draw;
+    action = Actions.Draw;
     color.set(newColor);
     colorsExpanded = false;
   };
@@ -189,7 +189,7 @@
     in:fly={{ y: -100 }}
     style={`left: ${position.x}px; top: ${position.y}px;`}
     class="touch-none z-10 absolute bg-dark rounded-lg dark:bg-light drop-shadow-lg p-2
-	before:absolute before:top-full before:right-2 before:content-['BETA'] before:font-primary before:bg-red-500 before:text-xs before:px-1 before:rounded-b-sm"
+	before:absolute before:top-full before:right-2 before:content-['WIP'] before:font-primary before:bg-red-500 before:text-xs before:px-1 before:rounded-b-sm"
   >
     <div class="items-center flex flex-row justify-between">
       <span
