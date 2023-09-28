@@ -4,6 +4,8 @@
   import IMG3 from "$lib/assets/img3.webp?url";
   import IMG4 from "$lib/assets/img4.webp?url";
   import icon from "$lib/assets/icon32.png?url";
+  import Checkout from "$lib/assets/Checkout.gif?url";
+
   import { texts, type TranslationKeys } from "$lib/translation";
 
   let page: HTMLDivElement;
@@ -44,12 +46,21 @@
         "Svelte, FastAPI, TawilindCSS, Docker Compose, Stylegan3 AI, Websockets",
       github: "guesswho",
     },
+    {
+      name: "Epic Stuff",
+      url: Checkout,
+      stack: "",
+      github: "",
+      descKey: "" as TranslationKeys,
+    },
   ];
 
   let currIndex = 0;
 </script>
 
-<div class="w-full h-[40rem] flex flex-col border-2 border-primary dark:border-light bg-light dark:bg-dark p-1 text-dark dark:text-light rounded-sm">
+<div
+  class="w-full h-[40rem] flex flex-col border-2 border-primary dark:border-light bg-light dark:bg-dark p-1 text-dark dark:text-light rounded-sm"
+>
   <div
     style="scrollbar-gutter: stable;"
     class="flex flex-row gap-x-4 pb-2 pt-1 px-2 items-center overflow-x-auto overflow-y-hidden"
@@ -71,31 +82,34 @@
       <span>➡️</span>
       <span>🔃</span>
     </div>
-    <span
-      class="w-full pt-0.5 bg-light dark:bg-dark text-md px-1 truncate"
-    >
-      https://github.com/issdn/about/{imageByProject[
-        currIndex
-      ].name.toLowerCase().replace(" ", "")}.html
+    <span class="w-full pt-0.5 bg-light dark:bg-dark text-md px-1 truncate">
+      https://github.com/issdn/about/{imageByProject[currIndex].name
+        .toLowerCase()
+        .replace(" ", "")}.html
     </span>
   </div>
   <div
     bind:this={page}
     class="h-full overflow-scroll bg-white text-black font-serif p-8 flex flex-col gap-y-4"
   >
+  {#if imageByProject[currIndex].descKey}
     <h2 class="text-xl font-bold">{imageByProject[currIndex].name}</h2>
-    <p>{$texts[imageByProject[currIndex].descKey]}</p>
-    <p>Stack: {imageByProject[currIndex].stack}</p>
-    <a
-      target="_blank"
-      class="text-blue-600 hover:underline text-blue-500 w-fit"
-      href={`https://github.com/issdn/${imageByProject[currIndex].github}`}
-      >Github Link</a
-    >
+      <p>{$texts[imageByProject[currIndex].descKey]}</p>
+      <p>Stack: {imageByProject[currIndex].stack}</p>
+      <a
+        target="_blank"
+        class="text-blue-600 hover:underline text-blue-500 w-fit"
+        href={`https://github.com/issdn/${imageByProject[currIndex].github}`}
+        >Github Link</a
+      >
+    {/if}
 
     {#key imageByProject[currIndex].url}
-        <img class="w-fit" alt={imageByProject[currIndex].name} src={imageByProject[currIndex].url}/>
+      <img
+        class="w-fit"
+        alt={imageByProject[currIndex].name}
+        src={imageByProject[currIndex].url}
+      />
     {/key}
-
   </div>
 </div>
