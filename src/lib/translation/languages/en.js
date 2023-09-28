@@ -4,6 +4,7 @@ export default {
   erase: "Erase",
   drag: "Drag",
   title: "Hi, I'm Karol",
+  CacheCleared: "Cache cleared!",
   painterInfo:
     "Paint over my website for EVERYONE to see (after verification).",
   mainPar:
@@ -25,4 +26,6 @@ export default {
   DescAgora:
     "Semi-anonymous publishing platform - posts, comments, followers, auth.",
   DescGuessWho: "An online version of classic table game - guess who?",
+  ErrCanvasCtx:  "Couldn't get canvas context.",
+  ErrCanvasCtxDetail: "Your browser might not support canvas."
 };

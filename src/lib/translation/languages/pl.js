@@ -5,6 +5,7 @@ export default {
   drag: "Przeciągnij",
   title: "Cześć, jestem Karol",
   ClearCache: "Wyczyść Pamięć Podręczną",
+  CacheCleared: "Pamięć podręczna wyczyszczona!",
   painterInfo:
     "Namaluj na mojej stronie internetowej, aby KAŻDY mógł ją zobaczyć (po weryfikacji).",
   mainPar:
@@ -24,5 +25,7 @@ export default {
     "Generator losowych wyzwań dla gry Brawl Stars, korzystający z API postaci i map tej gry.",
   DescAgora:
     "Półanonimowa platforma publikacyjna - posty, komentarze, obserwujący, uwierzytelnianie.",
-    "DescGuessWho": "Onlineowa wersja klasycznej gry planszowej - zgadnij kto?"
+    "DescGuessWho": "Onlineowa wersja klasycznej gry planszowej - zgadnij kto?",
+    ErrCanvasCtx:  "Nie można uzyskać kontekstu płótna (canvas ctx).",
+    ErrCanvasCtxDetail: "Twoja przeglądarka może nie wspierac tej technologii."
 };

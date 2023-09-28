@@ -5,6 +5,7 @@ export default {
   drag: "Ziehen",
   title: "Hallo, ich bin Karol",
   ClearCache: "Cache Leeren",
+  CacheCleared: "Cache geleert!",
   painterInfo:
     "Male über meine Website, damit JEDER sie sehen kann (nach Überprüfung).",
   mainPar:
@@ -26,4 +27,6 @@ export default {
   DescAgora:
     "Halbanonyme Veröffentlichungsplattform - Beiträge, Kommentare, Follower, Authentifizierung.",
   DescGuessWho: "Eine Online-Version des klassischen Tischspiels - Wer ist es?",
+  ErrCanvasCtx:  "Canvas-Kontext konnte nicht abgerufen werden.",
+  ErrCanvasCtxDetail: "Dein Browser unterstützt möglicherweise kein Canvas."
 };

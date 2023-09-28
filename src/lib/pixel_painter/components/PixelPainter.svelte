@@ -11,6 +11,7 @@
     moveCommand,
     placeholderCommand,
   } from "../commands";
+  import { texts } from "$lib/translation";
 
   export let cells: string;
   export let painterInitialized: boolean = false;
@@ -47,8 +48,8 @@
       );
     } catch {
       setErrorMessage(
-        "Couldn't get canvas context.",
-        "Your browser might not support canvas."
+        $texts["ErrCanvasCtx"],
+        $texts["ErrCanvasCtxDetail"]
       );
     }
   });

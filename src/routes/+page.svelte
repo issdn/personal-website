@@ -72,6 +72,13 @@
     painterEnabled = painterEnabled ? false : true;
   };
 
+  const clearCache = async () => {
+    caches.keys().then((keys) => {
+      keys.forEach(async (k) => await caches.delete(k))
+    })
+    snackbars.add($texts["CacheCleared"])
+  }
+
   onMount(() => {
     isTouchScreen.set("ontouchstart" in window ? true : false)
     pageLoaded = true;
@@ -93,7 +100,7 @@
         </h1>
         <p>{$texts["mainPar"]}</p>
         <p class="opacity-80 dark:opacity-60 mt-4 text-sm">{$texts["subline"]}
-        &nbsp;<button on:click={async () => (await caches.keys()).forEach(async (k)=> await caches.delete(k))} class="border border-primary dark:border-light px-2 rounded-md">{$texts["ClearCache"]}
+        &nbsp;<button on:click={clearCache} class="border border-primary dark:border-light px-2 rounded-md">{$texts["ClearCache"]}
         </button></p>
       </section>
       <Album/>
@@ -104,7 +111,7 @@
           class="bg-primary dark:bg-light text-light w-fit dark:text-dark rounded-md px-2"
           >{$texts["MadeWithSvelte"]}</span
         >
-        <span><Unlicense class="w-6 mr-2 [&>path]:fill-dark dark:[&>path]:fill-light inline"/>Karol Bielski</span>
+        <span><Unlicense class="w-6 mr-2 [&>path]:fill-primary dark:[&>path]:fill-light inline"/>Karol Bielski</span>
         <a href="mailto:karol.bielski@gmx.de" class="w-fit"
           >karol.bielski@gmx.de</a
         >
