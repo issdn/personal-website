@@ -13,5 +13,9 @@ export default {
   "GithubIcon": "Github Icon",
   "LinkedInIcon": "LinkedIn Icon",
   "OtherIcons": "Other Icons",
-  "MadeWithSvelte": "Made with Svelte"
+  "MadeWithSvelte": "Made with Svelte",
+  "DescMicroservices": "Register & login & session management with a jwt inside a httponly cookie. Built by me form component and validation. Password strength with zxcvbn. Response handling and interceptors. Forms in a neomorphist style and groups in discordish copycat.",
+  "DescBrawlHub": "Random challange generator for game Brawl Stars using their characters & maps API.",
+  "DescAgora": "Semi-anonymous publishing platform - posts, comments, followers, auth.",
+  "DescGuessWho": "An online version of classic table game - guess who?",
 }

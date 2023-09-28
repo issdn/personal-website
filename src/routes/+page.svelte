@@ -11,6 +11,7 @@
   import en from "$lib/translation/languages/en";
   import { SnackbarType, snackbars } from "$lib/snackbar";
   import { isTouchScreen } from "$lib/stores";
+  import Album from "$lib/album/Album.svelte";
 
   texts.set(en);
 
@@ -77,37 +78,21 @@
 </script>
 
 <div
-  class="min-h-full max-h-[100vh] max-w-[100vw] overflow-hidden relative h-full bg-light dark:bg-dark"
+  class="relative w-full h-full"
 >
   <div
-    class={`${ painterEnabled && "[&_nav]:pointer-events-none [&_nav]:opacity-40 [&_section]:pointer-events-none [&_section]:opacity-40 [&_footer]:pointer-events-none [&_footer]:opacity-40"
-} duration-500 h-full w-full px-4 md:px-16 lg:px-[20%] xl:px-[30%] py-8 flex flex-col justify-between gap-y-24`}
+    class={`${ painterEnabled && "pointer-events-none opacity-40"
+} duration-500 overflow-y-scroll h-full w-full px-4 md:px-16 lg:px-[20%] xl:px-[30%] py-8 flex flex-col justify-between gap-y-24`}
   >
     <Navbar />
-    <main class="flex flex-col h-full gap-y-24">
+    <main class="h-full flex flex-col gap-y-24">
       <section transition:fade={{ delay: 200 }} class="text-xl">
         <h1 class="text-5xl font-extrabold font-primary">
           {$texts["title"]}
         </h1>
         <p>{$texts["mainPar"]}</p>
       </section>
-      {#if painterEnabled}
-      {#await painterData}
-        <span
-          in:fade={{ duration: 250 }}
-          out:fade={{ duration: 125 }}
-          class="absolute left-1/2 gap-y-4 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
-        >
-          <Spinner />
-        </span>
-      {:then settledResults}
-        {#if settledResults[0].status === "fulfilled" 
-          && settledResults[1].status === "fulfilled" 
-          && settledResults[1].value}
-          <svelte:component cells={settledResults[1].value} this={settledResults[0].value} />
-        {/if}
-      {/await}
-    {/if}
+      <Album/>
     </main>
     <footer class="flex flex-col py-4 gap-y-6 md:gap-2 text-md w-full">
       <div class="flex flex-col md:flex-row gap-x-6 gap-y-1">
@@ -172,5 +157,22 @@
       </button>
     {/if}
   </div>
+  {#if painterEnabled}
+  {#await painterData}
+    <span
+      in:fade={{ duration: 250 }}
+      out:fade={{ duration: 125 }}
+      class="absolute left-1/2 gap-y-4 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
+    >
+      <Spinner />
+    </span>
+  {:then settledResults}
+    {#if settledResults[0].status === "fulfilled" 
+      && settledResults[1].status === "fulfilled" 
+      && settledResults[1].value}
+      <svelte:component cells={settledResults[1].value} this={settledResults[0].value} />
+    {/if}
+  {/await}
+{/if}
 </div>
 <SnackbarContainer />

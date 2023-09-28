@@ -39,7 +39,11 @@ module.exports = {
 				accent: '#F99417',
 				'accent-secondary': '#D9D9D9',
 				light: '#E8E2E2',
+				"light-tint-80": "#faf9f9",
+				"light-tint-30": "#efebeb",
+				"light-tint-20": "#ede8e8",
 				dark: '#1a1a1a',
+				"dark-tint-10": "#313131",
 				'accent-secondary-dark': '#232323',
 				special: "#6c9138"
 			},

@@ -77,7 +77,7 @@
 {/if}
 <div
   style={painterInitialized ? "opacity:1;" : "opacity: 0;"}
-  class="absolute overflow-hidden top-0 left-0 h-full w-full z-0 box-border transition-[opacity] duration-500"
+  class="absolute overflow-hidden top-0 left-0 h-full w-full z-[5] box-border transition-[opacity] duration-500"
 >
   <canvas class="touch-none absolute" bind:this={canvas} />
 </div>
