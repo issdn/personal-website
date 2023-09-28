@@ -12,6 +12,7 @@
   import { SnackbarType, snackbars } from "$lib/snackbar";
   import { isTouchScreen } from "$lib/stores";
   import Album from "$lib/album/Album.svelte";
+  import Unlicense from "$lib/symbols/Unlicense.svelte"
 
   texts.set(en);
 
@@ -85,12 +86,15 @@
 } duration-500 overflow-y-scroll h-full w-full px-4 md:px-16 lg:px-[20%] xl:px-[30%] py-8 flex flex-col justify-between gap-y-24`}
   >
     <Navbar />
-    <main class="h-full flex flex-col gap-y-24">
+    <main class="flex flex-col gap-y-24">
       <section transition:fade={{ delay: 200 }} class="text-xl">
         <h1 class="text-5xl font-extrabold font-primary">
           {$texts["title"]}
         </h1>
         <p>{$texts["mainPar"]}</p>
+        <p class="opacity-80 dark:opacity-60 mt-4 text-sm">{$texts["subline"]}
+        &nbsp;<button on:click={async () => (await caches.keys()).forEach(async (k)=> await caches.delete(k))} class="border border-primary dark:border-light px-2 rounded-md">{$texts["ClearCache"]}
+        </button></p>
       </section>
       <Album/>
     </main>
@@ -100,6 +104,7 @@
           class="bg-primary dark:bg-light text-light w-fit dark:text-dark rounded-md px-2"
           >{$texts["MadeWithSvelte"]}</span
         >
+        <span><Unlicense class="w-6 mr-2 [&>path]:fill-dark dark:[&>path]:fill-light inline"/>Karol Bielski</span>
         <a href="mailto:karol.bielski@gmx.de" class="w-fit"
           >karol.bielski@gmx.de</a
         >

@@ -35,7 +35,7 @@
   role="tooltip"
   bind:this={tooltip}
   style={`${tooltip ? "opacity: 1;" : "opacity: 0;"}${styles}`}
-  class={`transition-opacity delay-500 duration-200 after:border-transparent font-bold whitespace-nowrap pointer-events-none drop-shadow-md after:content-[' '] after:border-[5px] after:border-solid after:absolute z-[50] absolute bg-primary dark:bg-light rounded-md px-2 py-2 text-light dark:text-dark ${textSize} ${positionClasses}`}
+  class={`transition-opacity delay-250 duration-200 after:border-transparent font-bold whitespace-nowrap pointer-events-none drop-shadow-md after:content-[' '] after:border-[5px] after:border-solid after:absolute z-[50] absolute bg-primary dark:bg-light rounded-md px-2 py-2 text-light dark:text-dark ${textSize} ${positionClasses}`}
 >
   {text}
   {#if icon}

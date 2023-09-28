@@ -4,7 +4,7 @@
 
 @layer base {
 	a:focus,button:focus,[role="button"]:focus{
-		@apply outline-primary outline outline-offset-2;
+		@apply outline-primary outline;
 	}
 }
 

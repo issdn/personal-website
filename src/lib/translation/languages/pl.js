@@ -4,11 +4,13 @@ export default {
   erase: "Wymaż",
   drag: "Przeciągnij",
   title: "Cześć, jestem Karol",
+  ClearCache: "Wyczyść Pamięć Podręczną",
   painterInfo:
     "Namaluj na mojej stronie internetowej, aby KAŻDY mógł ją zobaczyć (po weryfikacji).",
   mainPar:
-    "Lubię majsterkować, budować i myśleć. Możesz się ze mną skontaktować po polsku, niemiecku lub angielsku.",
-  skillsTitle: "Kilka rzeczy które znam:",
+    "Lubię majsterkować, budować i myśleć. Możesz się ze mną skontaktować po polsku, niemiecku lub angielsku. Zobacz rzeczy aplikacje które napisałem poniżej lub na moim GitHubie. Klikając przycisk w prawym dolnym rogu możesz także namalować coś na mojej stronie, aby wszyscy (po weryfikacji) mogli to zobaczyć.",
+  subline: "Możesz dobrowolnie używać wszyskich moich projektów. Na mojej stronie nie ma plików cookie, a cache może być wyczyszczony przez kliknięcie tutaj:",
+    skillsTitle: "Kilka rzeczy które znam:",
   githubProfile: "Profil na Githubie",
   LinkedInProfile: "Profil na LinkedIn",
   CVDownload: "Pobierz moje CV",
