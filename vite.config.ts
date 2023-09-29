@@ -5,7 +5,7 @@ import strip from '@rollup/plugin-strip';
 export default defineConfig(({ command }) => {
 	const both = {
 		test: {
-			include: ["tests/unit/**/*.{ts,js}"]
+			include: ["src/**/*.test.{ts,js}"]
 		}
 	}
 	if (command === 'build') {

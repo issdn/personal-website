@@ -3,7 +3,6 @@
   import { texts, language, type Translations, type TranslationShape, languageImportObject, languageImportObjectKeys } from ".";
   import Translate from "$lib/symbols/Translate.svelte";
 
-
   let expanded = false;
   let loading = false;
   let languageFetched = false;

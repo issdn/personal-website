@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, test } from 'vitest';
 import  Cell  from '../../src/lib/pixel_painter/internals/cell';
 import  CellBoard from '../../src/lib/pixel_painter/internals/cellBoard';
 
-describe('Test CellBoard', () => {
+describe('Test CellBoard cell parsing functions', () => {
 	const mockCellArray = [
 		[new Cell(0, 0, 1), new Cell(0, 2, 1)],
 		[new Cell(2, 0, 1), new Cell(2, 2, 1)]
@@ -15,7 +15,7 @@ describe('Test CellBoard', () => {
 	];
 	let cellBoard: CellBoard;
 	beforeEach(() => {
-		cellBoard = new CellBoard(1, 1);
+		cellBoard = new CellBoard(1, 1,2,[]);
 	});
 
 	test('toRawCollorsArray all zeros', async () => {
@@ -31,7 +31,7 @@ describe('Test CellBoard', () => {
 	});
 
 	test('fromRawColorsArray 3x3 only colors', async () => {
-		await cellBoard.fromRawColorsArray('3,#0000004,#0000025');
+		const cellBoard = CellBoard.fromRawColorsArray('3,#0000004,#0000025',1,1);
 		expect(cellBoard.cells).toMatchObject([
 			[
 				{ x: 0, y: 0, originColor: '#000000', size: 1 },
@@ -52,7 +52,7 @@ describe('Test CellBoard', () => {
 	});
 
 	test('fromRawColorsArray only zeros', async () => {
-		await cellBoard.fromRawColorsArray('2,4');
+		const cellBoard = CellBoard.fromRawColorsArray('2,4',1,1);
 		expect(cellBoard.cells).toMatchObject([
 			[
 				{ x: 0, y: 0, originColor: null, size: 1 },
@@ -66,7 +66,7 @@ describe('Test CellBoard', () => {
 	});
 
 	test('fromRawColorsArray 2x2', async () => {
-		await cellBoard.fromRawColorsArray('2,#0000002,2');
+		const cellBoard = CellBoard.fromRawColorsArray('2,#0000002,2',1,1);
 		expect(cellBoard.cells).toMatchObject([
 			[
 				{ x: 0, y: 0, originColor: '#000000', size: 1 },
@@ -80,7 +80,7 @@ describe('Test CellBoard', () => {
 	});
 
 	test('fromRawColorsArray 250x250', async () => {
-		await cellBoard.fromRawColorsArray('250,#a760609,62491');
+		const cellBoard = CellBoard.fromRawColorsArray('250,#a760609,62491',1,1);
 		expect(cellBoard.cells[0][0]).toMatchObject({ originColor: '#a76060' });
 		expect(cellBoard.cells[0][8]).toMatchObject({ originColor: '#a76060' });
 	});
