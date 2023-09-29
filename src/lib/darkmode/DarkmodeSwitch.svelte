@@ -1,6 +1,7 @@
 <script lang="ts">
   import DarkMode from "$lib/symbols/DarkMode.svelte";
   import LightMode from "$lib/symbols/LightMode.svelte";
+  import Desc from "$lib/translation/Desc.svelte";
   import {darkmode} from "./"
 
   const setDark = () => {
@@ -33,13 +34,13 @@
     <DarkMode
       filled={hovering}
       class="w-8 h-8 absolute fill-primary dark:fill-light left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-      ><desc>Turn on dark mode</desc></DarkMode
+      ><Desc descKey="DESCTurnOnDarkMode"/></DarkMode
     >
   {:else}
     <LightMode
       filled={hovering}
       class="w-8 h-8 absolute fill-primary dark:fill-light left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-      ><desc>Turn off dark mode</desc></LightMode
+      ><Desc descKey="DESCTurnOffDarkMode"/></LightMode
     >
   {/if}
 </button>

@@ -2,6 +2,7 @@
   import { slide } from "svelte/transition";
   import { texts, language, type Translations, type TranslationShape, languageImportObject, languageImportObjectKeys } from ".";
   import Translate from "$lib/symbols/Translate.svelte";
+  import Desc from "./Desc.svelte";
 
   let expanded = false;
   let loading = false;
@@ -39,7 +40,7 @@
       loading && "animate-pulse"
     } h-16 w-16 flex items-center justify-center hover:bg-accent-secondary dark:hover:bg-accent-secondary-dark rounded-full`}
     ><Translate class="fill-primary dark:fill-light w-8 h-8"
-      ><desc>Change language dropdown button</desc></Translate
+      ><Desc descKey="DESCChangeLanguageDropdownToggle"/></Translate
     ></button
   >
   {#if expanded}

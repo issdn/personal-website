@@ -13,6 +13,7 @@
   import { isTouchScreen } from "$lib/stores";
   import Album from "$lib/album/Album.svelte";
   import Unlicense from "$lib/symbols/Unlicense.svelte"
+  import Desc from "$lib/translation/Desc.svelte";
 
   texts.set(en);
 
@@ -150,7 +151,7 @@
           isTouchScreen: $isTouchScreen,
         }}
         ><Help class="fill-primary dark:fill-light h-8 w-8"
-          ><desc>Information about pixel art painter</desc></Help
+          ><Desc descKey="DESCInformationAboutPixelPainter"/></Help
         ></span
       >
       <button
@@ -164,7 +165,7 @@
         on:click={handlePixelPainterOpen}
       >
         <FormatPaint class="h-10"
-          ><desc>Turn on pixel art painter</desc></FormatPaint
+          ><Desc descKey="DESCTurnOnPixelPainter"/></FormatPaint
         >
       </button>
     {/if}

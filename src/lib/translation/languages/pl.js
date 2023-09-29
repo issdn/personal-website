@@ -10,8 +10,9 @@ export default {
     "Namaluj na mojej stronie internetowej, aby KAŻDY mógł ją zobaczyć (po weryfikacji).",
   mainPar:
     "Lubię majsterkować, budować i myśleć. Możesz się ze mną skontaktować po polsku, niemiecku lub angielsku. Zobacz rzeczy aplikacje które napisałem poniżej lub na moim GitHubie. Klikając przycisk w prawym dolnym rogu możesz także namalować coś na mojej stronie, aby wszyscy (po weryfikacji) mogli to zobaczyć.",
-  subline: "Możesz dobrowolnie używać wszyskich moich projektów. Na mojej stronie nie ma plików cookie, a cache może być wyczyszczony przez kliknięcie tutaj:",
-    skillsTitle: "Kilka rzeczy które znam:",
+  subline:
+    "Możesz dobrowolnie używać wszyskich moich projektów. Na mojej stronie nie ma plików cookie, a cache może być wyczyszczony przez kliknięcie tutaj:",
+  skillsTitle: "Kilka rzeczy które znam:",
   githubProfile: "Profil na Githubie",
   LinkedInProfile: "Profil na LinkedIn",
   CVDownload: "Pobierz moje CV",
@@ -25,7 +26,21 @@ export default {
     "Generator losowych wyzwań dla gry Brawl Stars, korzystający z API postaci i map tej gry.",
   DescAgora:
     "Półanonimowa platforma publikacyjna - posty, komentarze, obserwujący, uwierzytelnianie.",
-    "DescGuessWho": "Onlineowa wersja klasycznej gry planszowej - zgadnij kto?",
-    ErrCanvasCtx:  "Nie można uzyskać kontekstu płótna (canvas ctx).",
-    ErrCanvasCtxDetail: "Twoja przeglądarka może nie wspierac tej technologii."
+  DescGuessWho: "Onlineowa wersja klasycznej gry planszowej - zgadnij kto?",
+  ErrCanvasCtx: "Nie można uzyskać kontekstu płótna (canvas ctx).",
+  ErrCanvasCtxDetail: "Twoja przeglądarka może nie wspierac tej technologii.",
+  DESCMoveTabBackwards: "Przesuń zakładkę wstecz",
+  DESCMoveTabForward: "Przesuń zakładkę do przodu",
+  DESCSetTabTo0: "Ustaw zakładkę na 0",
+  DESCTurnOnDarkMode: "Włącz tryb ciemny",
+  DESCTurnOffDarkMode: "Wyłącz tryb ciemny",
+  DESCClearCanvas: "Wyczyść płótno",
+  DESCDragToolbox: "Przeciągnij narzędziownię",
+  DESCSubmitYourPainting: "Prześlij swoje malowidło",
+  DESCEraser: "Gumka",
+  DESCMoveCanvas: "Przesuń płótno",
+  DESCDragElement: "Przeciągnij element",
+  DESCChangeLanguageDropdownToggle: "Przełącznik języka",
+  DESCInformationAboutPixelPainter: "Informacje o malarzu pikseli",
+  DESCTurnOnPixelPainter: "Włącz malarza pikseli",
 };

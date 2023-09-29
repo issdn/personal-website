@@ -27,6 +27,20 @@ export default {
   DescAgora:
     "Halbanonyme Veröffentlichungsplattform - Beiträge, Kommentare, Follower, Authentifizierung.",
   DescGuessWho: "Eine Online-Version des klassischen Tischspiels - Wer ist es?",
-  ErrCanvasCtx:  "Canvas-Kontext konnte nicht abgerufen werden.",
-  ErrCanvasCtxDetail: "Dein Browser unterstützt möglicherweise kein Canvas."
+  ErrCanvasCtx: "Canvas-Kontext konnte nicht abgerufen werden.",
+  ErrCanvasCtxDetail: "Dein Browser unterstützt möglicherweise kein Canvas.",
+  DESCMoveTabBackwards: "Tab zurück bewegen",
+  DESCMoveTabForward: "Tab vorwärts bewegen",
+  DESCSetTabTo0: "Tab auf 0 setzen",
+  DESCTurnOnDarkMode: "Dunklen Modus einschalten",
+  DESCTurnOffDarkMode: "Dunklen Modus ausschalten",
+  DESCClearCanvas: "Leinwand löschen",
+  DESCDragToolbox: "Werkzeugkasten ziehen",
+  DESCSubmitYourPainting: "Ihr Gemälde abschicken",
+  DESCEraser: "Radiergummi",
+  DESCMoveCanvas: "Leinwand bewegen",
+  DESCDragElement: "Element ziehen",
+  DESCChangeLanguageDropdownToggle: "Dropdown-Menü für die Sprachänderung",
+  DESCInformationAboutPixelPainter: "Informationen über den Pixelkunstmaler",
+  DESCTurnOnPixelPainter: "Pixelkunstmaler einschalten",
 };

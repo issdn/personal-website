@@ -6,6 +6,7 @@
   import icon from "$lib/assets/icon32.png?url";
   import Arrow from "$lib/symbols/Arrow.svelte"
   import Refresh from "$lib/symbols/Refresh.svelte"
+  import Desc from "$lib/translation/Desc.svelte";
 
   import { texts, type TranslationKeys } from "$lib/translation";
 
@@ -72,9 +73,12 @@
     class="font-arial flex flex-row tabs-center gap-x-4 bg-light-tint-20 dark:bg-dark-tint-10 py-1 px-4"
   >
     <div class="flex flex-row text-xl gap-x-1">
-      <button class="h-8 w-8 flex flex-row items-center justify-center hover:bg-white/25 rounded-md fill-primary dark:fill-light" on:click={() => (index = (index + imageByProject.length - 1) % imageByProject.length)}><Arrow class="h-6 w-6"/></button>
-      <button class="h-8 w-8 flex flex-row items-center justify-center hover:bg-white/25 rounded-md fill-primary dark:fill-light" on:click={() => (index = (index + 1) % imageByProject.length)}><Arrow class="h-6 w-6 rotate-180"/></button>
-      <button class="h-8 w-8 flex flex-row items-center justify-center hover:bg-white/25 rounded-md fill-primary dark:fill-light" on:click={() => (index = 0)}><Refresh class="h-6 w-6"/></button>
+      <button class="h-8 w-8 flex flex-row items-center justify-center hover:bg-white/25 rounded-md fill-primary dark:fill-light" on:click={() => (index = (index + imageByProject.length - 1) % imageByProject.length)}>
+        <Arrow class="h-6 w-6"/><Desc descKey="DESCMoveTabBackwards"/></button>
+      <button class="h-8 w-8 flex flex-row items-center justify-center hover:bg-white/25 rounded-md fill-primary dark:fill-light" on:click={() => (index = (index + 1) % imageByProject.length)}>
+        <Arrow class="h-6 w-6 rotate-180"/><Desc descKey="DESCMoveTabBackwards"/></button>
+      <button class="h-8 w-8 flex flex-row items-center justify-center hover:bg-white/25 rounded-md fill-primary dark:fill-light" on:click={() => (index = 0)}>
+        <Refresh class="h-6 w-6"/><Desc descKey="DESCSetTabTo0"/></button>
     </div>
     <span class="bg-light rounded-sm dark:bg-dark px-2 py-1 w-full">
       <a target="_blank"
@@ -84,7 +88,10 @@
     </a>
   </span>
   </div>
+  <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+  <!-- Because the element is scrollable. -->
   <div
+    tabindex="0"
     bind:this={page}
     class="h-full overflow-y-scroll bg-white text-black font-serif p-8 flex flex-col gap-y-4"
   >

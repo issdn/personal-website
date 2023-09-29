@@ -9,7 +9,8 @@ export default {
     "Paint over my website for EVERYONE to see (after verification).",
   mainPar:
     "I like to tinker, build and think. You can contact me in Polish, German or English. Check out stuff I built in the browser below or on my github. You can also draw on my page for everyone (after verification) to see by clicking the button in the right bottom corner.",
-  subline: "Feel free to use any of my projects. No cookies on my website and cache you can clear by clicking here:",
+  subline:
+    "Feel free to use any of my projects. No cookies on my website and cache you can clear by clicking here:",
   ClearCache: "Clear Cache",
   skillsTitle: "Some stuff I know:",
   githubProfile: "Github profile",
@@ -26,6 +27,20 @@ export default {
   DescAgora:
     "Semi-anonymous publishing platform - posts, comments, followers, auth.",
   DescGuessWho: "An online version of classic table game - guess who?",
-  ErrCanvasCtx:  "Couldn't get canvas context.",
-  ErrCanvasCtxDetail: "Your browser might not support canvas."
+  ErrCanvasCtx: "Couldn't get canvas context.",
+  ErrCanvasCtxDetail: "Your browser might not support canvas.",
+  DESCMoveTabBackwards: "Move tab backwards",
+  DESCMoveTabForward: "Move tab forward",
+  DESCSetTabTo0: "Set tab to 0",
+  DESCTurnOnDarkMode: "Turn on dark mode",
+  DESCTurnOffDarkMode: "Turn off dark mode",
+  DESCClearCanvas: "Clear canvas",
+  DESCDragToolbox: "Drag Toolbox",
+  DESCSubmitYourPainting: "Submit your painting",
+  DESCEraser: "Eraser",
+  DESCMoveCanvas: "Move canvas",
+  DESCDragElement: "Drag Element",
+  DESCChangeLanguageDropdownToggle: "Change language dropdown toggle",
+  DESCInformationAboutPixelPainter: "Information about pixel art painter",
+  DESCTurnOnPixelPainter: "Turn on pixel art painter",
 };

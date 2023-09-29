@@ -11,6 +11,7 @@
   import InkEraser from "$lib/symbols/InkEraser.svelte";
   import ToolButton from "./ToolButton.svelte";
   import { center, focusOnMount } from "../actions";
+  import Desc from "$lib/translation/Desc.svelte";
 
   let colorsExpanded = false;
   let dragButton: HTMLSpanElement;
@@ -207,7 +208,7 @@
         on:touchstart={() => (dragging = true)}
       >
         <DragIndicator class="fill-stone-500 h-8 w-8"
-          ><desc>Drag Toolbox</desc></DragIndicator
+          ><Desc descKey="DESCDragToolbox"/></DragIndicator
         >
       </span>
 
@@ -218,7 +219,7 @@
           active={false}
           aria-label="Clear All"
           on:click={handleClearAllClick}
-          ><Close class="h-8 w-8"><desc>Clear canvas</desc></Close></ToolButton
+          ><Close class="h-8 w-8"><Desc descKey="DESCClearCanvas"/></Close></ToolButton
         >
         <ToolButton
           shortcut="Ctrl+S"
@@ -227,7 +228,7 @@
           aria-label="Save"
           disabled={saving}
           on:click={handleSave}
-          ><Check class="h-8 w-8"><desc>Submit your painting</desc></Check
+          ><Check class="h-8 w-8"><Desc descKey="DESCSubmitYourPainting"/></Check
           ></ToolButton
         >
       </div>
@@ -242,7 +243,7 @@
           aria-label="Toggle Erase"
           on:click={handleEraseClick}
         >
-          <InkEraser class="h-8 w-8"><desc>Brush like eraser</desc></InkEraser>
+          <InkEraser class="h-8 w-8"><Desc descKey="DESCEraser"/></InkEraser>
         </ToolButton>
         <ToolButton
           shortcut="Num 2"
@@ -250,7 +251,7 @@
           active={action === "move"}
           aria-label="Toggle Move"
           on:click={handleMoveClick}
-          ><DragPan class="h-8 w-8"><desc>Move canvas</desc></DragPan
+          ><DragPan class="h-8 w-8"><Desc descKey="DESCMoveCanvas"/></DragPan
           ></ToolButton
         >
         <span
