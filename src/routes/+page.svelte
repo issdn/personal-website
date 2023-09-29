@@ -111,7 +111,7 @@
           class="bg-primary dark:bg-light text-light w-fit dark:text-dark rounded-md px-2"
           >{$texts["MadeWithSvelte"]}</span
         >
-        <span><Unlicense class="w-6 mr-2 [&>path]:fill-primary dark:[&>path]:fill-light inline"/>Karol Bielski</span>
+        <span use:tooltip={{text:"Unlicense"}}><Unlicense class="w-6 mr-2 [&>path]:fill-primary dark:[&>path]:fill-light inline"/>Karol Bielski</span>
         <a href="mailto:karol.bielski@gmx.de" class="w-fit"
           >karol.bielski@gmx.de</a
         >

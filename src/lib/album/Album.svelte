@@ -63,7 +63,7 @@
 >
   <div
     style="scrollbar-gutter: stable;"
-    class="flex flex-row gap-x-4 pb-2 pt-1 px-2 items-center overflow-x-auto overflow-y-hidden"
+    class="flex flex-row gap-x-2 pb-2 pt-1 px-2 items-center overflow-x-auto overflow-y-hidden"
   >
     <img alt="Icon" class="h-5" src={icon} />
     {#each imageByProject as { name }, i}
@@ -83,14 +83,14 @@
       <span>🔃</span>
     </div>
     <span class="w-full pt-0.5 bg-light dark:bg-dark text-md px-1 truncate">
-      https://github.com/issdn/about/{imageByProject[currIndex].name
+      http://www.past.com/{imageByProject[currIndex].name
         .toLowerCase()
         .replace(" ", "")}.html
     </span>
   </div>
   <div
     bind:this={page}
-    class="h-full overflow-scroll bg-white text-black font-serif p-8 flex flex-col gap-y-4"
+    class="h-full overflow-y-scroll bg-white text-black font-serif p-8 flex flex-col gap-y-4"
   >
   {#if imageByProject[currIndex].descKey}
     <h2 class="text-xl font-bold">{imageByProject[currIndex].name}</h2>
