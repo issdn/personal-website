@@ -2,8 +2,15 @@ import { writable } from "svelte/store";
 import type { TranslationShape, Translations } from ".";
 
 const createLanguageStore = () => {
-  const { subscribe, set } = writable<Translations>();
+  const { subscribe, set: _set } = writable<Translations>();
   
+  const set = (newLanguage: Translations) => {
+    if(document) {
+      document.getElementsByTagName("html")[0].setAttribute("lang", newLanguage)
+    }
+    _set(newLanguage)
+  }
+
   return {
     subscribe,
     set,

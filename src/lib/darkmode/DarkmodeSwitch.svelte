@@ -28,7 +28,7 @@
   on:blur={() => (hovering = false)}
   aria-label="Toggle dark mode"
   on:click={toggle}
-  class="h-16 w-16 rounded-full relative hover:bg-accent-secondary dark:hover:bg-accent-secondary-dark overflow-hidden"
+  class="h-16 w-16 rounded-full relative focus:bg-accent-secondary dark:focus:bg-accent-secondary-dark hover:bg-accent-secondary dark:hover:bg-accent-secondary-dark overflow-hidden"
 >
   {#if $darkmode}
     <DarkMode

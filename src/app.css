@@ -6,6 +6,9 @@
 	a:focus,button:focus,[role="button"]:focus{
 		@apply outline-primary outline;
 	}
+	[tabindex="0"]:focus{
+		@apply outline-primary outline outline-4;
+	}
 }
 
 @layer utilities {

@@ -43,7 +43,6 @@ const tooltip = (node: HTMLElement | SVGSVGElement, params: TooltipParams) => {
     if (!position || position === "static") {
       node.style.position = "relative";
     }
-    console.log(component);
     if (!component) {
       newTooltip();
     }

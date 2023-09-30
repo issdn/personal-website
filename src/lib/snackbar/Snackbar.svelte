@@ -60,6 +60,9 @@
 
 {#if show}
   <div
+    aria-atomic="true"
+    aria-live={type === SnackbarType.success ? "polite" : "assertive"}
+    role="alert"
     transition:slide
     class={`${styles[type]} text-light relative overflow-hidden pointer-events-auto rounded-md drop-shadow-lg justify-between md:max-w-[28rem] flex flex-row gap-x-4 py-2 px-4 items-center`}
   >

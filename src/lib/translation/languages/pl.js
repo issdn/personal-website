@@ -4,6 +4,8 @@ export default {
   erase: "Wymaż",
   drag: "Przeciągnij",
   title: "Cześć, jestem Karol",
+  Open: "Otwórz",
+  Close: "Zamknij",
   ClearCache: "Wyczyść Pamięć Podręczną",
   CacheCleared: "Pamięć podręczna wyczyszczona!",
   painterInfo:

@@ -184,8 +184,8 @@
   on:keydown={handleKeyboardShortcuts}
 />
 
-
   <div
+    role="menu"
     use:center={(pos) => (position = pos)}
     in:fly={{ y: -100 }}
     style={`left: ${position.x}px; top: ${position.y}px;`}
@@ -268,7 +268,7 @@
     {#if colorsExpanded}
       <div transition:slide class="h-[180px] overflow-y-hidden mt-4">
         <div class="flex flex-col justify-between h-[180px]">
-          <div class="flex flex-row justify-between">
+          <div role="group" class="flex flex-row justify-between">
             {#each COLORS as subcolors}
               <div class="flex flex-col gap-y-2">
                 {#each subcolors as colorObj}

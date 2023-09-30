@@ -3,6 +3,8 @@ export default {
   submit: "Einreichen",
   erase: "Löschen",
   drag: "Ziehen",
+  Open: "Öffnen",
+  Close: "Schließen",
   title: "Hallo, ich bin Karol",
   ClearCache: "Cache Leeren",
   CacheCleared: "Cache geleert!",

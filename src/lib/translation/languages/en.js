@@ -5,6 +5,8 @@ export default {
   drag: "Drag",
   title: "Hi, I'm Karol",
   CacheCleared: "Cache cleared!",
+  Open: "Open",
+  Close: "Close",
   painterInfo:
     "Paint over my website for EVERYONE to see (after verification).",
   mainPar:
