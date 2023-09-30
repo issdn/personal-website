@@ -16,7 +16,7 @@
   <button
     id="language-change-dropdown"
     aria-haspopup="listbox"
-    aria-controls="language-dropdown-listbox"
+    aria-controls={expanded ? "language-dropdown-listbox" : null}
     aria-label="Language Change Dropdown Toggle"
     on:click={() => (expanded = !expanded)}
     on:keydown={(e) => {

@@ -146,7 +146,7 @@
       </div>
     </footer>
   </div>
-  <div
+  <aside
     class="absolute bottom-10 right-4 md:right-16 lg:right-10 z-10 flex flex-col gap-y-2 items-end"
   >
     {#if !pageLoaded}
@@ -211,7 +211,7 @@
         </button>
       </div>
     {/if}
-  </div>
+  </aside>
   {#if painterEnabled}
     {#await painterData}
       <span

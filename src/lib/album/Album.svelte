@@ -99,28 +99,35 @@
   class="w-full h-[40rem] flex flex-col border-2 border-primary dark:border-light bg-light dark:bg-dark p-1 text-dark dark:text-light rounded-sm"
 >
   <div
-    on:keydown={(e) => {if(e.key === "ArrowRight" || e.key === "ArrowDown") focusAndPrevent(e)}}
-    tabindex="0"
-    role="tablist"
-    id="album-tablist"
     style="scrollbar-gutter: stable;"
-    class="flex flex-row gap-x-2 pb-2 pt-1 px-2 items-center tabs-center overflow-x-auto overflow-y-hidden"
+    class="flex flex-row gap-x-2 pb-2 pt-1 px-2 items-center overflow-x-auto overflow-y-hidden"
   >
     <img alt="Icon" class="h-5" src={icon} />
-    {#each imageByProject as { name }, i}
-      <button
-        on:keydown={handleTabKeydown}
-        id={`album-tab-${i}`}
-        aria-controls={`album-tabpanel-${index}`}
-        role="tab"
-        aria-selected={name === tab.name ? "true" : "false"}
-        on:click={() => (index = i)}
-        class={`${
-          name === tab.name && "bg-light-tint-20 dark:bg-dark-tint-10"
-        } hover:bg-light-tint-20 dark:hover:bg-dark-tint-10 px-2 rounded-sm font-primary whitespace-nowrap`}
-        >{name}<b class="font-secondary">&nbsp;x</b></button
-      >
-    {/each}
+    <div
+      class="flex flex-row gap-x-2 pb-2 pt-1 px-2 items-center"
+      on:keydown={(e) => {
+        if (e.key === "ArrowRight" || e.key === "ArrowDown") focusAndPrevent(e);
+      }}
+      tabindex="0"
+      role="tablist"
+      id="album-tablist"
+    >
+      {#each imageByProject as { name }, i}
+        <button
+          on:keydown={handleTabKeydown}
+          id={`album-tab-${i}`}
+          aria-controls={index === i ? `album-tabpanel-${index}` : null}
+          role="tab"
+          aria-selected={name === tab.name ? "true" : "false"}
+          on:click={() => (index = i)}
+          class={`${
+            name === tab.name && "bg-light-tint-20 dark:bg-dark-tint-10"
+          } hover:bg-light-tint-20 dark:hover:bg-dark-tint-10 px-2 rounded-sm font-primary whitespace-nowrap`}
+        >
+          {name}<b class="font-secondary">&nbsp;x</b>
+        </button>
+      {/each}
+    </div>
   </div>
   <div
     class="font-arial flex flex-row tabs-center gap-x-4 bg-light-tint-20 dark:bg-dark-tint-10 py-1 px-4"
