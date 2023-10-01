@@ -12,7 +12,7 @@ export default {
   mainPar:
     "I like to tinker, build and think. You can contact me in Polish, German or English. Check out stuff I built in the browser below or on my github. You can also draw on my page for everyone (after verification) to see by clicking the button in the right bottom corner.",
   subline:
-    "Feel free to use any of my projects. No cookies on my website and cache you can clear by clicking here:",
+    "Feel free to use any of my projects. No cookies on this website.",
   ClearCache: "Clear Cache",
   skillsTitle: "Some stuff I know:",
   githubProfile: "Github profile",

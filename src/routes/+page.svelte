@@ -78,13 +78,6 @@
     painterEnabled = painterEnabled ? false : true;
   };
 
-  const clearCache = async () => {
-    caches.keys().then((keys) => {
-      keys.forEach(async (k) => await caches.delete(k));
-    });
-    snackbars.add($texts["CacheCleared"]);
-  };
-
   onMount(() => {
     isTouchScreen.set("ontouchstart" in window ? true : false);
     language.set("en")
@@ -107,11 +100,6 @@
         <p>{$texts["mainPar"]}</p>
         <p class="opacity-80 dark:opacity-60 mt-4 text-sm">
           {$texts["subline"]}
-          &nbsp;<button
-            on:click={clearCache}
-            class="border border-primary dark:border-light px-2 rounded-md"
-            >{$texts["ClearCache"]}
-          </button>
         </p>
       </section>
       <Album />

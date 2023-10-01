@@ -13,7 +13,7 @@ export default {
   mainPar:
     "Ich mag es zu basteln, zu bauen und zu denken. Du kannst mich auf Polnisch, Deutsch oder Englisch kontaktieren. Schau dir die Sachen an, die ich gemacht habe, unten oder auf meinem GitHub. Du kannst auch auf meiner Seite für alle zeichnen (nach Verifizierung), indem du auf den Button in der rechten unteren Ecke klickst",
   subline:
-    "Du kannst gerne eines meiner Projekte verwenden. Auf meiner Website gibt es keine Cookies, und den Cache kannst du hier leeren:",
+    "Du kannst gerne eines meiner Projekte verwenden. Auf meiner Website gibt es keine Cookies.",
   skillsTitle: "Einige Sachen die ich kenne:",
   githubProfile: "Github Profil",
   LinkedInProfile: "LinkedIn Profil",
