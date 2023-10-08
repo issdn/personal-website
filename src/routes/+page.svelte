@@ -15,6 +15,7 @@
   import Unlicense from "$lib/symbols/Unlicense.svelte";
   import Desc from "$lib/translation/Desc.svelte";
   import Kbd from "$lib/visual_indicators/Kbd.svelte";
+  import AboutLineSection from "$lib/about_line/AboutLineSection.svelte";
 
   texts.set(en);
 
@@ -80,7 +81,7 @@
 
   onMount(() => {
     isTouchScreen.set("ontouchstart" in window ? true : false);
-    language.set("en")
+    language.set("en");
     pageLoaded = true;
   });
 </script>
@@ -93,6 +94,7 @@
   >
     <Navbar />
     <main class="flex flex-col gap-y-24">
+      <AboutLineSection />
       <section transition:fade={{ delay: 200 }} class="text-xl">
         <h1 class="text-5xl font-extrabold font-primary">
           {$texts["title"]}
