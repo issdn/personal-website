@@ -44,5 +44,18 @@ export default {
   DESCDragElement: "Przeciągnij element",
   DESCChangeLanguageDropdownToggle: "Przełącznik języka",
   DESCInformationAboutPixelPainter: "Informacje o malarzu pikseli",
+  DESCContrastMode: "Przełącznik trybu wysokiego kontrastu",
   DESCTurnOnPixelPainter: "Włącz malarza pikseli",
+  SSG: `Mój serwer zbudowany na FastAPI,
+  Flask, Node lub GO zostanie wdrożony na platformach takich jak GCP, AWS, Vercel
+  lub Netlify i zwróci odpowiedź w postaci strony internetowej. Brakuje mi niezbędnej
+  wiedzy, aby budować cokolwiek związanego z bezpieczeństwem, dlatego korzystam z platform trzecich
+  takich jak: Clerk lub Firebase Auth. Dane będą przechowywane za pomocą
+  NoSQL, takiego jak MongoDB lub Firestore, lub bazy danych relacyjnej
+  takiej jak PostgreSQL lub MySQL.`,
+  SSR: `Frameworki komponentów oparte na stanie, takie jak NextJS, SvelteKit lub Astro. Przycisk, który właśnie nacisnąłeś, zmienił stan zmiennej "index" na 1, co wyświetla informacje na temat "SSR" 😀. UX w formie
+  prędkości i dostępności to to, do czego dążę. Dynamiczne importy, preloading, obsesyjne dbanie o rozmiar paczek tylko po to, aby zaoszczędzić kilka milisekund.`,
+  SPA: `UI - utrzymuję go w prostocie, co dodatkowo poprawia UX. 
+  Dostępne komponenty, napisane w semantycznym HTML, stylizowane w TailwindCSS. Zwracam uwagę na rzeczy takie jak przycisk o wysokim kontraście po prawej stronie czy też wygodne sterowanie klawiszami na udawanej przeglądarki powyżej. Jednak trudno jest mi debugować te rzeczy, ponieważ nie mam żadnych niepełnosprawności.`,
+  AboutLineAppendix: "SSG, SSR i SPA mają tu znaczenie symboliczne.",
 };

@@ -6,9 +6,10 @@
   import LanguageDropdown from "$lib/translation/LanguageDropdown.svelte";
   import { texts } from "$lib/translation";
   import { tooltip } from "$lib/tooltip";
-  import {darkmode} from "$lib/darkmode";
+  import { darkmode } from "$lib/darkmode";
   import { fade } from "svelte/transition";
   import OpenInNew from "$lib/symbols/OpenInNew.svelte";
+  import { Sides } from "$lib/tooltip/tooltipAction";
 
   $: iconsColor = $darkmode ? "#E8E2E2" : "#5D3891";
 </script>
@@ -17,7 +18,12 @@
   <div class="flex flex-row justify-between">
     <ul class="flex flex-row gap-x-4 md:gap-x-6 items-center">
       <li
-        use:tooltip={{ text: $texts["githubProfile"], icon: OpenInNew }}
+        use:tooltip={{
+          text: $texts["githubProfile"],
+          icon: OpenInNew,
+          className: "whitespace-nowrap",
+          side: Sides.BR,
+        }}
       >
         <a
           aria-label="Link to my github profile."
@@ -29,6 +35,7 @@
         use:tooltip={{
           text: $texts["LinkedInProfile"],
           icon: OpenInNew,
+          className: "whitespace-nowrap",
         }}
       >
         <a
@@ -38,7 +45,11 @@
         >
       </li>
       <li
-        use:tooltip={{ text: $texts["CVDownload"], icon: OpenInNew }}
+        use:tooltip={{
+          text: $texts["CVDownload"],
+          icon: OpenInNew,
+          className: "whitespace-nowrap",
+        }}
       >
         <a
           aria-label="S3 link to download my CV"

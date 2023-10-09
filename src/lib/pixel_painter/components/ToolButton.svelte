@@ -10,7 +10,7 @@
 <button
   use:tooltip={{
     text: $texts[label],
-    textSize: "text-sm",
+    className: "text-sm",
     isTouchScreen: $isTouchScreen,
     showOnMobile: false,
   }}

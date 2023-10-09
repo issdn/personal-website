@@ -1,9 +1,19 @@
 import Tooltip from "./Tooltip.svelte";
-import type { Sides } from "./tooltipPositionFunctions";
 import type { ComponentType } from "svelte";
 
+export enum Sides {
+  TM = "tm",
+  BM = "bm",
+  TL = "tl",
+  TR = "tr",
+  BL = "bl",
+  BR = "br",
+  L = "l",
+  R = "r",
+}
+
 const defaultParams = {
-  side: "b" as Sides,
+  side: Sides.BM,
   icon: null,
   isTouchScreen: false,
   showOnMobile: true,
@@ -14,7 +24,7 @@ type TooltipParams = {
   side?: Sides;
   icon?: ComponentType | null;
   isTouchScreen?: boolean;
-  textSize?: string;
+  className?: string;
   showOnMobile?: boolean;
 };
 
@@ -27,7 +37,8 @@ const tooltip = (node: HTMLElement | SVGSVGElement, params: TooltipParams) => {
       props: {
         text: _params.text,
         icon: _params.icon,
-        textSize: _params.textSize,
+        className: _params.className,
+        side: _params.side,
       },
     });
   };

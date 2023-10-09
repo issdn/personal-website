@@ -98,13 +98,10 @@
 <div
   class="w-full h-[40rem] flex flex-col border-2 border-primary dark:border-light bg-light dark:bg-dark p-1 text-dark dark:text-light rounded-sm"
 >
-  <div
-    style="scrollbar-gutter: stable;"
-    class="flex flex-row gap-x-2 pb-2 pt-1 px-2 items-center overflow-x-auto overflow-y-hidden"
-  >
-    <img alt="Icon" class="h-5" src={icon} />
+  <div class="flex flex-row gap-x-2 pb-2 pt-1 px-2 items-center">
+    <img alt="Icon" class="h-6" src={icon} />
     <div
-      class="flex flex-row gap-x-2 pb-2 pt-1 px-2 items-center"
+      class="flex flex-row gap-x-2 py-1 px-2 items-center overflow-x-auto overflow-y-hidden"
       on:keydown={(e) => {
         if (e.key === "ArrowRight" || e.key === "ArrowDown") focusAndPrevent(e);
       }}

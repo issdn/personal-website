@@ -1,84 +1,94 @@
 <script lang="ts">
   import Line from "$lib/assets/Line.svelte";
-  import { tooltip } from "$lib/tooltip";
+  import { texts } from "$lib/translation";
   import { SvelteComponentTyped, onMount } from "svelte";
   import { fade } from "svelte/transition";
+  import Contrast from "$lib/symbols/Contrast.svelte";
 
-  let linesOffsets = { red: 0, green: 0, blue: 0 };
-  let linesWidth = { red: 0, green: 0, blue: 0 };
-
-  let line: SvelteComponentTyped | null;
+  let contrastMode = false;
   let section: HTMLElement | null;
   let isVisible = false;
   let lineDrawn = false;
 
-  const setWidthsAndOffsets = () => {
-    let redLine = document.getElementById("line-red")?.getBoundingClientRect();
-    let greenLine = document
-      .getElementById("line-green")
-      ?.getBoundingClientRect();
-    let blueLine = document
-      .getElementById("line-blue")
-      ?.getBoundingClientRect();
-    if (redLine && greenLine && blueLine) {
-      linesOffsets = {
-        red: 0,
-        green: redLine.width,
-        blue: redLine.width + greenLine.width,
-      };
-      linesWidth = {
-        red: redLine.width,
-        green: greenLine.width,
-        blue: blueLine.width,
-      };
-    }
-  };
   onMount(() => {
-    isVisible = true;
-    setTimeout(() => {
-      setWidthsAndOffsets();
-      lineDrawn = true;
-    }, 3100);
+    new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            isVisible = true;
+            setTimeout(() => {
+              lineDrawn = true;
+            }, 2250);
+          }
+        });
+      },
+      { threshold: 1 }
+    ).observe(section!);
   });
 
-  const pssg = `This I use much less and 100% in the cloud. My server built on FastAPI,
-      Flask, Node or GO will be deployed using platforms like GCP, AWS, Vercel
-      or Netlify and return a response with website like this. I lack necessary
-      expertise to build anything around security, therefore I use third-party
-      platforms like: Clerk or Firebase Auth. The data will be persisted using
-      either NoSQL like MongoDB or Firestore or relational database like
-      PostgreSQL or MySQL.`;
-  const pspa = `This I know the best - NextJS, SvelteKit, Astro, Tailwind, etc. UX in form
-      of speed and accessibility is what I strive for. UI - I keep it simple
-      which additionally enhances the UX.`;
+  const textKeys = ["SSG", "SSR", "SPA"] as const;
+
+  let index = 0;
+
+  const handleChangeText = (i: number) => {
+    index = i;
+  };
 </script>
 
-<section class="w-full h-screen relative pt-6 pb-12" bind:this={section}>
-  <b class="absolute left-0 top-2 text-detail-red font-primary">Server</b>
-  <b class="absolute right-0 top-2 text-detail-blue font-primary">Client</b>
-  {#if lineDrawn}
-    <b
-      use:tooltip={{ text: pssg }}
-      transition:fade={{ delay: 500 }}
-      style={`left:${linesWidth.red / 2}px;`}
-      class="top-0 -translate-x-1/2 absolute font-primary text-detail-red"
-      >SSG</b
+<div class="w-full min-h-[250px]" bind:this={section}>
+  <div class="flex flex-row justify-between gap-x-4 pb-2">
+    <em class="text-sm">*{$texts["AboutLineAppendix"]}</em>
+    <button
+      aria-label={$texts["DESCContrastMode"]}
+      class="dark:fill-light fill-primary"
+      on:click={() => (contrastMode = !contrastMode)}
+      ><Contrast bind:on={contrastMode} /></button
     >
-    <b
-      transition:fade={{ delay: 500 }}
-      style={`left:${linesOffsets.green + linesWidth.green / 2}px;`}
-      class="top-0 -translate-x-1/2 absolute font-primary text-detail-green"
-      >SSR</b
-    >
-    <b
-      use:tooltip={{ text: pspa }}
-      transition:fade={{ delay: 500 }}
-      style={`left:${linesOffsets.blue + linesWidth.blue / 2}px;`}
-      class="top-0 -translate-x-1/2 absolute font-primary text-detail-blue"
-      >SPA</b
-    >
-  {/if}
+  </div>
+  <div class="flex flex-row justify-between">
+    <b class={`${!contrastMode && "text-detail-red"} font-primary`}>Server</b>
+    <b class={`${!contrastMode && "text-detail-blue"} font-primary`}>Client</b>
+  </div>
   {#if isVisible}
-    <Line bind:this={line} class="w-full" />
+    <Line bind:index class="w-full" />
   {/if}
-</section>
+  <div class="flex flex-row gap-x-10 justify-around h-6">
+    {#if lineDrawn}
+      <button
+        on:click={() => handleChangeText(0)}
+        transition:fade={{ delay: 500 }}
+        class={`font-primary ${!contrastMode && "text-detail-red"} rounded-md ${
+          index === 0 && "font-extrabold"
+        }`}>SSG</button
+      >
+      <button
+        on:click={() => handleChangeText(1)}
+        transition:fade={{ delay: 500 }}
+        class={`font-primary ${
+          !contrastMode && "text-detail-green"
+        } rounded-md ${index === 1 && "font-extrabold"}`}>SSR</button
+      >
+      <button
+        on:click={() => handleChangeText(2)}
+        transition:fade={{ delay: 500 }}
+        class={`font-primary ${
+          !contrastMode && "text-detail-blue"
+        } rounded-md ${index === 2 && "font-extrabold"}`}>SPA</button
+      >
+    {/if}
+  </div>
+  {#if lineDrawn}
+    {#key index}
+      <p
+        data-textKey={textKeys[index]}
+        in:fade
+        class={`mt-4 font-primary ${
+          !contrastMode &&
+          "data-[textKey=SSG]:text-detail-red data-[textKey=SSR]:text-detail-green data-[textKey=SPA]:text-detail-blue"
+        }`}
+      >
+        {$texts[textKeys[index]]}
+      </p>
+    {/key}
+  {/if}
+</div>

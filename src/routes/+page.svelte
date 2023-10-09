@@ -16,6 +16,7 @@
   import Desc from "$lib/translation/Desc.svelte";
   import Kbd from "$lib/visual_indicators/Kbd.svelte";
   import AboutLineSection from "$lib/about_line/AboutLineSection.svelte";
+  import { Sides } from "$lib/tooltip/tooltipAction";
 
   texts.set(en);
 
@@ -90,21 +91,25 @@
   <div
     class={`${
       painterEnabled && "pointer-events-none opacity-40"
-    } duration-500 overflow-y-scroll h-full w-full px-4 md:px-16 lg:px-[20%] xl:px-[30%] py-8 flex flex-col justify-between gap-y-24`}
+    } duration-500 overflow-y-scroll h-full w-full px-4 md:px-16 lg:px-[20%] xl:px-[30%] py-8 flex flex-col justify-between gap-y-48`}
   >
     <Navbar />
-    <main class="flex flex-col gap-y-24">
-      <AboutLineSection />
-      <section transition:fade={{ delay: 200 }} class="text-xl">
+    <main class="flex flex-col gap-y-48">
+      <section transition:fade={{ delay: 200 }} class="text-xl h-full">
         <h1 class="text-5xl font-extrabold font-primary">
           {$texts["title"]}
         </h1>
         <p>{$texts["mainPar"]}</p>
-        <p class="opacity-80 dark:opacity-60 mt-4 text-sm">
+        <p class="opacity-80 dark:opacity-60 mt-4 text-base">
           {$texts["subline"]}
         </p>
       </section>
-      <Album />
+      <section class="h-full w-full">
+        <Album />
+      </section>
+      <section class="h-full w-full">
+        <AboutLineSection />
+      </section>
     </main>
     <footer class="flex flex-col py-4 gap-y-6 md:gap-2 text-md w-full">
       <div class="flex flex-col md:flex-row gap-x-6 gap-y-1">
@@ -112,7 +117,7 @@
           class="bg-primary dark:bg-light text-light w-fit dark:text-dark rounded-md px-2"
           >{$texts["MadeWithSvelte"]}</span
         >
-        <span use:tooltip={{ text: "Unlicense" }}
+        <span class="w-fit" use:tooltip={{ text: "Unlicense", side: Sides.TM }}
           ><Unlicense
             class="w-6 mr-2 [&>path]:fill-primary dark:[&>path]:fill-light inline"
           />Karol Bielski</span
@@ -180,6 +185,7 @@
           use:tooltip={{
             text: $texts["painterInfo"],
             isTouchScreen: $isTouchScreen,
+            side: Sides.TL,
           }}
           ><Help class="fill-primary dark:fill-light h-8 w-8"
             ><Desc descKey="DESCInformationAboutPixelPainter" /></Help

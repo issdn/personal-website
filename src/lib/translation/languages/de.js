@@ -45,4 +45,16 @@ export default {
   DESCChangeLanguageDropdownToggle: "Dropdown-Menü für die Sprachänderung",
   DESCInformationAboutPixelPainter: "Informationen über den Pixelkunstmaler",
   DESCTurnOnPixelPainter: "Pixelkunstmaler einschalten",
+  DESCContrastMode: "Hochkontrastmodus umschalten",
+  SSG: `Mein Server, der auf FastAPI,
+  Flask, Node oder GO basiert, wird auf Plattformen wie GCP, AWS, Vercel
+  oder Netlify bereitgestellt und gibt eine Antwort in Form einer Webseite zurück. Mir fehlt das notwendige
+  Fachwissen, um etwas im Bereich Sicherheit zu entwickeln, daher nutze ich Drittanbieterplattformen wie Clerk oder Firebase Auth. Die Daten werden gespeichert mit
+  entweder NoSQL wie MongoDB oder Firestore oder einer relationalen Datenbank wie
+  PostgreSQL oder MySQL.`,
+  SSR: `Zustandsbasierte Komponentenframeworks wie NextJS, SvelteKit oder Astro. Der Button, den du gerade gedrückt hast, hat den Zustand der Variable "index" auf 1 geändert, was Informationen über "SSR" anzeigt 😀. UX in Form von
+  Geschwindigkeit und Zugänglichkeit ist mein Ziel. Dynamische Imports, Vorladen, obsessives Überwachen der Bündelgröße, nur um ein paar Millisekunden zu sparen.`,
+  SPA: `UI - Ich halte es einfach, was die UX zusätzlich verbessert. 
+  Barrierefreie Komponenten, verfasst in semantischem HTML, gestylt in TailwindCSS. Ich achte auf Dinge wie den Hochkontrast-Button auf der rechten Seite oder die angenehme Tastensteuerung auf dem simulierten Browser oben. Es ist jedoch schwierig, diese Dinge zu debuggen, da ich keine Behinderung habe.`,
+  AboutLineAppendix: "SSG, SSR und SPA haben hier eine symbolische Bedeutung.",
 };
