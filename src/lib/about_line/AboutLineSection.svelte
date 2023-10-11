@@ -46,8 +46,10 @@
     >
   </div>
   <div class="flex flex-row justify-between">
-    <b class={`${!contrastMode && "text-detail-red"} font-primary`}>Server</b>
-    <b class={`${!contrastMode && "text-detail-blue"} font-primary`}>Client</b>
+    <b class={`${!contrastMode && "text-primary"} font-primary`}>Server</b>
+    <b class={`${!contrastMode && "text-primary-tint-20"} font-primary`}
+      >Client</b
+    >
   </div>
   {#if isVisible}
     <Line bind:index class="w-full" />
@@ -57,23 +59,25 @@
       <button
         on:click={() => handleChangeText(0)}
         transition:fade={{ delay: 500 }}
-        class={`font-primary ${!contrastMode && "text-detail-red"} rounded-md ${
-          index === 0 && "font-extrabold"
+        class={`font-primary ${!contrastMode && "text-primary"} rounded-md ${
+          index === 0 ? "font-extrabold" : "grayscale"
         }`}>SSG</button
       >
       <button
         on:click={() => handleChangeText(1)}
         transition:fade={{ delay: 500 }}
         class={`font-primary ${
-          !contrastMode && "text-detail-green"
-        } rounded-md ${index === 1 && "font-extrabold"}`}>SSR</button
+          !contrastMode && "text-primary-tint-10"
+        } rounded-md ${index === 1 ? "font-extrabold" : "grayscale"}`}
+        >SSR</button
       >
       <button
         on:click={() => handleChangeText(2)}
         transition:fade={{ delay: 500 }}
         class={`font-primary ${
-          !contrastMode && "text-detail-blue"
-        } rounded-md ${index === 2 && "font-extrabold"}`}>SPA</button
+          !contrastMode && "text-primary-tint-20"
+        } rounded-md ${index === 2 ? "font-extrabold" : "grayscale"}`}
+        >SPA</button
       >
     {/if}
   </div>
@@ -84,7 +88,7 @@
         in:fade
         class={`mt-4 font-primary ${
           !contrastMode &&
-          "data-[textKey=SSG]:text-detail-red data-[textKey=SSR]:text-detail-green data-[textKey=SPA]:text-detail-blue"
+          "data-[textKey=SSG]:text-primary data-[textKey=SSR]:text-primary-tint-10 data-[textKey=SPA]:text-primary-tint-20"
         }`}
       >
         {$texts[textKeys[index]]}

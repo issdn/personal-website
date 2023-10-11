@@ -36,6 +36,8 @@ module.exports = {
       },
       colors: {
         primary: "#5D3891",
+        "primary-tint-10": "#6d4c9c",
+        "primary-tint-20": "#7d60a7",
         accent: "#F99417",
         "accent-secondary": "#D9D9D9",
         light: "#E8E2E2",
@@ -46,9 +48,6 @@ module.exports = {
         "dark-tint-10": "#313131",
         "accent-secondary-dark": "#232323",
         special: "#6c9138",
-        "detail-red": "#913840",
-        "detail-green": "#6C9138",
-        "detail-blue": "#389189",
       },
       dropShadow: {
         "md-light": [
